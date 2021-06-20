@@ -1,0 +1,14 @@
+.content-home {
+    width: 600px;
+    height: 500px;
+    border: solid 1px black;
+    margin-left: 20%;
+}
+
+.iconLong {
+    width: 30px;
+}
+
+.swal-modal .swal-text {
+    text-align: center;
+}
