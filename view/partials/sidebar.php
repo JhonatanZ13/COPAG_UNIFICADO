@@ -55,17 +55,9 @@ include_once '../lib/helpers.php';
                         </a>
 
                         <ul class="nav child_menu">
-                            <li>
-                                <a href="form.html">Compra</a>
-                            </li>
-
-                            <li>
-                                <a href="form_advanced.html">Cotizacion</a>
-                            </li>
-
-                            <li>
-                                <a href="form_advanced.html">Solicitud</a>
-                            </li>
+                        <li><a href="<?php echo getUrl("costos","compras","consult");?>" >Compra</a></li>
+                        <li><a href="<?php echo getUrl("costos","cotizacion","consult");?>">Cotizacion</a></li>
+                        <li><a href="<?php echo getUrl("costos","solicitud","consult");?>">Solicitud</a></li>
 
                             <li>
                                 <a href="form_advanced.html">Reporte</a>

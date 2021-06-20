@@ -1,0 +1,26 @@
+/* estilo validate */
+label.error{
+    margin:0px;
+    color: red;
+}
+/* estilo validate */
+
+div#Cont{
+
+    padding: 0;
+    width: 1097px;
+    height: 100px;
+    margin:0 auto;
+
+  background-color: rgba(218, 218, 218, 0.993);
+}
+
+h6#der{
+    text-align: right;
+    vertical-align: text-top;  
+   
+}
+
+#imagen{
+    float: left;
+}

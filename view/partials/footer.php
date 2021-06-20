@@ -59,6 +59,11 @@ if (isset($_SESSION['auth']) && ($_SESSION['auth'] == 'ok')) {
     <!-- Validaciones -->
     <script src="build/js/valida.js"></script>
     <script src="build/js/validaupdate.js"></script>
+
+    <!-- Costos -->
+    <script src="build/js/costos.js"></script>
+    <script src="build/js/compras.js" ></script>
+    
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!----- Fin area de produccion -------------->

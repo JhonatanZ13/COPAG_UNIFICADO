@@ -28,6 +28,8 @@
 
     <link href="build/css/style.css" rel="stylesheet">
 
+    <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script>
+
     <!-- DataTables Content  -->
     <link href="vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
     <link href="vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">

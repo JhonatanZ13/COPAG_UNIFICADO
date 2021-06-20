@@ -1,0 +1,40 @@
+/* solicitud pdf */
+#solicitudpdf{
+    margin-left:7%;
+    margin-right:7%;
+    font-family:Calibri;
+    font-size:15px;
+}
+
+.encabezadoC{
+    width: 100%;
+    border: 1px solid black;
+    margin-bottom:7%;
+    border-spacing: 0;
+}
+
+.encabezadoC  td{
+    font-family:Calibri;
+    text-align: center;
+    border: 1px solid black;
+}
+#tablaps{
+    width:100%;
+    text-align: left;
+    border: 1px solid black;
+    border-spacing: 0;
+    margin-bottom: 7%;
+}
+
+#tablaps td, th{
+    text-align: left;
+font-family:Calibri;
+border: 1px solid black;
+    border-spacing: 0;
+    padding-left: 10px;
+}
+#tablaps th{
+    padding-left: 10px;
+    background-color: silver;
+}
+/* fin solicitud pdf */
