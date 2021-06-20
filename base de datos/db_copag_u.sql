@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2021 a las 22:32:57
+-- Tiempo de generación: 20-06-2021 a las 23:52:10
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 7.3.28
 
@@ -116,6 +116,23 @@ INSERT INTO `tblcentro` (`Cen_id`, `Cen_nombre`, `Cen_telefono`, `Cen_direccion`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tblcomprasinsumos`
+--
+
+CREATE TABLE `tblcomprasinsumos` (
+  `com_NoItem` int(10) NOT NULL,
+  `com_CodigoSena` int(15) NOT NULL,
+  `com_Descripcionb` varchar(70) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `com_UMedida` varchar(50) NOT NULL,
+  `com_Cantidad` int(40) NOT NULL,
+  `com_Observaciones` varchar(100) NOT NULL,
+  `Soc_id` int(11) NOT NULL,
+  `Cen_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tblcotizacion`
 --
 
@@ -124,6 +141,14 @@ CREATE TABLE `tblcotizacion` (
   `Cot_fecha` date NOT NULL COMMENT 'Fecha de registro de cotizacion.',
   `Usu_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tblcotizacion`
+--
+
+INSERT INTO `tblcotizacion` (`Cot_id`, `Cot_fecha`, `Usu_id`) VALUES
+(1, '2021-06-20', 1),
+(2, '2021-06-20', 1);
 
 -- --------------------------------------------------------
 
@@ -213,17 +238,33 @@ CREATE TABLE `tbldetallemateriaprimacompra` (
 
 CREATE TABLE `tbldetallepedido` (
   `Dpe_id` int(11) NOT NULL,
-  `Dpe_cantidadPlancha` double NOT NULL,
-  `Dpe_valorUnidadPlancha` double NOT NULL,
-  `Dpe_totalPlancha` double NOT NULL,
-  `Dpe_cantidad` int(11) NOT NULL COMMENT 'Es la cantidad del producto que se relaciona con el pedido.',
-  `Dpe_tama├▒o` varchar(45) COLLATE utf8mb4_spanish_ci NOT NULL COMMENT 'Es el tama├▒o del producto.',
-  `Dpe_valorUnitario` double NOT NULL COMMENT 'El valor unitario del producto',
-  `Dpe_valorTotal` double NOT NULL COMMENT 'El valor total del producto',
-  `Dpe_valorDise├▒o` double NOT NULL,
-  `Ped_id` int(11) NOT NULL,
-  `Pba_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+  `Dep_descripcion` varchar(300) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Dpe_cantidadPlancha` double DEFAULT NULL,
+  `Dpe_valorUnidadPlancha` double DEFAULT NULL,
+  `Dpe_totalPlancha` double DEFAULT NULL,
+  `Dpe_cantidad` int(11) DEFAULT NULL COMMENT 'Es la cantidad del producto que se relaciona con el pedido.',
+  `Dpe_tamanoCerrado` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Dpe_tamanoAbierto` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Dpe_paginasProducto` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Dpe_valorUnitario` double DEFAULT NULL COMMENT 'El valor unitario del producto',
+  `Dpe_valorTotal` double DEFAULT NULL COMMENT 'El valor total del producto',
+  `Dpe_insumos` double DEFAULT NULL,
+  `Dpe_procesos` double DEFAULT NULL,
+  `Dpe_valorDiseño` double DEFAULT NULL,
+  `Dpe_encargadoDiseno` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Ped_id` int(11) DEFAULT NULL,
+  `Pba_id` int(11) DEFAULT NULL,
+  `Maq_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tbldetallepedido`
+--
+
+INSERT INTO `tbldetallepedido` (`Dpe_id`, `Dep_descripcion`, `Dpe_cantidadPlancha`, `Dpe_valorUnidadPlancha`, `Dpe_totalPlancha`, `Dpe_cantidad`, `Dpe_tamanoCerrado`, `Dpe_tamanoAbierto`, `Dpe_paginasProducto`, `Dpe_valorUnitario`, `Dpe_valorTotal`, `Dpe_insumos`, `Dpe_procesos`, `Dpe_valorDiseño`, `Dpe_encargadoDiseno`, `Ped_id`, `Pba_id`, `Maq_id`) VALUES
+(1, 'Cartillas', NULL, NULL, NULL, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL),
+(2, 'sadas', NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL),
+(3, 'sadasd', 12, 1000, 12000, 40, '3434', '23', '50', 1439.15, 57566, 52000, 5566, 566, 'funcionario', 103, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -248,12 +289,72 @@ CREATE TABLE `tbldetallepedidoempaque` (
 
 CREATE TABLE `tbldetallepedidomateriaprima` (
   `Dpm_id` int(11) NOT NULL,
+  `Dpm_tamanoMaterial` varchar(250) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `Dpm_unidadTamanoMaterial` varchar(250) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `Dpm_gramajeMaterial` varchar(250) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
+  `Dpm_unidadGramajeMaterial` varchar(250) COLLATE utf8mb4_spanish_ci DEFAULT NULL,
   `Dpm_cantidad` double NOT NULL COMMENT 'Es la cantidad que se va a utilizar para la fabricacion.',
   `Dpm_precioUnitario` double NOT NULL,
   `Dpm_valorTotal` double NOT NULL,
   `Dpe_id` int(11) NOT NULL,
   `Arti_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tbldetallepedidomateriaprima`
+--
+
+INSERT INTO `tbldetallepedidomateriaprima` (`Dpm_id`, `Dpm_tamanoMaterial`, `Dpm_unidadTamanoMaterial`, `Dpm_gramajeMaterial`, `Dpm_unidadGramajeMaterial`, `Dpm_cantidad`, `Dpm_precioUnitario`, `Dpm_valorTotal`, `Dpe_id`, `Arti_id`) VALUES
+(1, NULL, NULL, NULL, NULL, 50, 1000, 50000, 3, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbldetallepedidoterminado`
+--
+
+CREATE TABLE `tbldetallepedidoterminado` (
+  `Dpt_id` int(11) NOT NULL,
+  `Dpt_cantidadHorasTerminado` double DEFAULT NULL,
+  `Dpt_costoUnitarioTerminado` double DEFAULT NULL,
+  `Dpt_subtotalTerminado` double DEFAULT NULL,
+  `Ter_id` int(11) DEFAULT NULL,
+  `Dpe_id` int(11) DEFAULT NULL,
+  `Maq_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tbldetallepedidoterminado`
+--
+
+INSERT INTO `tbldetallepedidoterminado` (`Dpt_id`, `Dpt_cantidadHorasTerminado`, `Dpt_costoUnitarioTerminado`, `Dpt_subtotalTerminado`, `Ter_id`, `Dpe_id`, `Maq_id`) VALUES
+(1, 5, 1000, 5000, 1, 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbldetallepedidotinta`
+--
+
+CREATE TABLE `tbldetallepedidotinta` (
+  `Dpti_id` int(11) NOT NULL,
+  `Arti_id` int(11) DEFAULT NULL,
+  `Dpe_id` int(11) DEFAULT NULL,
+  `Dpti_colorTinta` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Dpti_cantidadTinta` double DEFAULT NULL,
+  `Dpti_unidadCantidad` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Dpti_costoUnitario` double DEFAULT NULL,
+  `Dpti_subTotal` double DEFAULT NULL,
+  `Dpti_tipoTinta` enum('BASICA','ESPECIAL') COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tbldetallepedidotinta`
+--
+
+INSERT INTO `tbldetallepedidotinta` (`Dpti_id`, `Arti_id`, `Dpe_id`, `Dpti_colorTinta`, `Dpti_cantidadTinta`, `Dpti_unidadCantidad`, `Dpti_costoUnitario`, `Dpti_subTotal`, `Dpti_tipoTinta`) VALUES
+(1, NULL, 3, 'CMYK', 10, 'Kg', 100, 1000, 'BASICA'),
+(2, NULL, 3, '08374hj', 10, 'Kg', 100, 1000, 'ESPECIAL');
 
 -- --------------------------------------------------------
 
@@ -271,6 +372,8 @@ CREATE TABLE `tblejecucion` (
 --
 
 INSERT INTO `tblejecucion` (`Eje_id`, `Eje_descripcion`) VALUES
+(1, 'CDTI'),
+(2, 'Externo'),
 (4, 'nose');
 
 -- --------------------------------------------------------
@@ -335,7 +438,13 @@ INSERT INTO `tblestado` (`Est_id`, `Est_nombre`, `Est_descrpicion`) VALUES
 (1, 'Activo', 'Para que el usurio este activo\r\n'),
 (2, 'Aprobado', 'Ordenes de produccion aprobadas'),
 (3, 'Rechazado', 'Ordenes de produccion rechazadas'),
-(4, 'Pendiente', 'Ordenes de produccion pendientes por aprobar');
+(4, 'Pendiente', 'Ordenes de produccion pendientes por aprobar'),
+(5, 'Pendiente por aprobacion - solicitud', ''),
+(6, 'Aprobado - solicitud', ''),
+(7, 'No aprobado - solicitud', ''),
+(8, 'Pendiente por aprobacion - cotizacion', ''),
+(9, 'Aprobado - cotizacion', ''),
+(10, 'No aprobado - cotizacion', '');
 
 -- --------------------------------------------------------
 
@@ -1711,7 +1820,7 @@ CREATE TABLE `tblordenproduccion` (
 
 INSERT INTO `tblordenproduccion` (`Odp_id`, `Odp_fechaCreacion`, `Odp_tipoempresa`, `Emp_id`, `Usu_id`, `Pte_id`, `Pim_id`, `Imp_id`, `Odp_fechaEntrega`, `Odp_fechaInicio`, `Odp_fechafin`, `Odp_Estado`, `Odp_motivorechazo`, `Odp_usuFirma`) VALUES
 (1, '2021-06-20', 3, '1', 1, 2, 2, 1, '2021-06-30', '2021-06-17', '2021-06-24', 3, 'Prueba 1', 0),
-(2, '2021-06-20', 4, '1', 4, 3, 3, 2, '2021-06-30', '2021-06-30', '2021-06-30', 2, 'NULL', 4);
+(2, '2021-06-20', 4, '1', 1, 3, 3, 2, '2021-06-30', '2021-06-30', '2021-06-30', 3, 'Prueba', 0);
 
 -- --------------------------------------------------------
 
@@ -1721,14 +1830,32 @@ INSERT INTO `tblordenproduccion` (`Odp_id`, `Odp_fechaCreacion`, `Odp_tipoempres
 
 CREATE TABLE `tblpedido` (
   `Ped_id` int(11) NOT NULL,
-  `Ped_fecha` date NOT NULL,
-  `Ped_asunto` varchar(45) NOT NULL,
-  `Ped_objetivo` varchar(45) NOT NULL,
-  `Ped_plazoEjecucion` varchar(45) NOT NULL,
-  `Ped_lugarEjecucion` varchar(45) NOT NULL,
-  `Est_id` int(11) NOT NULL,
-  `Cot_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Ped_fecha` date DEFAULT NULL,
+  `destinatario` int(11) DEFAULT NULL,
+  `Ped_objetivo` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Ped_plazoEjecucionDias` int(30) DEFAULT NULL,
+  `Ped_plazoEjecucionMeses` int(12) DEFAULT NULL,
+  `Ped_lugarEjecucionCiu` int(100) DEFAULT NULL,
+  `Ped_lugarEjecucionCen` int(100) DEFAULT NULL,
+  `Est_id` int(11) DEFAULT NULL,
+  `Cot_id` int(11) DEFAULT NULL,
+  `Cen_id` int(11) DEFAULT NULL,
+  `Emp_id` int(11) DEFAULT NULL,
+  `Dep_id` int(11) DEFAULT NULL,
+  `Mun_id` int(11) DEFAULT NULL,
+  `Tempr_id` int(11) DEFAULT NULL,
+  `Ped_motivo` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tblpedido`
+--
+
+INSERT INTO `tblpedido` (`Ped_id`, `Ped_fecha`, `destinatario`, `Ped_objetivo`, `Ped_plazoEjecucionDias`, `Ped_plazoEjecucionMeses`, `Ped_lugarEjecucionCiu`, `Ped_lugarEjecucionCen`, `Est_id`, `Cot_id`, `Cen_id`, `Emp_id`, `Dep_id`, `Mun_id`, `Tempr_id`, `Ped_motivo`) VALUES
+(1, '2021-06-20', 4, 'Pedido de solicitud', 2, 1, 1, 3, 3, NULL, 3, 1, 24, 1009, 3, NULL),
+(102, '2021-06-20', NULL, '', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(103, '2021-06-20', NULL, '', NULL, NULL, NULL, NULL, 7, 1, NULL, 1, NULL, NULL, 3, NULL),
+(104, '2021-06-20', NULL, '', NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1896,11 +2023,13 @@ INSERT INTO `tblrol` (`Rol_id`, `Rol_nombre`) VALUES
 CREATE TABLE `tblsolicitudecompra` (
   `Soc_id` int(11) NOT NULL,
   `Soc_fecha` date NOT NULL,
-  `Soc_version` varchar(45) NOT NULL,
   `Soc_DNI_jefeOficina` int(11) NOT NULL,
   `Soc_DNI_servidorPublico` int(11) NOT NULL,
-  `Soc_descripcionArea` varchar(45) NOT NULL,
-  `Soc_codigoGurpo` int(11) NOT NULL
+  `Soc_area` varchar(20) DEFAULT NULL,
+  `Soc_ficha` int(11) DEFAULT NULL,
+  `Soc_servidorp` varchar(45) DEFAULT NULL,
+  `Soc_nom_je` varchar(40) DEFAULT NULL,
+  `Reg_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -2142,7 +2271,8 @@ INSERT INTO `tbltipoterminado` (`tter_id`, `Ter_id`, `tter_descripcion1`, `tter_
 (16, 12, '', '', 2),
 (17, 19, '', '', 2),
 (18, 22, '', '', 2),
-(19, 23, '', '', 2);
+(19, 23, '', '', 2),
+(20, 27, '', '', 2);
 
 -- --------------------------------------------------------
 
@@ -2211,6 +2341,14 @@ ALTER TABLE `tblcentro`
   ADD KEY `fk_Tcentro_Tregional1_idx` (`Reg_id`);
 
 --
+-- Indices de la tabla `tblcomprasinsumos`
+--
+ALTER TABLE `tblcomprasinsumos`
+  ADD PRIMARY KEY (`com_NoItem`),
+  ADD KEY `Cen_id` (`Cen_id`),
+  ADD KEY `Soc_id` (`Soc_id`);
+
+--
 -- Indices de la tabla `tblcotizacion`
 --
 ALTER TABLE `tblcotizacion`
@@ -2244,8 +2382,9 @@ ALTER TABLE `tbldetallemateriaprimacompra`
 --
 ALTER TABLE `tbldetallepedido`
   ADD PRIMARY KEY (`Dpe_id`),
-  ADD KEY `fk_TDetallePedido_TPedido1_idx` (`Ped_id`),
-  ADD KEY `fk_TDetallePedido_TProductoBase1_idx` (`Pba_id`);
+  ADD KEY `fk_DetallePedidoMaquina` (`Maq_id`),
+  ADD KEY `fk_TDetallePedido_TPedido1` (`Ped_id`),
+  ADD KEY `fk_TDetallePedido_TProductoBase1` (`Pba_id`);
 
 --
 -- Indices de la tabla `tbldetallepedidoempaque`
@@ -2262,6 +2401,23 @@ ALTER TABLE `tbldetallepedidomateriaprima`
   ADD PRIMARY KEY (`Dpm_id`),
   ADD KEY `fk_TDetPedidoMateriaPrima_TDetallePedido1_idx` (`Dpe_id`),
   ADD KEY `fk_TblDetallePedidoMateriaPrima_TblArticulo1_idx` (`Arti_id`);
+
+--
+-- Indices de la tabla `tbldetallepedidoterminado`
+--
+ALTER TABLE `tbldetallepedidoterminado`
+  ADD PRIMARY KEY (`Dpt_id`),
+  ADD KEY `fk_DetallePedido` (`Dpe_id`),
+  ADD KEY `fk_DetallePedidoTerminadoMaquina` (`Maq_id`),
+  ADD KEY `fk_terminados` (`Ter_id`);
+
+--
+-- Indices de la tabla `tbldetallepedidotinta`
+--
+ALTER TABLE `tbldetallepedidotinta`
+  ADD PRIMARY KEY (`Dpti_id`),
+  ADD KEY `fk_DetallePedidoTinta` (`Dpe_id`),
+  ADD KEY `fk_TintaArticulo` (`Arti_id`);
 
 --
 -- Indices de la tabla `tblejecucion`
@@ -2398,8 +2554,12 @@ ALTER TABLE `tblordenproduccion`
 --
 ALTER TABLE `tblpedido`
   ADD PRIMARY KEY (`Ped_id`),
-  ADD KEY `fk_TPedido_Estado1_idx` (`Est_id`),
-  ADD KEY `fk_TPedido_TCotizacion1_idx` (`Cot_id`);
+  ADD KEY `fk_CenPedido` (`Cen_id`),
+  ADD KEY `fk_DepPedido` (`Dep_id`),
+  ADD KEY `fk_MunPedido` (`Mun_id`),
+  ADD KEY `fk_TPedido_TCotizacion1` (`Cot_id`),
+  ADD KEY `fk_tiposolicitud` (`Tempr_id`),
+  ADD KEY `fk_TPedido_Estado1` (`Est_id`);
 
 --
 -- Indices de la tabla `tblpermiso`
@@ -2460,7 +2620,8 @@ ALTER TABLE `tblrol`
 -- Indices de la tabla `tblsolicitudecompra`
 --
 ALTER TABLE `tblsolicitudecompra`
-  ADD PRIMARY KEY (`Soc_id`);
+  ADD PRIMARY KEY (`Soc_id`),
+  ADD KEY `Reg_id` (`Reg_id`);
 
 --
 -- Indices de la tabla `tblsubtipogeneral`
@@ -2558,10 +2719,16 @@ ALTER TABLE `tblcentro`
   MODIFY `Cen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `tblcomprasinsumos`
+--
+ALTER TABLE `tblcomprasinsumos`
+  MODIFY `com_NoItem` int(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `tblcotizacion`
 --
 ALTER TABLE `tblcotizacion`
-  MODIFY `Cot_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Cot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tbldetalleinsumo`
@@ -2579,7 +2746,7 @@ ALTER TABLE `tbldetallemateriaprimacompra`
 -- AUTO_INCREMENT de la tabla `tbldetallepedido`
 --
 ALTER TABLE `tbldetallepedido`
-  MODIFY `Dpe_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Dpe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT de la tabla `tbldetallepedidoempaque`
@@ -2591,7 +2758,7 @@ ALTER TABLE `tbldetallepedidoempaque`
 -- AUTO_INCREMENT de la tabla `tbldetallepedidomateriaprima`
 --
 ALTER TABLE `tbldetallepedidomateriaprima`
-  MODIFY `Dpm_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Dpm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tblejecucion`
@@ -2633,7 +2800,7 @@ ALTER TABLE `tblmovimiento`
 -- AUTO_INCREMENT de la tabla `tblpedido`
 --
 ALTER TABLE `tblpedido`
-  MODIFY `Ped_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Ped_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- AUTO_INCREMENT de la tabla `tblpermiso`
@@ -2696,6 +2863,13 @@ ALTER TABLE `tblcentro`
   ADD CONSTRAINT `fk_Tcentro_Tregional1` FOREIGN KEY (`Reg_id`) REFERENCES `tblregional` (`Reg_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Filtros para la tabla `tblcomprasinsumos`
+--
+ALTER TABLE `tblcomprasinsumos`
+  ADD CONSTRAINT `tblcomprasinsumos_ibfk_1` FOREIGN KEY (`Cen_id`) REFERENCES `tblcentro` (`Cen_id`),
+  ADD CONSTRAINT `tblcomprasinsumos_ibfk_2` FOREIGN KEY (`Soc_id`) REFERENCES `tblsolicitudecompra` (`Soc_id`);
+
+--
 -- Filtros para la tabla `tblcotizacion`
 --
 ALTER TABLE `tblcotizacion`
@@ -2719,6 +2893,7 @@ ALTER TABLE `tbldetallemateriaprimacompra`
 -- Filtros para la tabla `tbldetallepedido`
 --
 ALTER TABLE `tbldetallepedido`
+  ADD CONSTRAINT `fk_DetallePedidoMaquina` FOREIGN KEY (`Maq_id`) REFERENCES `tblmaquina` (`Maq_id`),
   ADD CONSTRAINT `fk_TDetallePedido_TPedido1` FOREIGN KEY (`Ped_id`) REFERENCES `tblpedido` (`Ped_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_TDetallePedido_TProductoBase1` FOREIGN KEY (`Pba_id`) REFERENCES `tblproductobase` (`Pba_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -2735,6 +2910,21 @@ ALTER TABLE `tbldetallepedidoempaque`
 ALTER TABLE `tbldetallepedidomateriaprima`
   ADD CONSTRAINT `fk_TDetPedidoMateriaPrima_TDetallePedido1` FOREIGN KEY (`Dpe_id`) REFERENCES `tbldetallepedido` (`Dpe_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_TblDetallePedidoMateriaPrima_TblArticulo1` FOREIGN KEY (`Arti_id`) REFERENCES `tblarticulo` (`Arti_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tbldetallepedidoterminado`
+--
+ALTER TABLE `tbldetallepedidoterminado`
+  ADD CONSTRAINT `fk_DetallePedido` FOREIGN KEY (`Dpe_id`) REFERENCES `tbldetallepedido` (`Dpe_id`),
+  ADD CONSTRAINT `fk_DetallePedidoTerminadoMaquina` FOREIGN KEY (`Maq_id`) REFERENCES `tblmaquina` (`Maq_id`),
+  ADD CONSTRAINT `fk_terminados` FOREIGN KEY (`Ter_id`) REFERENCES `tblterminado` (`Ter_id`);
+
+--
+-- Filtros para la tabla `tbldetallepedidotinta`
+--
+ALTER TABLE `tbldetallepedidotinta`
+  ADD CONSTRAINT `fk_DetallePedidoTinta` FOREIGN KEY (`Dpe_id`) REFERENCES `tbldetallepedido` (`Dpe_id`),
+  ADD CONSTRAINT `fk_TintaArticulo` FOREIGN KEY (`Arti_id`) REFERENCES `tblarticulo` (`Arti_id`);
 
 --
 -- Filtros para la tabla `tblempresa`
@@ -2824,8 +3014,12 @@ ALTER TABLE `tblordenproduccion`
 -- Filtros para la tabla `tblpedido`
 --
 ALTER TABLE `tblpedido`
+  ADD CONSTRAINT `fk_CenPedido` FOREIGN KEY (`Cen_id`) REFERENCES `tblcentro` (`Cen_id`),
+  ADD CONSTRAINT `fk_DepPedido` FOREIGN KEY (`Dep_id`) REFERENCES `tbldepartamento` (`Dep_id`),
+  ADD CONSTRAINT `fk_MunPedido` FOREIGN KEY (`Mun_id`) REFERENCES `tblmunicipio` (`Mun_id`),
   ADD CONSTRAINT `fk_TPedido_Estado1` FOREIGN KEY (`Est_id`) REFERENCES `tblestado` (`Est_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_TPedido_TCotizacion1` FOREIGN KEY (`Cot_id`) REFERENCES `tblcotizacion` (`Cot_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_TPedido_TCotizacion1` FOREIGN KEY (`Cot_id`) REFERENCES `tblcotizacion` (`Cot_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_tiposolicitud` FOREIGN KEY (`Tempr_id`) REFERENCES `tbltipoempresa` (`Tempr_id`);
 
 --
 -- Filtros para la tabla `tblpermiso`
@@ -2858,6 +3052,12 @@ ALTER TABLE `tblproductobase`
 --
 ALTER TABLE `tblproductoterminado`
   ADD CONSTRAINT `fk_TProductoTerminado_TProductoBase1` FOREIGN KEY (`Pba_id`) REFERENCES `tblproductobase` (`Pba_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `tblsolicitudecompra`
+--
+ALTER TABLE `tblsolicitudecompra`
+  ADD CONSTRAINT `tblsolicitudecompra_ibfk_1` FOREIGN KEY (`Reg_id`) REFERENCES `tblregional` (`Reg_id`);
 
 --
 -- Filtros para la tabla `tblsubtipogeneral`
