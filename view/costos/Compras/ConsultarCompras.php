@@ -38,17 +38,26 @@ echo getUrl("costos","compras","getInsert");?>">
                                    <?php
                                foreach($compras as $comp){
                                 echo "<tr>";     
-                                echo "<td>".$comp['com_NoItem']."</td>";
+                                echo "<td>".$comp['Soc_id']."</td>";
                                 echo "<td>".$comp['Soc_fecha']."</td>";
-                                echo "<td>".$comp['com_NoItem']."</td>";
+                                echo "<td>".$comp['continsumos']."</td>";
                                 
                                 echo "<td>
-                                <a href='".getUrl("costos", "compras","getUpdate",array("com_NoItem"=>$comp['com_NoItem']))."'>
-                                <button class='btn btn-success'><i class='fa fa-pencil'></i></button></a> 
-                                <a href='".getUrl("costos", "compras","getVisualize",array("com_NoItem"=>$comp['com_NoItem']))."'>
-                                <button class='btn btn-success'><i class='fa fa-eye'></i></button></a>
+                                <abbr title='Editar compra'>
+                                <a href='".getUrl("costos", "compras","getUpdate",array("Soc_id"=>$comp['Soc_id']))."'>
+                                <button class='btn btn-success btn-sm'><i class='fa fa-pencil'></i></button></a> 
+                                </abbr>
+                                <abbr title='Mostrar compra'>
+                                <a href='".getUrl("costos", "compras","getVisualize",array("Soc_id"=>$comp['Soc_id']))."'>
+                                <button class='btn btn-success btn-sm'><i class='fa fa-eye'></i></button></a>      
+                                </a>
+                                </abbr>
+                                <abbr title='Descargar compra'>
+                                <a href='" . getUrl("Costos", "Excel", "postExcel", false, 'ajax') . "' target='_blank'><button class='btn btn-sm btn-success'><i class='fa fa-file-excel-o'></i></button>
+                                </a>
+                                </abbr>
                                 <abbr title='Eliminar compra'>
-                                <button value='Eliminar Solicitud de Compra' data-url='".getUrl("costos","compras","modalDelete",false,"ajax")."' data-id='".$comp['com_NoItem']."' class='btn btn-danger botonModal'  id='botonModal' value='Eliminar' ><i class='fa fa-close'></i></button></a>
+                                <button value='Eliminar solicitud de compras' class='btn btn-danger btn-sm botonModal' data-url='".getUrl("costos","compras","modalDelete",array("Soc_id"=>$comp['Soc_id']),"ajax")."' ><i class='fa fa-close'></i></button></a>
                                 </abbr></td>";  
                                 echo "</tr>";
                             }

@@ -8,7 +8,7 @@ class comprasController {
         $obj=new ComprasModel();
         
         
-        $sql=" SELECT tblcomprasinsumos.com_NoItem,tblsolicitudecompra.Soc_fecha, count(tblcomprasinsumos.Soc_id)
+        $sql=" SELECT tblcomprasinsumos.Soc_id,tblsolicitudecompra.Soc_fecha, count(tblcomprasinsumos.Soc_id) as 'continsumos'
         FROM tblsolicitudecompra,tblcomprasinsumos
         WHERE tblsolicitudecompra.Soc_id=tblcomprasinsumos.Soc_id
         GROUP BY tblsolicitudecompra.Soc_id";
@@ -32,6 +32,16 @@ class comprasController {
 
         $sql= "SELECT * FROM tblregional";
         $Regionales=$obj->consult($sql);
+
+        $sql ="SELECT * FROM tblcentro";
+        $Centros=$obj->consult($sql);
+
+        $sql ="SELECT * FROM tblproductobase";
+        $productoBase=$obj->consult($sql);
+
+        $sql ="SELECT * FROM tblmedida";
+        $Medidas=$obj->consult($sql);
+        
         
        
 
@@ -44,59 +54,89 @@ class comprasController {
         $obj=new ComprasModel();
 
         extract($_POST);
-        $id=$obj->autoIncrement("tblsolicitudecompra","Soc_id");
-        $sql="INSERT INTO tblsolicitudecompra VALUES ('$id','".$Soc_fecha."','".$Soc_DNI_jefeOficina."','".$Soc_DNI_servidorPublico."','".$Soc_servidorp."','".$Soc_ficha."','".$Soc_area."','".$Reg_id."','".$Soc_nom_je."')";    
+        $Soc_id=$obj->autoIncrement("tblsolicitudecompra","Soc_id");
+        $sql="INSERT INTO tblsolicitudecompra VALUES ('$Soc_id','".$Soc_fecha."','".$Soc_DNI_jefeOficina."','".$Soc_DNI_servidorPublico."','".$Soc_servidorp."','".$Soc_ficha."','".$Soc_area."','".$Reg_id."','".$Soc_nom_je."','$Cen_id')";    
         $ejecutar=$obj->insert($sql); 
         
         if($ejecutar){
 
-            $sql="SELECT * FROM tblsolicitudecompra";
 
-            $solicitud=$obj->consult($sql);
-           
-            foreach($solicitud as $soli){
-                $Soc_id = $soli['Soc_id'];
-            }
+            extract($_POST);
 
-        for ($i=0;$i<count($com_CodigoSena);$i++) {
+        for ($i=0;$i<count($com_Cantidad);$i++) {
 
-            $id=$obj->autoIncrement("tblcomprasinsumos","com_NoItem"); 
+            $com_NoItem=$obj->autoIncrement("tblcomprasinsumos","com_NoItem"); 
             
-            $sql="INSERT INTO tblcomprasinsumos VALUES ( '$id','".$com_CodigoSena[$i]."','".$com_Descripcionb[$i]."','".$com_UMedida[$i]."','".$com_Cantidad[$i]."','".$com_Observaciones[$i]."','".$Soc_id."')";
+            $sql="INSERT INTO tblcomprasinsumos VALUES ( '$com_NoItem','".$com_Cantidad[$i]."','".$com_Observaciones[$i]."','".$Soc_id."','".$Pba_id[$i]."','".$Med_id[$i]."')";
             $ejecutar2=$obj->insert($sql);
+
+
+
         }
-            
+                 
         redirect(getUrl("costos","compras","consult"));
 
-         
+        echo $sql;
+
         }else{
             echo $sql;
             echo "Ups :(, ocurrio un error";
 
         }
 
+
      
+    }
+
+
+    
+
+    public function selectCompras(){
+        $obj=new ComprasModel();
+        
+        $id=$_POST['id'];
+
+        $sql="SELECT * FROM tblCentro WHERE Reg_id=$id";
+        $Centros=$obj->consult($sql);
+
+        foreach ($Centros as $cen) {
+            echo "<option value='".$cen['Cen_id']."'>".$cen['Cen_nombre']."</option>";
+        }
+      
     }
 
     public function getUpdate(){
 
             $obj=new ComprasModel();
         
-           extract($_GET);
+           $Soc_id=$_GET['Soc_id'];
 
-            $sql ="SELECT * FROM tblcomprasinsumos WHERE com_NoItem= $com_NoItem";
+        //    $sql="SELECT tblcomprasinsumos.com_NoItem,tblproductobase.Pba_descripcion,tblmedida.Med_descripcion, tblcomprasinsumos.com_Cantidad, tblcomprasinsumos.com_Observaciones 
+        //    FROM tblcomprasinsumos 
+        //     INNER JOIN tblsolicitudecompra
+        //     ON tblcomprasinsumos.Soc_id = tblsolicitudecompra.Soc_id 
+        //     INNER JOIN tblproductobase ON tblcomprasinsumos.Pba_id =tblproductobase.Pba_id INNER JOIN tblmedida
+        //     ON tblcomprasinsumos.Med_id = tblmedida.Med_id=$com_NoItem";
+        //    $compras=$obj->consult($sql);
+
+            $sql ="SELECT * FROM tblcomprasinsumos WHERE Soc_id= $Soc_id";
             $compras=$obj->consult($sql);
-           
-    
-    
-            $sql = "SELECT * FROM tblsolicitudecompra WHERE Soc_id=$com_NoItem";
+        
+            $sql = "SELECT * FROM tblsolicitudecompra WHERE Soc_id=$Soc_id";
             $solicitud=$obj->consult($sql);
-
-            
-
     
             $sql= "SELECT * FROM tblregional";
             $Regionales=$obj->consult($sql); 
+
+            $sql ="SELECT * FROM tblcentro";
+            $Centros=$obj->consult($sql);
+
+            $sql ="SELECT * FROM tblproductobase";
+            $productoBase=$obj->consult($sql);
+
+             $sql ="SELECT * FROM tblmedida";
+            $Medidas=$obj->consult($sql);
+        
 
 
             
@@ -116,8 +156,7 @@ class comprasController {
         
         extract($_POST);
 
-        $sql="UPDATE tblsolicitudecompra SET Soc_fecha='".$Soc_fecha."', Soc_area='".$Soc_area."', Soc_nom_je='".$Soc_nom_je."', 
-        Soc_DNI_jefeOficina='".$Soc_DNI_jefeOficina."', Soc_servidorp='".$Soc_servidorp."', Soc_DNI_servidorPublico='".$Soc_DNI_servidorPublico."', Soc_ficha='".$Soc_ficha."', Reg_id=$Reg_id WHERE Soc_id=$com_NoItem";
+        $sql="UPDATE tblsolicitudecompra SET Soc_fecha='".$Soc_fecha."', Soc_area='".$Soc_area."', Soc_nom_je='".$Soc_nom_je."', Soc_DNI_jefeOficina='".$Soc_DNI_jefeOficina."', Soc_servidorp='".$Soc_servidorp."', Soc_DNI_servidorPublico='".$Soc_DNI_servidorPublico."', Soc_ficha='".$Soc_ficha."',Reg_id='".$Reg_id."', Cen_id='".$Cen_id."' WHERE Soc_id=$Soc_id";
        
         
         $ejecutar=$obj->update($sql);
@@ -138,11 +177,11 @@ class comprasController {
                     $Soc_id = $soli['Soc_id'];
                 }
     
-            for ($i=0;$i<count($com_CodigoSena);$i++) {
+            for ($i=0;$i<count($com_Observaciones);$i++) {
     
                 $id=$obj->autoIncrement("tblcomprasinsumos","com_NoItem"); 
                 
-                $sql="INSERT INTO tblcomprasinsumos VALUES ( '$id','".$com_CodigoSena[$i]."','".$com_Descripcionb[$i]."','".$com_UMedida[$i]."','".$com_Cantidad[$i]."','".$com_Observaciones[$i]."','".$Soc_id."')";
+                $sql="INSERT INTO tblcomprasinsumos VALUES ( '$id','".$com_Cantidad[$i]."','".$com_Observaciones[$i]."','".$Soc_id."','".$Pba_id[$i]."','".$Med_id[$i]."')";
                 $ejecutar2=$obj->insert($sql);
             }
             }
@@ -167,18 +206,25 @@ class comprasController {
 
     public function getDelete(){
 
-       $com_NoItem=$_GET['com_NoItem'];
+       $Soc_id=$_GET['Soc_id'];
 
         $obj=new ComprasModel();
+        
 
 
-        $sql ="SELECT tblcomprasinsumos.com_NoItem, tblcomprasinsumos.com_CodigoSena, tblcomprasinsumos.com_Descripcionb, tblcomprasinsumos.com_UMedida, tblcomprasinsumos.com_Cantidad, tblcomprasinsumos.com_Observaciones, tblsolicitudecompra.Soc_fecha, tblsolicitudecompra.Soc_area, tblsolicitudecompra.Soc_nom_je,
-        tblsolicitudecompra.Soc_id,tblsolicitudecompra.Soc_DNI_jefeOficina, tblsolicitudecompra.Soc_servidorp, tblsolicitudecompra.Soc_DNI_servidorPublico, tblsolicitudecompra.Soc_ficha, tblsolicitudecompra.Reg_id 
-        FROM tblcomprasinsumos 
-        NATURAL JOIN  tblsolicitudecompra
-        WHERE Soc_id=1";
+        // $sql ="SELECT tblcomprasinsumos.com_NoItem, tblcomprasinsumos.Cen_id, tblcomprasinsumos.com_Descripcionb,
+        // tblcomprasinsumos.com_UMedida, tblcomprasinsumos.com_Cantidad, tblcomprasinsumos.com_Observaciones,tblcentro.Cen_id, tblsolicitudecompra.Soc_fecha, tblsolicitudecompra.Soc_area, tblsolicitudecompra.Soc_nom_je,
+        // tblsolicitudecompra.Soc_id,tblsolicitudecompra.Soc_DNI_jefeOficina, tblsolicitudecompra.Soc_servidorp, tblsolicitudecompra.Soc_DNI_servidorPublico, tblsolicitudecompra.Soc_ficha, tblsolicitudecompra.Reg_id 
+        // FROM tblcomprasinsumos 
+        // NATURAL JOIN  tblsolicitudecompra
+        // WHERE Soc_id=$Soc_id";
 
-        $compras=$obj->consult($sql);
+        // $compras=$obj->consult($sql);
+
+
+        // foreach($compras as $comp){
+        //     $Soc_id=$comp['Soc_id'];
+        // }
         
         include_once '../view/costos/compras/ModalDelete.php';
     }
@@ -188,14 +234,17 @@ class comprasController {
 
         $obj=new comprasModel();
 
-        extract($_POST);
+        $Soc_id=$_POST['Soc_id'];
 
-        $sql= "DELETE tblcomprasinsumos, tblsolicitudecompra FROM tblcomprasinsumos
-        JOIN tblsolicitudecompra ON  tblcomprasinsumos.com_NoItem=tblsolicitudecompra.Soc_id=1";
+        $sql= "DELETE FROM tblcomprasinsumos WHERE Soc_id=$Soc_id";
         $ejecutar=$obj->delete($sql);
 
             
             if($ejecutar){
+
+                $sql= "DELETE FROM tblsolicitudecompra WHERE Soc_id=$Soc_id";
+                $ejecutar2=$obj->delete($sql);
+        
               
                
         redirect(getUrl("costos","compras","consult"));
@@ -203,6 +252,8 @@ class comprasController {
 
 
             }else{
+
+                echo $sql;
 
                 echo"Ups :(, ocurrio un error";
 
@@ -213,23 +264,11 @@ class comprasController {
     public function modalDelete(){
 
         
-       $com_NoItem=$_POST['datos'];
+       $Soc_id=$_GET['Soc_id'];
 
         $obj=new ComprasModel();
-        
-           extract($_GET);
 
-            $sql ="SELECT * FROM tblcomprasinsumos WHERE com_NoItem= $com_NoItem";
-            $compras=$obj->consult($sql);
-           
-    
-    
-            $sql = "SELECT * FROM tblsolicitudecompra WHERE Soc_id=$com_NoItem";
-            $solicitud=$obj->consult($sql);
 
-    
-            $sql= "SELECT * FROM tblregional";
-            $Regionales=$obj->consult($sql); 
         
         include_once '../view/costos/compras/ModalDelete.php';
         
@@ -247,17 +286,26 @@ class comprasController {
         $obj=new ComprasModel();
 
         
-        $sql ="SELECT * FROM tblcomprasinsumos WHERE com_NoItem= $com_NoItem";
+        $sql ="SELECT * FROM tblcomprasinsumos WHERE com_NoItem= $Soc_id";
         $compras=$obj->consult($sql);
 
 
 
-        $sql = "SELECT * FROM tblsolicitudecompra WHERE Soc_id=$com_NoItem";
+        $sql = "SELECT * FROM tblsolicitudecompra WHERE Soc_id=$Soc_id";
         $solicitud=$obj->consult($sql);
 
 
-        $sql= "SELECT * FROM tblregional";
+        $sql= "SELECT * FROM tblregional WHERE Reg_id=$Soc_id";
         $Regionales=$obj->consult($sql); 
+
+        $sql ="SELECT * FROM tblcentro WHERE Cen_id=$Soc_id";
+        $Centros=$obj->consult($sql);
+
+        $sql ="SELECT * FROM tblproductobase WHERE Pba_id=$Soc_id";
+        $productoBase=$obj->consult($sql);
+
+         $sql ="SELECT * FROM tblmedida WHERE Med_id=$Soc_id";
+        $Medidas=$obj->consult($sql);
 
 
 
@@ -267,6 +315,8 @@ class comprasController {
 
 
     }
+
+    
 
 
 
