@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2021 a las 23:52:10
+-- Tiempo de generación: 22-06-2021 a las 09:54:33
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 7.3.28
 
@@ -121,14 +121,20 @@ INSERT INTO `tblcentro` (`Cen_id`, `Cen_nombre`, `Cen_telefono`, `Cen_direccion`
 
 CREATE TABLE `tblcomprasinsumos` (
   `com_NoItem` int(10) NOT NULL,
-  `com_CodigoSena` int(15) NOT NULL,
-  `com_Descripcionb` varchar(70) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `com_UMedida` varchar(50) NOT NULL,
   `com_Cantidad` int(40) NOT NULL,
   `com_Observaciones` varchar(100) NOT NULL,
   `Soc_id` int(11) NOT NULL,
-  `Cen_id` int(11) NOT NULL
+  `Pba_id` int(11) NOT NULL,
+  `Med_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tblcomprasinsumos`
+--
+
+INSERT INTO `tblcomprasinsumos` (`com_NoItem`, `com_Cantidad`, `com_Observaciones`, `Soc_id`, `Pba_id`, `Med_id`) VALUES
+(1, 88, 'ujjh', 1, 2, 2),
+(2, 88, 'ujjh', 1, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -148,7 +154,8 @@ CREATE TABLE `tblcotizacion` (
 
 INSERT INTO `tblcotizacion` (`Cot_id`, `Cot_fecha`, `Usu_id`) VALUES
 (1, '2021-06-20', 1),
-(2, '2021-06-20', 1);
+(2, '2021-06-20', 1),
+(3, '2021-06-21', 1);
 
 -- --------------------------------------------------------
 
@@ -264,7 +271,8 @@ CREATE TABLE `tbldetallepedido` (
 INSERT INTO `tbldetallepedido` (`Dpe_id`, `Dep_descripcion`, `Dpe_cantidadPlancha`, `Dpe_valorUnidadPlancha`, `Dpe_totalPlancha`, `Dpe_cantidad`, `Dpe_tamanoCerrado`, `Dpe_tamanoAbierto`, `Dpe_paginasProducto`, `Dpe_valorUnitario`, `Dpe_valorTotal`, `Dpe_insumos`, `Dpe_procesos`, `Dpe_valorDiseño`, `Dpe_encargadoDiseno`, `Ped_id`, `Pba_id`, `Maq_id`) VALUES
 (1, 'Cartillas', NULL, NULL, NULL, 20, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, NULL),
 (2, 'sadas', NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 2, NULL),
-(3, 'sadasd', 12, 1000, 12000, 40, '3434', '23', '50', 1439.15, 57566, 52000, 5566, 566, 'funcionario', 103, 1, 1);
+(3, 'sadasd', 12, 1000, 12000, 40, '3434', '23', '50', 1439.15, 57566, 52000, 5566, 566, 'funcionario', 103, 1, 1),
+(4, 'dsfs', 4, 1000, 4000, 400, '40', '20', '20', 155, 62000, 52000, 10000, 5000, 'funcionario', 105, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -305,7 +313,8 @@ CREATE TABLE `tbldetallepedidomateriaprima` (
 --
 
 INSERT INTO `tbldetallepedidomateriaprima` (`Dpm_id`, `Dpm_tamanoMaterial`, `Dpm_unidadTamanoMaterial`, `Dpm_gramajeMaterial`, `Dpm_unidadGramajeMaterial`, `Dpm_cantidad`, `Dpm_precioUnitario`, `Dpm_valorTotal`, `Dpe_id`, `Arti_id`) VALUES
-(1, NULL, NULL, NULL, NULL, 50, 1000, 50000, 3, 7);
+(1, NULL, NULL, NULL, NULL, 50, 1000, 50000, 3, 7),
+(2, NULL, NULL, NULL, NULL, 20, 1000, 20000, 4, 7);
 
 -- --------------------------------------------------------
 
@@ -328,7 +337,8 @@ CREATE TABLE `tbldetallepedidoterminado` (
 --
 
 INSERT INTO `tbldetallepedidoterminado` (`Dpt_id`, `Dpt_cantidadHorasTerminado`, `Dpt_costoUnitarioTerminado`, `Dpt_subtotalTerminado`, `Ter_id`, `Dpe_id`, `Maq_id`) VALUES
-(1, 5, 1000, 5000, 1, 3, 1);
+(1, 5, 1000, 5000, 1, 3, 1),
+(2, 5, 1000, 5000, 1, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -354,7 +364,9 @@ CREATE TABLE `tbldetallepedidotinta` (
 
 INSERT INTO `tbldetallepedidotinta` (`Dpti_id`, `Arti_id`, `Dpe_id`, `Dpti_colorTinta`, `Dpti_cantidadTinta`, `Dpti_unidadCantidad`, `Dpti_costoUnitario`, `Dpti_subTotal`, `Dpti_tipoTinta`) VALUES
 (1, NULL, 3, 'CMYK', 10, 'Kg', 100, 1000, 'BASICA'),
-(2, NULL, 3, '08374hj', 10, 'Kg', 100, 1000, 'ESPECIAL');
+(2, NULL, 3, '08374hj', 10, 'Kg', 100, 1000, 'ESPECIAL'),
+(3, NULL, 4, 'CMYK', 1000, 'und', 30, 30000, 'BASICA'),
+(4, NULL, 4, '08374hj', 2, 'und', 1000, 2000, 'ESPECIAL');
 
 -- --------------------------------------------------------
 
@@ -572,8 +584,8 @@ CREATE TABLE `tblimpresion` (
 --
 
 INSERT INTO `tblimpresion` (`Imp_id`, `Maq_id`, `Imp_formatoCorte`, `Imp_encargado`, `Imp_observaciones`) VALUES
-(1, 1, '20 x 40 cm', 'Jhonatan', 'Obs 2'),
-(2, 1, '20 x 40 cm', 'Jhonatan', 'fdfsd');
+(2, 1, '20 x 40 cm', 'Jhonatan', 'fdfsd'),
+(3, 1, '20 x 40 cm', 'Jhonatan', 'dsfsd');
 
 -- --------------------------------------------------------
 
@@ -1819,8 +1831,8 @@ CREATE TABLE `tblordenproduccion` (
 --
 
 INSERT INTO `tblordenproduccion` (`Odp_id`, `Odp_fechaCreacion`, `Odp_tipoempresa`, `Emp_id`, `Usu_id`, `Pte_id`, `Pim_id`, `Imp_id`, `Odp_fechaEntrega`, `Odp_fechaInicio`, `Odp_fechafin`, `Odp_Estado`, `Odp_motivorechazo`, `Odp_usuFirma`) VALUES
-(1, '2021-06-20', 3, '1', 1, 2, 2, 1, '2021-06-30', '2021-06-17', '2021-06-24', 3, 'Prueba 1', 0),
-(2, '2021-06-20', 4, '1', 1, 3, 3, 2, '2021-06-30', '2021-06-30', '2021-06-30', 3, 'Prueba', 0);
+(2, '2021-06-20', 4, '1', 1, 3, 3, 2, '2021-06-30', '2021-06-30', '2021-06-30', 3, 'Prueba rechazo', 0),
+(3, '2021-06-21', 3, '1', 1, 4, 4, 3, '2021-06-26', '2021-06-10', '2021-06-16', 4, 'NULL', 0);
 
 -- --------------------------------------------------------
 
@@ -1855,7 +1867,8 @@ INSERT INTO `tblpedido` (`Ped_id`, `Ped_fecha`, `destinatario`, `Ped_objetivo`, 
 (1, '2021-06-20', 4, 'Pedido de solicitud', 2, 1, 1, 3, 3, NULL, 3, 1, 24, 1009, 3, NULL),
 (102, '2021-06-20', NULL, '', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (103, '2021-06-20', NULL, '', NULL, NULL, NULL, NULL, 7, 1, NULL, 1, NULL, NULL, 3, NULL),
-(104, '2021-06-20', NULL, '', NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL, NULL, NULL, NULL);
+(104, '2021-06-20', NULL, '', NULL, NULL, NULL, NULL, 1, 2, NULL, NULL, NULL, NULL, NULL, NULL),
+(105, '2021-06-21', NULL, '', NULL, NULL, NULL, NULL, 1, 3, NULL, 1, NULL, NULL, 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -1891,9 +1904,8 @@ CREATE TABLE `tblpliego` (
 --
 
 INSERT INTO `tblpliego` (`Pli_id`, `Pli_rip`, `Stg_id`, `Pli_tintaespecial`, `Imp_id`) VALUES
-(1, 11, 7, '#00FFFF', 1),
-(2, 10, 8, '#00ff00', 1),
-(3, 11, 7, '#0000ff', 2);
+(1, 11, 7, '#0000ff', 2),
+(2, 11, 7, '#0000ff', 3);
 
 -- --------------------------------------------------------
 
@@ -1914,8 +1926,8 @@ CREATE TABLE `tblpreimpreion` (
 
 INSERT INTO `tblpreimpreion` (`Pim_id`, `Stg_id`, `Pim_encargado`, `Pim_observacion`) VALUES
 (1, 4, 'Jhonatan', 'dfdf'),
-(2, 4, 'Jhonatan Zambrano', 'Obs 1'),
-(3, 4, 'Jhonatan Zambrano', 'sdasd');
+(3, 4, 'Jhonatan Zambrano', 'sdasd'),
+(4, 4, 'Jhonatan Zambrano', 'fsd');
 
 -- --------------------------------------------------------
 
@@ -1972,8 +1984,8 @@ CREATE TABLE `tblproductoterminado` (
 
 INSERT INTO `tblproductoterminado` (`Pte_id`, `Pte_cantidad`, `Pte_numeroPaginas`, `Pte_tamañoAbierto`, `Pte_tamañoCerrado`, `Pte_diseñador`, `Pba_id`) VALUES
 (1, 40, 44, '20 x 30 cm', '10 x 30 cm', 'Jhonatan', 2),
-(2, 400, 20, '20 x 30 cm', '10 x 30 cm', 'Jhonatan', 1),
-(3, 4000, 20, '20 x 30 cm', '10 x 30 cm', 'Jhonatan', 2);
+(3, 4000, 20, '20 x 30 cm', '10 x 30 cm', 'Jhonatan', 2),
+(4, 40, 5, '20 x 30 cm', '10 x 30 cm', 'Jhonatan', 1);
 
 -- --------------------------------------------------------
 
@@ -2025,12 +2037,20 @@ CREATE TABLE `tblsolicitudecompra` (
   `Soc_fecha` date NOT NULL,
   `Soc_DNI_jefeOficina` int(11) NOT NULL,
   `Soc_DNI_servidorPublico` int(11) NOT NULL,
-  `Soc_area` varchar(20) DEFAULT NULL,
-  `Soc_ficha` int(11) DEFAULT NULL,
   `Soc_servidorp` varchar(45) DEFAULT NULL,
+  `Soc_ficha` int(11) DEFAULT NULL,
+  `Soc_area` varchar(20) DEFAULT NULL,
+  `Reg_id` int(11) DEFAULT NULL,
   `Soc_nom_je` varchar(40) DEFAULT NULL,
-  `Reg_id` int(11) DEFAULT NULL
+  `Cen_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tblsolicitudecompra`
+--
+
+INSERT INTO `tblsolicitudecompra` (`Soc_id`, `Soc_fecha`, `Soc_DNI_jefeOficina`, `Soc_DNI_servidorPublico`, `Soc_servidorp`, `Soc_ficha`, `Soc_area`, `Reg_id`, `Soc_nom_je`, `Cen_id`) VALUES
+(1, '2021-06-09', 567654, 998, 'ggv', 2346, 'ghgh', 2, 'vggcg', 1);
 
 -- --------------------------------------------------------
 
@@ -2092,9 +2112,9 @@ CREATE TABLE `tblsustrato` (
 --
 
 INSERT INTO `tblsustrato` (`Sus_id`, `Pim_id`, `Sus_tamañoPliego`, `Sus_cantidadSustrato`, `Sus_tamañoCorte`, `Sus_tirajePedido`, `Sus_porcentajeDesperdicio`, `Sus_tirajeTotal`, `Arti_id`) VALUES
-(1, 2, '90 x 79 cm', 10000, '20 x 50 cm', 4000, 5, 4200, 1),
-(2, 2, '90 x 79 cm', 2000, '20 x 50 cm', 6000, 10, 6600, 2),
-(3, 3, '90 x 79 cm', 10000, '20 x 50 cm', 6000, 5, 6300, 1);
+(1, 3, '90 x 79 cm', 10000, '20 x 50 cm', 6000, 5, 6300, 1),
+(2, 3, '90 x 79 cm', 10000, '20 x 50 cm', 6000, 5, 6300, 2),
+(3, 4, '90 x 79 cm', 10000, '20 x 50 cm', 4000, 5, 4200, 1);
 
 -- --------------------------------------------------------
 
@@ -2253,26 +2273,14 @@ CREATE TABLE `tbltipoterminado` (
 --
 
 INSERT INTO `tbltipoterminado` (`tter_id`, `Ter_id`, `tter_descripcion1`, `tter_descripcion2`, `Odp_id`) VALUES
-(1, 1, '', '', 1),
-(2, 2, '', '', 1),
-(3, 7, '', '', 1),
-(4, 13, '', '', 1),
-(5, 14, '', '', 1),
-(6, 16, '0', '20', 1),
-(7, 18, '4', '', 1),
-(8, 22, '2', '', 1),
-(9, 23, '', '', 1),
-(10, 27, '', '', 1),
-(11, 24, '', '', 1),
-(12, 28, '', '', 1),
-(13, 29, '', '', 1),
-(14, 1, '', '', 2),
-(15, 6, '', '', 2),
-(16, 12, '', '', 2),
-(17, 19, '', '', 2),
-(18, 22, '', '', 2),
-(19, 23, '', '', 2),
-(20, 27, '', '', 2);
+(1, 1, '', '', 2),
+(2, 6, '', '', 2),
+(3, 12, '', '', 2),
+(4, 19, '', '', 2),
+(5, 22, '', '', 2),
+(6, 23, '', '', 2),
+(7, 27, '', '', 2),
+(8, 1, '', '', 3);
 
 -- --------------------------------------------------------
 
@@ -2345,8 +2353,9 @@ ALTER TABLE `tblcentro`
 --
 ALTER TABLE `tblcomprasinsumos`
   ADD PRIMARY KEY (`com_NoItem`),
-  ADD KEY `Cen_id` (`Cen_id`),
-  ADD KEY `Soc_id` (`Soc_id`);
+  ADD KEY `Soc_id` (`Soc_id`),
+  ADD KEY `Pba_id` (`Pba_id`),
+  ADD KEY `Med_id` (`Med_id`);
 
 --
 -- Indices de la tabla `tblcotizacion`
@@ -2621,7 +2630,8 @@ ALTER TABLE `tblrol`
 --
 ALTER TABLE `tblsolicitudecompra`
   ADD PRIMARY KEY (`Soc_id`),
-  ADD KEY `Reg_id` (`Reg_id`);
+  ADD KEY `Reg_id` (`Reg_id`),
+  ADD KEY `Cen_id` (`Cen_id`);
 
 --
 -- Indices de la tabla `tblsubtipogeneral`
@@ -2722,13 +2732,13 @@ ALTER TABLE `tblcentro`
 -- AUTO_INCREMENT de la tabla `tblcomprasinsumos`
 --
 ALTER TABLE `tblcomprasinsumos`
-  MODIFY `com_NoItem` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `com_NoItem` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tblcotizacion`
 --
 ALTER TABLE `tblcotizacion`
-  MODIFY `Cot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Cot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tbldetalleinsumo`
@@ -2758,7 +2768,7 @@ ALTER TABLE `tbldetallepedidoempaque`
 -- AUTO_INCREMENT de la tabla `tbldetallepedidomateriaprima`
 --
 ALTER TABLE `tbldetallepedidomateriaprima`
-  MODIFY `Dpm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Dpm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tblejecucion`
@@ -2800,7 +2810,7 @@ ALTER TABLE `tblmovimiento`
 -- AUTO_INCREMENT de la tabla `tblpedido`
 --
 ALTER TABLE `tblpedido`
-  MODIFY `Ped_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `Ped_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT de la tabla `tblpermiso`
@@ -2830,7 +2840,7 @@ ALTER TABLE `tblrol`
 -- AUTO_INCREMENT de la tabla `tblsolicitudecompra`
 --
 ALTER TABLE `tblsolicitudecompra`
-  MODIFY `Soc_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Soc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `tblterminado`
@@ -2866,8 +2876,9 @@ ALTER TABLE `tblcentro`
 -- Filtros para la tabla `tblcomprasinsumos`
 --
 ALTER TABLE `tblcomprasinsumos`
-  ADD CONSTRAINT `tblcomprasinsumos_ibfk_1` FOREIGN KEY (`Cen_id`) REFERENCES `tblcentro` (`Cen_id`),
-  ADD CONSTRAINT `tblcomprasinsumos_ibfk_2` FOREIGN KEY (`Soc_id`) REFERENCES `tblsolicitudecompra` (`Soc_id`);
+  ADD CONSTRAINT `tblcomprasinsumos_ibfk_2` FOREIGN KEY (`Soc_id`) REFERENCES `tblsolicitudecompra` (`Soc_id`),
+  ADD CONSTRAINT `tblcomprasinsumos_ibfk_3` FOREIGN KEY (`Pba_id`) REFERENCES `tblproductobase` (`Pba_id`),
+  ADD CONSTRAINT `tblcomprasinsumos_ibfk_4` FOREIGN KEY (`Med_id`) REFERENCES `tblmedida` (`Med_id`);
 
 --
 -- Filtros para la tabla `tblcotizacion`
@@ -3057,7 +3068,8 @@ ALTER TABLE `tblproductoterminado`
 -- Filtros para la tabla `tblsolicitudecompra`
 --
 ALTER TABLE `tblsolicitudecompra`
-  ADD CONSTRAINT `tblsolicitudecompra_ibfk_1` FOREIGN KEY (`Reg_id`) REFERENCES `tblregional` (`Reg_id`);
+  ADD CONSTRAINT `tblsolicitudecompra_ibfk_1` FOREIGN KEY (`Reg_id`) REFERENCES `tblregional` (`Reg_id`),
+  ADD CONSTRAINT `tblsolicitudecompra_ibfk_2` FOREIGN KEY (`Cen_id`) REFERENCES `tblcentro` (`Cen_id`);
 
 --
 -- Filtros para la tabla `tblsubtipogeneral`
