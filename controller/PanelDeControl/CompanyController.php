@@ -27,7 +27,7 @@
 
             include_once '../view/Panel/COmpany/insertCompany.php';
         }
-
+ 
         public function selectDinamico(){
             $obj=new CompanyModel();
             

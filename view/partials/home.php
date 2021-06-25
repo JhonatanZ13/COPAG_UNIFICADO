@@ -1,3 +1,3 @@
-<div class="x-content content-home">
-    <b>BIENVENIDO a COPAG</b>
-</div>
+<div class="content-home">
+    <img id="img-home" src="images/logo-pequeño.png" alt="">
+</div> 

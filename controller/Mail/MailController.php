@@ -16,7 +16,7 @@ class MailController
     public function postMail()
     {
         $obj = new MailModel();
-
+ 
         require 'PHPMailer/src/Exception.php';
         require 'PHPMailer/src/PHPMailer.php';
         require 'PHPMailer/src/SMTP.php';
@@ -33,7 +33,7 @@ class MailController
             $mail = new PHPMailer();                              // Passing `true` enables exceptions
             try {
                 //Server settings
-                $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+                $mail->SMTPDebug = 0;                                 // Enable verbose debug output
 
                 $mail->CharSet = 'UTF-8';
 
@@ -54,19 +54,18 @@ class MailController
                 // $mail->addCC('bcc@example.com');
 
                 //Attachments
-                $mail->addAttachment('images/logo.png');     // Add attachments
+                $mail->addAttachment('images/logo-pequeño.png');     // Add attachments
                 $mail->addAttachment('Taller De Artes Graficas - COPAG');    // Optional name
 
                 //Content
                 $mail->isHTML(true);                                  // Set email format to HTML
                 $mail->Subject = 'Restablecimiento De Contraseña';
-                $mail->Body    = "Ha solicitado cambiar contraseña, dale clic al siguiente enlace, para poder restablecer tu contraseña ";
-                $mail->AltBody = 'Si no solicito ningun restablecimiento de su contraseña en el sistema COPAG, ignore este mensaje';
+                $mail->Body    = "Ha solicitado cambiar contraseña, copie este codigo <b>$token</b> e ingreselo en el sistema o dele clic al siguiente enlace <strong>http://127.0.0.1/COPAG/web/ajax.php?modulo=Mail&controlador=Mail&funcion=getToken</strong>, para poder restablecer tu contraseña<br><b>Si no solicito ningun restablecimiento de su contraseña en el sistema COPAG, ignore este mensaje.</b>";
+                //$mail->AltBody = '';
 
                 $mail->send();
 
-                $sql = "UPDATE TblUsuario SET Usu_token='" . $token . "'";
-
+                $sql = "UPDATE TblUsuario SET Usu_token='$token' WHERE Usu_email='$Usu_email' ";
                 $execution = $obj->update($sql);
 
                 if ($execution) {
@@ -77,6 +76,8 @@ class MailController
             }
         } else {
             //aviso de mal correo
+            echo '<script>alert("el correo que digito no existe");</script>';
+            //echo '<script>swal("Good job!", "You clicked the button!", "success");</script>';
             redirect(getUrl("Mail", "Mail", "getMail", false, "ajax"));
         }
     }
@@ -84,24 +85,30 @@ class MailController
     public function getToken()
     {
         include_once '../view/Panel/login/tokenPass.php';
-        // $obj = new MailModel();
+    }
 
-        // extract($_POST);
+    public function postToken()
+    {
+        $obj = new MailModel();
 
-        // $sql = "SELECT * FROM TblUsuario";
-        // $usuarios = $obj->consult($sql);
+        $Usu_token = $_POST['Usu_token'];
+        $Usu_numeroDocumento = $_POST['Usu_numeroDocumento'];
 
-        // if ($token == $user['Usu_token']) {
-        //     foreach ($usuarios as $user) {
-        //         if ($usuarios) {
-        //             $sql = "UPDATE TblUsuario SET Usu_password='" . $user['Usu_numeroDocumento'] . "' WHERE Usu_email='" . $Usu_email . "' ";
-        //             $execution = $obj->update($sql);
+        $sql = "SELECT Usu_token FROM TblUsuario WHERE Usu_token='$Usu_token' ";
+        $consultToken = $obj->consult($sql);
 
-        //             if ($execution) {
-        //                 redirect(getUrl("Access", "Access", "login", false, "ajax"));
-        //             }
-        //         }
-        //     }
-        // }
+        if (mysqli_num_rows($consultToken) > 0) {
+            $sql = "UPDATE TblUsuario SET Usu_password='$Usu_numeroDocumento', Usu_token='0' WHERE Usu_numeroDocumento='".$Usu_numeroDocumento."' ";
+
+            $execution = $obj->update($sql);
+
+            if ($execution) {
+                //aqui hiria una alerta para mostrar que ya se cambio 
+                redirect(getUrl("Access", "Access", "login"));
+            }else {
+                
+                echo '<script>alert("El token ya no tiene validez");</script>';
+            }
+        }
     }
 }

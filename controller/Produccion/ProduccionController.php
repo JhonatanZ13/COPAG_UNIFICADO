@@ -77,21 +77,15 @@
             $fir_id = $obj->autoIncrement('tblfirma', 'fir_id');
             $usu_id = $_POST['usu_id'];
             $fir_cargo = $_POST['fir_cargo'];
-
-            if(isset($_FILES['fir_imagen'])){
-                $fir_imagen =$_FILES['fir_imagen']['name'];
-                $ruta="../web/images/Firma/".$fir_imagen;
-                move_uploaded_file($_FILES['fir_imagen']['tmp_name'],$ruta);
-            }else{
-                $ruta = "";
-            }
+            $fir_imagen =$_FILES['fir_imagen']['name'];
+            $ruta="../web/images/Firma/".$fir_imagen;
+            move_uploaded_file($_FILES['fir_imagen']['tmp_name'],$ruta);
 
             $sql = "DELETE FROM tblfirma WHERE usu_id = $usu_id";
             $borrar = $obj->delete($sql);
 
             $sql = "INSERT INTO tblfirma VALUES($fir_id, '$fir_cargo', '$ruta', $usu_id)";
             $ejecutar = $obj->insert($sql);
-            //echo $sql;
             redirect(getUrl("Produccion", "Produccion", "getMainAdmin"));
         }
 
@@ -189,25 +183,9 @@
     /* ============ Producto terminado ===============*/
 
             $Pte_cantidad = $_POST['Pte_cantidad'];
-
-            if(isset($_POST['Pte_numeroPaginas'])){
-                $Pte_numeroPaginas = $_POST['Pte_numeroPaginas'];
-            }else{
-                $Pte_numeroPaginas = "";
-            }
-
-            if(isset($_POST['Pte_tamañoAbierto'])){
-                $Pte_tamañoAbierto = $_POST['Pte_tamañoAbierto'];
-            }else{
-                $Pte_tamañoAbierto = "";
-            }
-
-            if(isset($_POST['Pte_tamañoCerrado'])){
-                $Pte_tamañoCerrado = $_POST['Pte_tamañoCerrado'];
-            }else{
-                $Pte_tamañoCerrado = "";
-            }
-            
+            $Pte_numeroPaginas = $_POST['Pte_numeroPaginas'];
+            $Pte_tamañoAbierto = $_POST['Pte_tamañoAbierto'];
+            $Pte_tamañoCerrado = $_POST['Pte_tamañoCerrado'];
             $Pte_diseñador = $_POST['Pte_diseñador'];
             $Pba_id = $_POST['Pba_id'];
             $sql = "INSERT INTO tblproductoterminado VALUES($Pte_id, $Pte_cantidad, $Pte_numeroPaginas, '$Pte_tamañoAbierto', '$Pte_tamañoCerrado', '$Pte_diseñador', $Pba_id)";
@@ -217,12 +195,7 @@
 
             $Stg_id = $_POST['Stg_id'];
             $Pim_encargado = $_POST['Pim_encargado'];
-            if(isset($_POST['Pim_observacion'])){
-                $Pim_observacion = $_POST['Pim_observacion'];
-            }else{
-                $Pim_observacion = "";
-            }
-            
+            $Pim_observacion = $_POST['Pim_observacion'];
             $sql = "INSERT INTO tblpreimpreion VALUES($Pim_id, $Stg_id, '$Pim_encargado', '$Pim_observacion')";
             $insertPim = $obj->insert($sql);
 
@@ -269,111 +242,95 @@
 
     /* ================= Orden de produccion ====================*/
             //Falta agregar el usuario
-            if(isset($_POST['Odp_fechaEntrega'])){
-                $Odp_fechaEntrega = $_POST['Odp_fechaEntrega'];
-            }else{
-                $Odp_fechaEntrega = "";
-            }
 
-            if(isset($_POST['Odp_fechaInicio'])){
-                $Odp_fechaInicio = $_POST['Odp_fechaInicio'];
-            }else{
-                $Odp_fechaInicio = "";
-            }
-
-            if(isset($_POST['Odp_fechafin'])){
-                $Odp_fechafin = $_POST['Odp_fechafin'];
-            }else{
-                $Odp_fechafin = "";
-            }
-            
+            $Odp_fechaEntrega = $_POST['Odp_fechaEntrega'];
+            $Odp_fechaInicio = $_POST['Odp_fechaInicio'];
+            $Odp_fechafin = $_POST['Odp_fechafin'];
             $sql = "INSERT INTO tblordenproduccion VALUES($Odp_id, NOW(), $Odp_tipoempresa, $Emp_id, ".$_SESSION['idUser'].", $Pte_id, $Pim_id, $Imp_id, '$Odp_fechaEntrega', '$Odp_fechaInicio', '$Odp_fechafin', 4, 'NULL', 0)";
             $insertOdp = $obj->insert($sql);
 
 
     /* ================= terminados ====================*/
-            if(isset($_POST['tipoterminado'])){
 
-                $tipoterminado = $_POST['tipoterminado'];
-                $tter_descripcion1 = "";
-                $tter_descripcion2 = "";
-                $idnumerado = 0;
-                $idestam = 0;
-                $idple = 0;
-                $idembol = 0;
-                $idfaja = 0;
-                $iddesba = 0;
-                $idperfo = 0;
+            $tipoterminado = $_POST['tipoterminado'];
+            $tter_descripcion1 = "";
+            $tter_descripcion2 = "";
+            $idnumerado = 0;
+            $idestam = 0;
+            $idple = 0;
+            $idembol = 0;
+            $idfaja = 0;
+            $iddesba = 0;
+            $idperfo = 0;
 
-                for($i = 0; $i < count($tipoterminado); $i++){
-                    
-                    $tter_id = $obj->autoIncrement('tbltipoterminado', 'tter_id');
+            for($i = 0; $i < count($tipoterminado); $i++){
+                
+                $tter_id = $obj->autoIncrement('tbltipoterminado', 'tter_id');
 
-                    //Toma los ids de los terminados que tienen descripciones
-                    if($tipoterminado[$i] == 16){
-                        $idnumerado = $tter_id;
-                    }
-                    if($tipoterminado[$i] == 17){
-                        $idestam = $tter_id;
-                    }
-                    if($tipoterminado[$i] == 18){
-                        $idple = $tter_id;
-                    }
-                    if($tipoterminado[$i] == 19){
-                        $idembol = $tter_id;
-                    }
-                    if($tipoterminado[$i] == 20){
-                        $idfaja = $tter_id;
-                    }
-                    if($tipoterminado[$i] == 21){
-                        $iddesba = $tter_id;
-                    }
-                    if($tipoterminado[$i] == 22){
-                        $idperfo = $tter_id;
-                    }
-                    $sql = "INSERT INTO tbltipoterminado VALUES($tter_id, $tipoterminado[$i], '$tter_descripcion1',  '$tter_descripcion2', $Odp_id)";
-                    $inserttter = $obj->insert($sql);
+                //Toma los ids de los terminados que tienen descripciones
+                if($tipoterminado[$i] == 16){
+                    $idnumerado = $tter_id;
                 }
+                if($tipoterminado[$i] == 17){
+                    $idestam = $tter_id;
+                }
+                if($tipoterminado[$i] == 18){
+                    $idple = $tter_id;
+                }
+                if($tipoterminado[$i] == 19){
+                    $idembol = $tter_id;
+                }
+                if($tipoterminado[$i] == 20){
+                    $idfaja = $tter_id;
+                }
+                if($tipoterminado[$i] == 21){
+                    $iddesba = $tter_id;
+                }
+                if($tipoterminado[$i] == 22){
+                    $idperfo = $tter_id;
+                }
+                $sql = "INSERT INTO tbltipoterminado VALUES($tter_id, $tipoterminado[$i], '$tter_descripcion1',  '$tter_descripcion2', $Odp_id)";
+                $inserttter = $obj->insert($sql);
+            }
 
-                //Actuaiza los terminados que tienen opciones
+            //Actuaiza los terminados que tienen opciones
 
-                if(isset($_POST['numeradodesde']) && isset($_POST['numeradohasta'])){
-                    $descripcion1 = $_POST['numeradodesde'];
-                    $descripcion2 = $_POST['numeradohasta'];
-                    $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1', tter_descripcion2 = '$descripcion2' WHERE tter_id = $idnumerado";
-                    $ejecutar = $obj->update($sql);
-                }
-                if(isset($_POST['estamcolor']) && isset($_POST['estamtrafico'])){
-                    $descripcion1 = $_POST['estamcolor'];
-                    $descripcion2 = $_POST['estamtrafico'];
-                    $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1', tter_descripcion2 = '$descripcion2' WHERE tter_id = $idestam";
-                    $ejecutar = $obj->update($sql);
-                }
-                if(isset($_POST['plenumerocuerpos'])){
-                    $descripcion1 = $_POST['plenumerocuerpos'];
-                    $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idple";
-                    $ejecutar = $obj->update($sql);
-                }
-                if(isset($_POST['embolcantidad'])){
-                    $descripcion1 = $_POST['embolcantidad'];
-                    $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idembol";
-                    $ejecutar = $obj->update($sql);
-                }
-                if(isset($_POST['fajacantidad'])){
-                    $descripcion1 = $_POST['fajacantidad'];
-                    $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idfaja";
-                    $ejecutar = $obj->update($sql);
-                }
-                if(isset($_POST['desbcantidad'])){
-                    $descripcion1 = $_POST['desbcantidad'];
-                    $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $iddesba";
-                    $ejecutar = $obj->update($sql);
-                }
-                if(isset($_POST['perforado'])){
-                    $descripcion1 = $_POST['perforado'];
-                    $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idperfo";
-                    $ejecutar = $obj->update($sql);
-                }
+            if(isset($_POST['numeradodesde']) && isset($_POST['numeradohasta'])){
+                $descripcion1 = $_POST['numeradodesde'];
+                $descripcion2 = $_POST['numeradohasta'];
+                $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1', tter_descripcion2 = '$descripcion2' WHERE tter_id = $idnumerado";
+                $ejecutar = $obj->update($sql);
+            }
+            if(isset($_POST['estamcolor']) && isset($_POST['estamtrafico'])){
+                $descripcion1 = $_POST['estamcolor'];
+                $descripcion2 = $_POST['estamtrafico'];
+                $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1', tter_descripcion2 = '$descripcion2' WHERE tter_id = $idestam";
+                $ejecutar = $obj->update($sql);
+            }
+            if(isset($_POST['plenumerocuerpos'])){
+                $descripcion1 = $_POST['plenumerocuerpos'];
+                $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idple";
+                $ejecutar = $obj->update($sql);
+            }
+            if(isset($_POST['embolcantidad'])){
+                $descripcion1 = $_POST['embolcantidad'];
+                $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idembol";
+                $ejecutar = $obj->update($sql);
+            }
+            if(isset($_POST['fajacantidad'])){
+                $descripcion1 = $_POST['fajacantidad'];
+                $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idfaja";
+                $ejecutar = $obj->update($sql);
+            }
+            if(isset($_POST['desbcantidad'])){
+                $descripcion1 = $_POST['desbcantidad'];
+                $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $iddesba";
+                $ejecutar = $obj->update($sql);
+            }
+            if(isset($_POST['perforado'])){
+                $descripcion1 = $_POST['perforado'];
+                $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idperfo";
+                $ejecutar = $obj->update($sql);
             }
 
             //FIN
@@ -701,7 +658,7 @@
                 $Odp_fechaEntrega = $_POST['Odp_fechaEntrega'];
                 $Odp_fechaInicio = $_POST['Odp_fechaInicio'];
                 $Odp_fechafin = $_POST['Odp_fechafin'];
-                $sql = "UPDATE tblordenproduccion SET Odp_tipoempresa = $Odp_tipoempresa, Emp_id = $Emp_id, Usu_id = 1, Pte_id = $Pte_id, Pim_id = $Pim_id, Imp_id = $Imp_id, 
+                $sql = "UPDATE tblordenproduccion SET Odp_tipoempresa = $Odp_tipoempresa, Emp_id = $Emp_id, Pte_id = $Pte_id, Pim_id = $Pim_id, Imp_id = $Imp_id, 
                             Odp_fechaEntrega = '$Odp_fechaEntrega', Odp_fechaInicio = '$Odp_fechaInicio', Odp_fechafin = '$Odp_fechafin', Odp_Estado = 4, Odp_motivorechazo = 'NULL', Odp_usuFirma = 0
                             WHERE Odp_id = $Odp_id";
                 

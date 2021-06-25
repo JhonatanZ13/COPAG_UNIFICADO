@@ -465,6 +465,11 @@ foreach ($tipoterminado as $res) {
       //Compara los ids para saber el nombre del terminado
       if(($numero == $numero2) && $numero == 22){
         //Crea 4 filas en cada tabla
+        if($res['tter_descripcion1'] == 1){
+          $tp="Micro";
+        }else{
+          $tp="Normal";
+        }
         $pagina2 = $pagina2.'
         <table>
           <tr>
@@ -474,9 +479,9 @@ foreach ($tipoterminado as $res) {
               </ul>
             </td>
             
-            <td class="b-bottom">Cantidad:</td>
-            <td>'.$res['tter_descripcion1'].'</td>
-            <td width="50px"></td>
+            <td class="b-bottom">Tipo</td>
+            <td></td>
+            <td width="50px">'.$tp.'</td>
           </tr>
         </table>
         ';
