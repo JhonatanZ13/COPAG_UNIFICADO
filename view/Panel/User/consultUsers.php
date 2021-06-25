@@ -33,19 +33,19 @@
                             <td><?= $user['Rol_nombre']?></td>
                             <td><?= $user['Est_nombre']?></td>
                             <td>
-                                <a class='btn btn-info btn-sm' href='<?php echo getUrl("PanelDeControl", "User", "viewUser", array('Usu_id' => $user['Usu_id'])); ?>'>
+                                <a class='row ml-1 btn btn-info btn-sm' href='<?php echo getUrl("PanelDeControl", "User", "viewUser", array('Usu_id' => $user['Usu_id'])); ?>'>
                                     <i class='text-secundary fa fa-eye' aria-hidden='true'></i>
                                 </a>
 
-                                <a class='btn btn-primary btn-sm' href='<?php echo getUrl("PanelDeControl", "User", "getUpdate", array('Usu_id' => $user['Usu_id'])); ?>'>
+                                <a class='row ml-1 btn btn-primary btn-sm' href='<?php echo getUrl("PanelDeControl", "User", "getUpdate", array('Usu_id' => $user['Usu_id'])); ?>'>
                                     <i class='fa fa-pencil' aria-hidden='true'></i>
                                 </a>
 
                                 <?php
                                     if ($user["Est_id"] == 1) {
-                                        echo "<button class='iconLong btn btn-danger btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$user['Usu_id']."' data-url='".getUrl('PanelDeControl','User','getDelete',array('Usu_id'=>$user['Usu_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
+                                        echo "<button class='row ml-1 iconLong btn btn-danger btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$user['Usu_id']."' data-url='".getUrl('PanelDeControl','User','getDelete',array('Usu_id'=>$user['Usu_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
                                     } else {
-                                        echo "<button class='iconLong btn btn-success btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$user['Usu_id']."' data-url='".getUrl("PanelDeControl","User","getDelete",array("Usu_id"=>$user['Usu_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
+                                        echo "<button class='row ml-1 iconLong btn btn-success btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$user['Usu_id']."' data-url='".getUrl("PanelDeControl","User","getDelete",array("Usu_id"=>$user['Usu_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
                                     }
                                 ?>
                                 

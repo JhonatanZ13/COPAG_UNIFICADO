@@ -179,6 +179,7 @@
             header("Content-Disposition: inline; filename=fichaTecnica.pdf");
             readfile("$Maq_fichaTecnica");
         }
+        
         public function viewPdfManual(){
             $obj=new MachineModel();
             $Maq_manual=$_GET['Maq_manual'];

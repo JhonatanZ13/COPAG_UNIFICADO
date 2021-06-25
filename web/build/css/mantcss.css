@@ -1,0 +1,36 @@
+.xc_color {
+  display: block;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  font-weight: 600;
+  color: #17A481;
+  font-size: 16px; }
+
+.xc_centrado{
+  text-align: center !important;
+}
+
+#fechas{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#horas{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.caja{
+  margin-bottom: 10px !important;
+}
+
+.x_panel #contraste_panel{
+  background: #d3d3d3 i !important;
+}
+
+
+#th_desc{
+  width:65% !important;
+
+  
+}

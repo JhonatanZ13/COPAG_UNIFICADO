@@ -55,9 +55,17 @@ include_once '../lib/helpers.php';
                         </a>
 
                         <ul class="nav child_menu">
-                        <li><a href="<?php echo getUrl("costos","compras","consult");?>" >Compra</a></li>
-                        <li><a href="<?php echo getUrl("costos","cotizacion","consult");?>">Cotizacion</a></li>
-                        <li><a href="<?php echo getUrl("costos","solicitud","consult");?>">Solicitud</a></li>
+                            <li>
+                                <a href="<?php echo getUrl("costos", "compras", "consult"); ?>">Compra</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo getUrl("costos", "cotizacion", "consult"); ?>">Cotizacion</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo getUrl("costos", "solicitud", "consult"); ?>">Solicitud</a>
+                            </li>
 
                             <li>
                                 <a href="form_advanced.html">Reporte</a>
@@ -73,19 +81,19 @@ include_once '../lib/helpers.php';
 
                         <ul class="nav child_menu">
                             <li>
-                                <a href="general_elements.html">Control Stock</a>
+                                <a href="<?php echo getUrl("Entrada", "Entrada", "getEntrada"); ?>">Entrada de Bodega</a>
                             </li>
 
                             <li>
-                                <a href="media_gallery.html">Entrada de Bodega</a>
+                                <a href="<?php echo getUrl("Salida", "Salida", "getSalidaMasiva"); ?>">Salida de Bodega</a>
                             </li>
 
                             <li>
-                                <a href="typography.html">Salida de Bodega</a>
+                                <a href="<?php echo getUrl("Control", "Control", "getControl"); ?>">Control Stock</a>
                             </li>
-
+                            
                             <li>
-                                <a href="icons.html">Reporte</a>
+                                <a href="<?php echo getUrl("Reportes", "Reportes", "getReporte"); ?>">Reporte</a>
                             </li>
                         </ul>
                     </li>
@@ -98,15 +106,23 @@ include_once '../lib/helpers.php';
 
                         <ul class="nav child_menu">
                             <li>
-                                <a href="tables.html">Gestionar Maquina</a>
+                                <a href="<?php echo getUrl("Mantenimiento", "Gestion", "consult"); ?>">Gestionar Maquina</a>
                             </li>
 
                             <li>
-                                <a href="tables_dynamic.html">Gestionar Orden</a>
+                                <a href="<?php echo getUrl("Mantenimiento", "Orden", "consult"); ?>">Gestionar Orden</a>
                             </li>
 
                             <li>
-                                <a href="tables_dynamic.html">Reporte</a>
+                                <a href="<?php echo getUrl("Mantenimiento", "Procesos", "consult"); ?>">Procesos</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo getUrl("Mantenimiento", "Tareas", "consult"); ?>">Tareas</a>
+                            </li>
+
+                            <li>
+                                <a href="<?php echo getUrl("Mantenimiento", "Reporte", "consult"); ?>">Reporte</a>
                             </li>
                         </ul>
                     </li>

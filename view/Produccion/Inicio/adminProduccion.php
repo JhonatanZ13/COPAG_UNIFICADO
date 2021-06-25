@@ -12,7 +12,7 @@
                     foreach ($datosfirma as $res) {
             ?>
                 <div class="col-md-8">
-                    <input type="hidden" value="<?php echo $_SESSION['usu_id'] ?>" name="usu_id">
+                    <input type="hidden" value="<?php echo $_SESSION['idUser'] ?>" name="usu_id">
                     <div class="col-md-10">
                         <div class="form-group row" id="grupoCantidad">
                             <label class="col-form-label col-md-3 col-sm-3">Cargo:</label>
@@ -72,8 +72,8 @@
             }
             ?>
             <div class="col-md-3">
-                <input type="submit" value="Guardar datos" class="btn btn-success">
                 <a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>"><button type="button" class="btn btn-danger">Volver a produccion</button></a>
+                <input type="submit" value="Guardar datos" class="btn btn-success">
             </div>
         </form>
     </div>

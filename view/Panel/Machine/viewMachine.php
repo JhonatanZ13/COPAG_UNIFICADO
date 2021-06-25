@@ -39,7 +39,9 @@ foreach ($maquina as $maq) {
 
                         <div class="col-md-6 form-group has-feedback">
                             <label for="fullname">Ficha Tecnica</label><br>
-                            <?php if ($maq['Maq_fichaTecnica']) { ?>
+                            <?php 
+                                if ($maq['Maq_fichaTecnica']) { 
+                            ?>
                                 <a href="<?php echo getUrl("PanelDeControl", "Machine", "viewPdfFicha", array("Maq_fichaTecnica" => $maq['Maq_fichaTecnica']), "ajax") ?>" target="blank">
                                     <button type="button" class="btn-small btn-info">
                                         <i class="fa fa-file-pdf-o"></i>&nbsp;Ver Ficha Tecnica

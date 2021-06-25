@@ -62,7 +62,7 @@
 
     <!-- Tabla de consulta Ordenes de Producción -->
     <a href="<?php echo getUrl("Produccion", "Produccion", "formInsertOrden");?>"><button class="btn btn-success">Crear Orden de Produccion <i class="fa fa-plus"></i></button></a>
-    <a href="<?php echo getUrl("Produccion", "Produccion", "getMainAdmin");?>"><button class="btn btn-success">Administrar Ordenes Pendientes <i class="fa glyphicon glyphicon-cog"></i></button></a>
+    <a href="<?php echo getUrl("Produccion", "Produccion", "getMainAdmin");?>"><button class="btn btn-success">Administrar Ordenes Pendientes <i class="glyphicon glyphicon-cog"></i></button></a>
     <div class="x_panel mt-1">
 
         <?php if(isset($_SESSION['mensaje'])){ ?>

@@ -1,14 +1,83 @@
-.content-home {
+div.content-home {
     width: 600px;
     height: 500px;
-    border: solid 1px black;
     margin-left: 20%;
+    position: absolute;
+}
+
+div.x-panel {
+    background: #fff0;
+    border: none;
+}
+
+#img-home {
+    width: 100%;
+    height: 100%;
 }
 
 .iconLong {
     width: 30px;
 }
 
+
+/* estilos del login */
+
+.containerLogin {
+    text-align: center;
+    border: solid 1px mediumturquoise;
+    border-radius: 100px;
+    background-color: rgb(33, 173, 138);
+}
+
+body.login {
+    background-image: url('../../images/Fondo.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#showMore {
+    border-radius: 100%;
+    text-decoration: none;
+}
+
+#showMore,
+button {
+    text-decoration: none;
+    border-bottom: none;
+}
+
 .swal-modal .swal-text {
     text-align: center;
+}
+
+
+/* estilos de produccion */
+
+input.parsley-success {
+    background: #ffffff;
+    border: 1px solid #6ceb39;
+}
+
+.form_input-error {
+    font-size: 12px;
+    color: #ff4931;
+    margin-bottom: 0;
+    display: none;
+}
+
+.form_input-error-activo {
+    display: block;
+}
+
+.formulario__mensaje {
+    height: 45px;
+    line-height: 45px;
+    background: #F66060;
+    padding: 0 15px;
+    border-radius: 3px;
+    display: none;
+}
+
+.formulario__mensaje-activo {
+    display: block;
 }
