@@ -294,3 +294,47 @@ inputsupdate.forEach((input) => {
 
 });
 
+function validarCamposVacios2(){
+
+	var tipocliente = $("#tipoCliente").val();
+	var elegircliente = $("#elegirCliente").val();
+	var elegirproducto = $("#elegirProducto").val();
+
+	if (tipocliente == "" || elegircliente == "" || elegirproducto == "") {
+		$("#alert_reg").removeClass("invisible");
+		setTimeout(function(){
+			$('#alert_reg').addClass("invisible");
+		}, 5000);
+		if(elegirproducto == ""){
+			$("#elegirProducto").addClass("parsley-error");
+			setTimeout(function(){
+				$("#elegirProducto").removeClass("parsley-error");	
+			}, 10000);
+			
+		}
+		if(tipocliente == ""){
+			$("#tipoCliente").addClass("parsley-error");
+			setTimeout(function(){
+				$("#tipoCliente").removeClass("parsley-error");	
+			}, 10000);
+			
+		}
+		if(elegircliente == ""){
+			$("#elegirCliente").addClass("parsley-error");
+			setTimeout(function(){
+				$("#elegirCliente").removeClass("parsley-error");	
+			}, 10000);
+			
+		}
+		return false;
+	}
+	if(campos2.Pte_cantidad && campos2.Pte_numeroPaginas && campos2.Pte_tamañoAbierto && campos2.Pte_tamañoCerrado && campos2.Pte_diseñador && campos2.Sus_tamañoPliego && campos2.Sus_cantidadSustrato && campos2.Sus_tamañoCorte && campos2.Sus_tirajePedido && campos2.Sus_porcentajeDesperdicio && campos2.Pim_encargado && campos2.Imp_formatoCorte && campos2.Pli_tintaespecial && campos2.Imp_encargado && campos2.numeradoDesde && campos2.numeradoHasta && campos2.estamcolor && campos2.plenumerocuerpos && campos2.embolcantidad && campos2.fajacantidad && campos2.desbcantidad){
+		return true;
+	} else {
+		$("#alert_reg").removeClass("invisible");
+		setTimeout(function(){
+			$('#alert_reg').addClass("invisible");
+		}, 5000);
+		return false;
+	}
+}

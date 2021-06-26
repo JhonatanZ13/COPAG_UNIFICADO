@@ -25,7 +25,7 @@
 
     <!---------------------- Inicio formulario ----------------------->
 
-    <form id="formUpdateProduccion" class="form-horizontal form-label-left" action="<?php echo getUrl("Produccion", "Produccion", "postUpdateOrdenProduccion"); ?>"  method="POST" onsubmit="return validarCamposVacios();">
+    <form id="formUpdateProduccion" class="form-horizontal form-label-left" action="<?php echo getUrl("Produccion", "Produccion", "postUpdateOrdenProduccion"); ?>"  method="POST" onsubmit="return validarCamposVacios2();">
 
         <input type="hidden" name="Odp_id" value="<?= $Odp_id ?>">
 
