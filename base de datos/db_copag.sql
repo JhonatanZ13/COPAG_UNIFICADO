@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-06-2021 a las 16:20:06
+-- Tiempo de generación: 26-06-2021 a las 03:14:45
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 7.3.28
 
@@ -561,7 +561,7 @@ CREATE TABLE `tblfirma` (
 --
 
 INSERT INTO `tblfirma` (`fir_id`, `fir_cargo`, `fir_imagen`, `usu_id`) VALUES
-(4, 'Director General CDTI', '../web/images/Firma/firma.png', 4);
+(6, 'Director General CDTI', '../web/images/Firma/firma.png', 4);
 
 -- --------------------------------------------------------
 
@@ -2334,7 +2334,8 @@ INSERT INTO `tbltipoempresa` (`Tempr_id`, `Tempr_descripcion`) VALUES
 (2, 'Proveedor'),
 (3, 'Sena proveedor sena'),
 (4, 'Sena auto-consumo'),
-(5, 'Cliente externo');
+(5, 'Cliente externo'),
+(6, 'Mantenimientos');
 
 -- --------------------------------------------------------
 
@@ -2428,7 +2429,7 @@ CREATE TABLE `tblusuario` (
 
 INSERT INTO `tblusuario` (`Usu_id`, `Usu_primerNombre`, `Usu_segundoNombre`, `Usu_primerApellido`, `Usu_segundoApellido`, `Stg_id`, `Usu_numeroDocumento`, `Usu_telefono`, `Usu_email`, `Usu_password`, `Rol_id`, `Gen_id`, `Est_id`, `Area_id`, `Usu_token`) VALUES
 (1, 'Jair', 'Alexander', 'Hernandez', 'Rosero', 0, '1144090162', '3235148081', 'jahernandez2610@misena.edu.co', '1144090162', 1, 1, 1, 1, '0'),
-(4, 'Jhonatan', 'Javier', 'Zambrano', 'Zambrano', 0, '111000', '3168445287', 'zambranojhonatan20@gmail.com', '111000', 1, 1, 0, 2, '111000');
+(4, 'Jhonatan', 'Javier', 'Zambrano', 'Zambrano', 0, '111000', '3168445287', 'zambranojhonatan20@gmail.com', '111000', 1, 1, 0, 2, '0');
 
 --
 -- Índices para tablas volcadas
