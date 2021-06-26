@@ -18,13 +18,15 @@
 
             <div class="form-group col-sm-12">
                 <label for="Articulos">Nombre articulo:</label>
-                <select name="Arti_id[]" id="Articulos" class="form-control">
+                <select name="Arti_id[]" id="Articulos" class="form-control" data-url="<?= getUrl("Salida", "Salida", "cantidad", false, "ajax") ?>">
                     <option value="0">Seleccione..</option>
                 </select>
             </div>
-            <div class="form-group col-sm-12">
-                <label for="Arti_cantidad">Cantidad</label>
-                <input type="number" id="Arti_cantidad" name="Arti_cantidad[]" class="form-control" min="0" value="0">
+            <div id="contieneInput" class="form-group col-sm-12">
+                    
+            </div>
+            <div id="noHay"class="alert alert-danger d-none" role="alert">
+                <strong>ups!</strong> no hay suficiente stock de ese articulo para tal cantidad
             </div>
         </div>
     </div>
@@ -37,7 +39,7 @@
 
     <div class="x_title"></div>
     <button type="submit" disabled name="enviar" id="send" class="btn btn-primary btn-lg btn-block">
-        <i class="fa fa-plus-circle fa-lg mr-1"></i>
-        AGREAGAR
+        <i class="fa fa-minus-circle fa-lg mr-1"></i>
+        DAR SALIDA
     </button>
 </form>

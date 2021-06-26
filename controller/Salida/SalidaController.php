@@ -12,20 +12,7 @@ class SalidaController{
 
         include_once '../view/Inventario/Salida/Salida.php';
     }
-    public function modalSalida(){
-        $obj = new SalidaModel();
-        $Arti_id = $_POST['datos'];
-
-        $sql = "SELECT Arti_nombre,Arti_id FROM tblarticulo WHERE Arti_id=$Arti_id";
-
-        $articulos = $obj->consult($sql);
-        $array = mysqli_fetch_row($articulos);
-
-        $nombre = $array[0];
-        $id = $array[1];
-
-        include_once '../view/Inventario/Salida/modalSalida.php';
-    }
+    
     public function postSalida(){
         $id = $_POST['Arti_id'];
         $cantidad = $_POST['Arti_cantidad'];
@@ -41,6 +28,7 @@ class SalidaController{
     public function getSalidaMasiva(){
         $obj = new SalidaModel();
         $sql = "SELECT * FROM tbltipoarticulo";
+        $sql2 = "SELECT * FROM tbltipoarticulo";
         $tipos = $obj->consult($sql);
         include_once '../view/Inventario/Salida/SalidaMasiva.php';
     }
@@ -70,5 +58,16 @@ class SalidaController{
         foreach ($tipos as $tp) {
             echo "<option value='" . $tp['Arti_id'] . "'>" . $tp['Arti_nombre'] . "</option>";
         }
+    }
+    public function cantidad(){
+        $obj = new SalidaModel();
+        $vale = $_POST['vale'];
+        $sql = "SELECT tblarticulo.Arti_cantidad FROM `tblarticulo` WHERE Arti_id= $vale ";
+        $existen = $obj->consult($sql);
+
+        foreach ($existen as $hay) {
+         echo implode($hay);
+        }
+        return intval($hay);
     }
 }

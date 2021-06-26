@@ -1,0 +1,31 @@
+.cartica{
+  background-color:#E4E4E4;
+  border-radius:20px;
+}
+.cartica:hover {
+  border-style:solid;
+  border-width:1px;
+  border-radius: 20px;
+  border-color: #17A481;
+  
+  /*Animaciones*/
+  animation: pulse;
+  animation-duration: 1s;
+}
+
+.reporte{
+  width:auto;
+}
+.reporte:hover{
+  animation: pulse;
+  animation-duration: 1s;
+  cursor: pointer;
+}
+i{
+  cursor: pointer;
+}
+
+thead{
+  background-color: #17A481;
+}
+

@@ -67,7 +67,8 @@
  <!-- Costos -->
  <script src="build/js/costos.js"></script>
  <script src="build/js/compras.js"></script>
- <!----- Fin area de produccion -------------->
+ <!----- Inventario -------------->
+ <script src="vendors/jquery/dist/globalInventario.js"></script>
 
  <!-- inicio sweetalert -->
  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

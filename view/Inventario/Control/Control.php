@@ -1,44 +1,44 @@
 <!-- Visualizacion del inventario de artes graficas -->
 <div class="x_title">
-  <h2>Control De Stock</small></h2>
-  <ul class="nav navbar-right panel_toolbox">
-  </ul>
-  <div class="clearfix"></div>
+    <h2>CONTROL DE STOCK</h2>
+    <div class="clearfix"></div>
 </div>
-<div class="x_content">
-  <div class="row">
-    <!-- tabla de visualizacion de datos -->
-      <div class="table-responsive">
-        <table class="table table-responsive table-bordered table-hover" id="table">
-          <thead>
-            <tr class="even pointer">
-              <th class="column-title">ID</th>
-              <th class="column-title">Nombre</th>
-              <th class="column-title">Tipo articulo</th>
-              <!-- <th class="column-title">Medida</th>
-              <th class="column-title">Tipo medida</th> -->
-              <th class="column-title">Descripcion</th>
-              <th class="column-title">Cantidad</th>
-            </tr>
-          </thead>
+<div class="col-md-12 col-sm-11 ">
+    <div class="x_panel">     
+        <div class="x_content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        <table id="table-inventario" class="table table-striped table-bordered" style="width:100%">
+                            <thead style="background-color: #17A481;; color:#fff;">
+                                <tr>
+                                <th class="column-title">ID</th>
+                                <th class="column-title">Nombre</th>
+                                <th class="column-title">Tipo articulo</th>
+                                <th class="column-title">Descripcion</th>
+                                <th class="column-title">Cantidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
 
-          <tbody>
-            <?php
-            foreach ($Control as $con) {
-              echo "<tr>";
-              echo "<td>" . $con['Arti_id'] . "</td>";
-              echo "<td>" . $con['Arti_nombre'] . "</td>";
-              echo "<td>" . $con['Tart_descripcion'] . "</td>";
-              /* echo "<td>" . $con['Arti_medida'] . "</td>";
-              echo "<td>" . $con['Med_descripcion'] . "</td>"; */
-              echo "<td>" . $con['Arti_descripcion'] . "</td>";
-              echo "<td>" . $con['Arti_cantidad'] . "</td>";
-              echo "</tr>";
-            }
-            ?>
-          </tbody>
-        </table>
-      </div>
-    <!-- /tabla de visualizacion de datos -->
-  </div>
+                          foreach ($Control as $con){
+                            echo "<tr>";
+                            echo "<td>" . $con['Arti_id'] . "</td>";
+                            echo "<td>" . $con['Arti_nombre'] . "</td>";
+                            echo "<td>" . $con['Tart_descripcion'] . "</td>";
+                            echo "<td>" . $con['Arti_descripcion'] . "</td>";
+                            echo "<td>" . $con['Arti_cantidad'] . "</td>";
+                            echo "</tr>";
+                           } 
+                           ?>  
+
+                            </tbody>
+                          </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
