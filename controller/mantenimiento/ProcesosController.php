@@ -8,7 +8,7 @@ class ProcesosController
     public function consult()
     {
         $obj = new ProcesoModel();
-        $sql = "SELECT pro_id, pro_nombre, pro_descripcion FROM tblproceso";
+        $sql = "SELECT Pro_id, Pro_nombre, Pro_descripcion FROM tblproceso";
         $procesos = $obj->consult($sql);
         include_once '../view/Mantenimiento/Procesos/consult.php';
     }
@@ -43,9 +43,9 @@ class ProcesosController
     public function ModalUpdate()
     {
 
-        $pro_id = $_GET['pro_id'];
+        $pro_id = $_GET['Pro_id'];
         $obj = new ProcesoModel();
-        $sql = "SELECT * FROM tblproceso WHERE pro_id=$pro_id";
+        $sql = "SELECT * FROM tblproceso WHERE Pro_id=$pro_id";
         $procesos = $obj->consult($sql);
         include_once '../view/Mantenimiento/Procesos/ModalUpdate.php';
     }
@@ -55,10 +55,10 @@ class ProcesosController
         $obj = new ProcesoModel();
 
         $pro_nombre = $_POST['Pro_nombre'];
-        $pro_id = $_POST['pro_id'];
+        $pro_id = $_POST['Pro_id'];
         $pro_descripcion = $_POST['Pro_descripcion'];
 
-        $sql = "UPDATE tblproceso SET Pro_nombre ='" . $pro_nombre . "',Pro_descripcion='" . $pro_descripcion . "' WHERE pro_id = $pro_id";
+        $sql = "UPDATE tblproceso SET Pro_nombre ='" . $pro_nombre . "',Pro_descripcion='" . $pro_descripcion . "' WHERE Pro_id = $pro_id";
 
         $ejecutar = $obj->Update($sql);
         if ($ejecutar) {
@@ -71,11 +71,11 @@ class ProcesosController
     //FUNCION  PARA CONSULTAR DATOS DE ELIMINAR  PARA LA TABLA PROCESOS
     public function ModalDelete()
     {
-        if (isset($_POST['pro_id'])){
-            $pro_id=$_POST['pro_id'];
-        }else {$pro_id=$_GET['pro_id'];}
+        if (isset($_POST['Pro_id'])){
+            $pro_id=$_POST['Pro_id'];
+        }else {$pro_id=$_GET['Pro_id'];}
         $obj = new ProcesoModel();
-        $sql = "SELECT * FROM tblproceso WHERE pro_id=$pro_id";
+        $sql = "SELECT * FROM tblproceso WHERE Pro_id=$pro_id";
         $procesos = $obj->consult($sql);
         include_once '../view/Mantenimiento/Procesos/ModalDelete.php';
     }
@@ -83,15 +83,17 @@ class ProcesosController
 
     public function DeleteModal()
     {
-        if (isset($_POST['pro_id'])){
-            $pro_id=$_POST['pro_id'];
-        }else {$pro_id=$_GET['pro_id'];}
+        if (isset($_POST['Pro_id'])){
+            $pro_id=$_POST['Pro_id'];
+        }else {$pro_id=$_GET['Pro_id'];}
         $obj = new ProcesoModel();
-        $sql = "DELETE FROM tblproceso WHERE pro_id=$pro_id";
+      
+        $sql = "DELETE FROM tbltareaproceso WHERE Pro_id=$pro_id";
 
         $ejecutar = $obj->delete($sql);
         
-       
+        $sql = "DELETE FROM tblproceso WHERE Pro_id=$pro_id";
+        $ejecutar = $obj->delete($sql);
 
         //  if (!$ejecutar) {
 

@@ -31,7 +31,7 @@
     <link href="build/css/custom.css" rel="stylesheet">
 
     <link href="build/css/style.css" rel="stylesheet">
-
+    <link href="build/css/mantcss.css" rel="stylesheet">
     <!-- produccion -->
     <script src="https://kit.fontawesome.com/2c36e9b7b1.js"></script>
 

@@ -225,7 +225,7 @@
                     <?php 
                        foreach ($Articulo as $arti) {    
                     ?>
-                    <div class="col-md-2 ">
+                    <div class="col-md-3 ">
 
                         <input type='checkbox' name='Arti_id[]' value='<?=$arti['Arti_id']?>'>
                         <label for="checkbox1"><?=$arti['Arti_nombre']?></label>
@@ -254,7 +254,7 @@
         <div class="row justify-content-end">
             
             <input type="submit" class="btn btn-success float-right" value="Registrar">
-            <button type="button" class="btn btn-danger">Cancelar</button>
+            <a class="btn btn-danger" href="<?php echo getUrl("Mantenimiento", "Orden", "consult"); ?>">Cancelar</a>
         </div>
     </form>
 

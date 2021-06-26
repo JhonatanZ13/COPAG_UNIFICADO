@@ -33,7 +33,7 @@
                            echo "<td>".$odm['Odm_fechaInicio']."</td>";
                            echo "<td>".$odm['Odm_fechaFin']."</td>";
                            echo "<td>".$odm['Odm_observacionesFin']."</td>";
-                           echo "<td>"."<a target='_blank' href='".getUrl("Pdf","Pdf","postPDF",array("Odm_id"=>$odm['Odm_id']),"ajax")."'>"."<button style='display:none;'id='botonpdf'class='btn btn-danger btn-sm '><i class='fa fa-file-pdf-o pl-1'></i></button>"."</a>".
+                           echo "<td>"."<a target='_blank' href='".getUrl("Mantenimiento","Pdf","postPDF",array("Odm_id"=>$odm['Odm_id']),"ajax")."'>"."<button style='display:none;'id='botonpdf'class='btn btn-primary btn-sm '><i class='fa fa-file-pdf-o '></i></button>"."</a>".
 
 
                           
@@ -44,7 +44,7 @@
                            
                            "<button id='habilitar' value='1' class='btn btn-sm btn-success' data-toggle='tooltip' data-placement='bottom' title='habilitar'><i class='fa fa-unlock'></i></button>".
 
-                           "<button  id='inhabilitar' value='2' class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Inhabilitar'><i class='fa fa-lock'></i></button>".
+                           "<button style='display:none;'  id='inhabilitar' value='2' class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Inhabilitar'><i class='fa fa-lock'></i></button>".
                         
                         
                            

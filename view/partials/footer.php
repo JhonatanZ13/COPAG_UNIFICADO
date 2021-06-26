@@ -64,6 +64,9 @@
 
  <!----- Fin area de produccion -------------->
 
+  <!----- Mantenimiento -------------->
+ <script src="vendors/jquery/dist/globalMantenimiento.js"></script>
+
  <!-- Costos -->
  <script src="build/js/costos.js"></script>
  <script src="build/js/compras.js"></script>

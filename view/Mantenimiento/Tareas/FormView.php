@@ -6,7 +6,7 @@ foreach ($Tareas as $Tar) {
 
 <div class="clearfix"></div>
 <div class="x_title">
-    <h2>Editar Tareas</h2>
+    <h2>Consultar Tareas</h2>
     <div class="clearfix"></div>
 </div>
 <div class="x_content">
@@ -48,7 +48,7 @@ foreach ($Tareas as $Tar) {
 
                             if($pro['Pro_id']==$tp['Pro_id']){      
                     ?>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <input disabled="" type='checkbox' name='Procesos[]' value='<?=$pro['Pro_id']?>' <?php echo "checked";?>>
                         <label for="checkbox1"><?=$pro['Pro_nombre']?></label>
                     </div>
@@ -85,7 +85,7 @@ foreach ($Tareas as $Tar) {
                             if($Her['Her_id']==$th['Her_id']){
                     
                        ?>
-                    <div class="col-md-2 justify-content: space-around">
+                    <div class="col-md-3 justify-content: space-around">
                         <input disabled="" type='checkbox' name='Herramientas[]' value='<?=$Her['Her_id']?>'<?php echo "checked";?>>
                         <label for="checkbox2"><?=$Her['Her_nombre']?></label>
                     </div>

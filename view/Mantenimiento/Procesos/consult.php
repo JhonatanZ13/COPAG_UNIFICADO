@@ -30,12 +30,12 @@
 
                                 foreach ($procesos as $pro) {
                                     echo  "<tr>";
-                                    echo   "<td>" . $pro['pro_id'] . "</td>";
-                                    echo   "<td>" . $pro['pro_nombre'] . "</td>";
-                                    echo   "<td>" . $pro['pro_descripcion'] . "</td>";
+                                    echo   "<td>" . $pro['Pro_id'] . "</td>";
+                                    echo   "<td>" . $pro['Pro_nombre'] . "</td>";
+                                    echo   "<td>" . $pro['Pro_descripcion'] . "</td>";
                                     echo "<td>
-                                    <button type='buttom' title='Editar' value='Editar' class='btn btn-primary btn-sm' <a id='botonModal' data-url='" . getUrl("Mantenimiento", "Procesos", "ModalUpdate", array("pro_id" => $pro['pro_id']), "ajax") . "'><i class='fa fa-pencil'></i></a></button>
-                                    <button id='AlertDelete' data-id='".$pro['pro_id']."' data-url='" . getUrl("Mantenimiento", "Procesos", "DeleteModal",false, "ajax") . "' 
+                                    <button type='buttom' title='Editar' value='Editar' class='btn btn-primary btn-sm' <a id='botonModal' data-url='" . getUrl("Mantenimiento", "Procesos", "ModalUpdate", array("Pro_id" => $pro['Pro_id']), "ajax") . "'><i class='fa fa-pencil'></i></a></button>
+                                    <button id='AlertDelete' data-id='".$pro['Pro_id']."' data-url='" . getUrl("Mantenimiento", "Procesos", "DeleteModal",false, "ajax") . "' 
                                     class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Eliminar'><i class='fa fa-trash-o'></i></button>
                                     </td>";
 

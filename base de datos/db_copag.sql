@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-06-2021 a las 03:14:45
+-- Tiempo de generación: 26-06-2021 a las 23:29:23
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 7.3.28
 
@@ -87,7 +87,7 @@ CREATE TABLE `tblarticulo` (
   `Arti_medida` varchar(45) COLLATE utf8mb4_spanish_ci NOT NULL COMMENT 'se utiliza para la medida en numeros',
   `Med_id` int(11) NOT NULL,
   `Arti_imagen` varchar(200) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `Arti_descripcion` varchar(45) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `Arti_descripcion` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `Arti_cantidad` int(5) NOT NULL,
   `Est_id` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
@@ -98,7 +98,7 @@ CREATE TABLE `tblarticulo` (
 
 INSERT INTO `tblarticulo` (`Arti_id`, `Arti_nombre`, `Tart_id`, `Arti_medida`, `Med_id`, `Arti_imagen`, `Arti_descripcion`, `Arti_cantidad`, `Est_id`) VALUES
 (1, 'Reprograf', 4, '20', 1, '../web/images/Articulo/logo_sena.png', 'resma de papel reprograf', 4, 0),
-(2, 'Papelillo', 2, '12', 1, '../web/images/Articulo/', 'no tiene', 2, 0),
+(2, 'Papelillo', 2, '12', 1, '../web/images/Articulo/', 'no tiene', 1, 0),
 (3, 'Carton', 1, '20 x 20', 1, '../web/images/pictureDefault.png', 'carton de colombia', 0, 1),
 (4, 'Colbon', 2, '30', 4, '../web/images/pictureDefault.png', 'Colbon de colombia', 1, 0),
 (7, 'Magenta', 3, '10', 5, '../web/images/pictureDefault.png', 'Tinta para pintar', 1, 1);
@@ -134,38 +134,6 @@ INSERT INTO `tblbitentrada` (`bitcod`, `bituser`, `bitfecha`, `bittabla`, `bitac
 (9, 'root@localhost', '2021-06-08 03:46:33', 'tipo_id', 'Actualizo ', 'Se actualizó la cantidad de Tinta EPSON paso de: 1 a: 1 unidades'),
 (10, 'root@localhost', '2021-06-08 03:46:40', 'tipo_id', 'Actualizo ', 'Se actualizó la cantidad de Tinta EPSON paso de: 1 a: 2 unidades'),
 (11, 'root@localhost', '2021-06-08 03:46:44', 'tipo_id', 'Actualizo ', 'Se actualizó la cantidad de Tinta EPSON paso de: 2 a: 2 unidades');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `tblbitsalida`
---
-
-CREATE TABLE `tblbitsalida` (
-  `bitcod` int(11) NOT NULL,
-  `bituser` varchar(30) DEFAULT NULL,
-  `bitfecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `bittabla` varchar(255) DEFAULT NULL,
-  `bitaccion` varchar(255) DEFAULT NULL,
-  `bitdesc` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `tblbitsalida`
---
-
-INSERT INTO `tblbitsalida` (`bitcod`, `bituser`, `bitfecha`, `bittabla`, `bitaccion`, `bitdesc`) VALUES
-(2, 'root@localhost', '2021-06-03 04:48:49', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Reprograf paso de 46 a: 47 Unidades '),
-(3, 'root@localhost', '2021-06-05 22:00:06', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Reprograf paso de 47 a: 48 Unidades '),
-(4, 'root@localhost', '2021-06-08 03:19:38', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Reprograf paso de 48 a: 60 Unidades '),
-(5, 'root@localhost', '2021-06-08 03:19:38', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Tinta EPSON paso de 50 a: 60 Unidades '),
-(6, 'root@localhost', '2021-06-08 03:41:06', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Reprograf paso de 60 a: 1 Unidades '),
-(7, 'root@localhost', '2021-06-08 03:44:14', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Reprograf paso de 1 a: 1 Unidades '),
-(8, 'root@localhost', '2021-06-08 03:44:26', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Reprograf paso de 1 a: 1 Unidades '),
-(9, 'root@localhost', '2021-06-08 03:46:27', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Tinta EPSON paso de 60 a: 1 Unidades '),
-(10, 'root@localhost', '2021-06-08 03:46:33', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Tinta EPSON paso de 1 a: 1 Unidades '),
-(11, 'root@localhost', '2021-06-08 03:46:40', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Tinta EPSON paso de 1 a: 2 Unidades '),
-(12, 'root@localhost', '2021-06-08 03:46:44', 'tipo_id', 'Actualizo ', 'Se disminuyo la cantidad de: Tinta EPSON paso de 2 a: 2 Unidades ');
 
 -- --------------------------------------------------------
 
@@ -512,7 +480,8 @@ CREATE TABLE `tblempresa` (
 --
 
 INSERT INTO `tblempresa` (`Emp_id`, `Emp_razonSocial`, `Emp_NIT`, `Emp_email`, `Emp_direccion`, `Emp_nombreContacto`, `Emp_apellidoContacto`, `Mun_id`, `Emp_numeroDocumento`, `Emp_primerNumeroContacto`, `Emp_segundoNumeroContacto`, `Est_id`, `Tempr_id`, `Stg_id`) VALUES
-('1', 'CAI centro agropecuario internacional', '123-4', 'cai@cai.gov.co', 'av 5 norte 10', 'jhonatan', 'zambrano', 1009, '1144060265', '3122321070', '3235148081', 1, 1, 0);
+('1', 'CAI centro agropecuario internacional', '123-4', 'cai@cai.gov.co', 'av 5 norte 10', 'jhonatan', 'zambrano', 1009, '1144060265', '3122321070', '3235148081', 1, 1, 0),
+('2', 'Mantenimiento SAS', '000012344', 'asdsd@misena.edu.co', 'TRANSVERSAL 2A #6-71', 'JULIAN', 'ZAMBRANO', 1009, '32323', '3163995722', '23223', 1, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -541,7 +510,8 @@ INSERT INTO `tblestado` (`Est_id`, `Est_nombre`, `Est_descrpicion`) VALUES
 (7, 'No aprobado - solicitud', ''),
 (8, 'Pendiente por aprobacion - cotizacion', ''),
 (9, 'Aprobado - cotizacion', ''),
-(10, 'No aprobado - cotizacion', '');
+(10, 'No aprobado - cotizacion', ''),
+(11, 'Mantenimiento', 'Estado para la maquina');
 
 -- --------------------------------------------------------
 
@@ -652,8 +622,8 @@ CREATE TABLE `tblmaquina` (
 --
 
 INSERT INTO `tblmaquina` (`Maq_id`, `Maq_nombre`, `Maq_serial`, `Maq_descripcion`, `Maq_imagen`, `Maq_cantidad`, `Est_id`, `Stg_id`, `Maq_fichaTecnica`, `Maq_manual`) VALUES
-(1, 'Oliver', 0x313235623362352d6b, 'The Oliver Typewriter Company (en español: La', '../web/images/Maquina/72a4dd4e-4dd6-44f5-b49d-7215c5917b45.jpg', 1, 1, 18, '../web/images/Maquina/Ficha/', '../web/images/Maquina/Manual/'),
-(2, 'Sakurai', 0x3132332d6838, 'Año 1994\r\nModelo SC-102AⅡ\r\ncondiciones de tra', '../web/images/Maquina/', 1, 0, 16, '../web/images/Maquina/Ficha/ficha tecnica.pdf', '../web/images/Maquina/Manual/20170227-Manual Artes Graficas.pdf'),
+(1, 'Oliver', 0x313235623362352d6b, 'The Oliver Typewriter Company (en español: La', '../web/images/Maquina/72a4dd4e-4dd6-44f5-b49d-7215c5917b45.jpg', 1, 11, 18, '../web/images/Maquina/Ficha/OrdenProduccion_3.pdf', '../web/images/Maquina/Manual/OrdenProduccion_3.pdf'),
+(2, 'Sakurai', 0x3132332d6838, 'Año 1994\r\nModelo SC-102AⅡ\r\ncondiciones de tra', '../web/images/Maquina/', 1, 11, 16, '../web/images/Maquina/Ficha/ficha tecnica.pdf', '../web/images/Maquina/Manual/20170227-Manual Artes Graficas.pdf'),
 (3, 'Tampoprint', 0x3131682d6b31323030, 'Tampoprint Entrance 90 año 2015 Maquina de ta', '../web/images/pictureDefault.png', 1, 1, 15, '../web/images/Maquina/Ficha/', '../web/images/Maquina/Manual/'),
 (4, 'oliver twin', 0x31323334, 'no aplica', '../web/images/pictureDefault.png', 1, 1, 15, '../web/images/Maquina/Ficha/2-Ada_in_Action.pdf', '../web/images/Maquina/Manual/3-AdaDistilled.pdf');
 
@@ -1851,10 +1821,10 @@ INSERT INTO `tblmunicipio` (`Mun_id`, `Mun_nombre`, `Dep_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tblordenmantenimiento`
+-- Estructura de tabla para la tabla `tblordenmanto`
 --
 
-CREATE TABLE `tblordenmantenimiento` (
+CREATE TABLE `tblordenmanto` (
   `Odm_id` int(11) NOT NULL,
   `Odm_fechaInicio` date NOT NULL,
   `Odm_fechaFin` date NOT NULL,
@@ -1871,11 +1841,12 @@ CREATE TABLE `tblordenmantenimiento` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
--- Volcado de datos para la tabla `tblordenmantenimiento`
+-- Volcado de datos para la tabla `tblordenmanto`
 --
 
-INSERT INTO `tblordenmantenimiento` (`Odm_id`, `Odm_fechaInicio`, `Odm_fechaFin`, `Odm_horainicio`, `Odm_horaFin`, `Odm_tecnico`, `Odm_observaciones`, `Odm_observacionesFin`, `Stg_id`, `Maq_id`, `Emp_id`, `Usu_id`, `Odm_pdf`) VALUES
-(1, '2021-06-03', '2021-06-02', '20:41:00', '19:40:00', 'ivan uribe', 'mala', '', 16, 1, NULL, 1, NULL);
+INSERT INTO `tblordenmanto` (`Odm_id`, `Odm_fechaInicio`, `Odm_fechaFin`, `Odm_horainicio`, `Odm_horaFin`, `Odm_tecnico`, `Odm_observaciones`, `Odm_observacionesFin`, `Stg_id`, `Maq_id`, `Emp_id`, `Usu_id`, `Odm_pdf`) VALUES
+(2, '2021-06-16', '2021-06-30', '16:18:00', '16:18:00', 'dfdf', 'dfdf', 'fsgfs', 19, 1, NULL, 4, '../web/pdf/'),
+(3, '2021-06-25', '2021-06-23', '16:21:00', '16:24:00', '', 'dssd', 'dfdfd', 20, 1, '2', 4, '../web/pdf/OrdenProduccion_3.pdf');
 
 -- --------------------------------------------------------
 
@@ -1891,6 +1862,20 @@ CREATE TABLE `tblordenmantodetalle` (
   `Her_id` int(11) DEFAULT NULL,
   `Arti_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tblordenmantodetalle`
+--
+
+INSERT INTO `tblordenmantodetalle` (`Odmde_id`, `Odm_id`, `Pro_id`, `Tar_id`, `Her_id`, `Arti_id`) VALUES
+(1, 2, 1, NULL, NULL, NULL),
+(2, 2, NULL, 1, NULL, NULL),
+(3, 2, NULL, NULL, 2, NULL),
+(4, 2, NULL, NULL, NULL, 2),
+(5, 3, 1, NULL, NULL, NULL),
+(6, 3, NULL, 1, NULL, NULL),
+(7, 3, NULL, NULL, 2, NULL),
+(8, 3, NULL, NULL, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -2027,8 +2012,15 @@ INSERT INTO `tblpreimpreion` (`Pim_id`, `Stg_id`, `Pim_encargado`, `Pim_observac
 CREATE TABLE `tblproceso` (
   `Pro_id` int(11) NOT NULL,
   `Pro_nombre` varchar(45) NOT NULL,
-  `Pro_descripcon` varchar(45) NOT NULL
+  `Pro_descripcion` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tblproceso`
+--
+
+INSERT INTO `tblproceso` (`Pro_id`, `Pro_nombre`, `Pro_descripcion`) VALUES
+(1, 'Mecanico', 'Proceso mecanico');
 
 -- --------------------------------------------------------
 
@@ -2217,9 +2209,7 @@ CREATE TABLE `tbltarea` (
 --
 
 INSERT INTO `tbltarea` (`Tar_id`, `Tar_nombre`, `Tar_descripcion`) VALUES
-(1, 'depurar', 'Consiste en depurar la maquina para encontrar'),
-(2, 'lubricar', 'lubricar'),
-(3, 'Limpieza', 'limpieza');
+(1, 'Lubricar', 'fgdg');
 
 -- --------------------------------------------------------
 
@@ -2233,6 +2223,13 @@ CREATE TABLE `tbltareaherramienta` (
   `Her_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `tbltareaherramienta`
+--
+
+INSERT INTO `tbltareaherramienta` (`The_id`, `Tar_id`, `Her_id`) VALUES
+(1, 1, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -2244,6 +2241,13 @@ CREATE TABLE `tbltareaproceso` (
   `Pro_id` int(11) NOT NULL,
   `Tar_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tbltareaproceso`
+--
+
+INSERT INTO `tbltareaproceso` (`Tpr_id`, `Pro_id`, `Tar_id`) VALUES
+(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2457,12 +2461,6 @@ ALTER TABLE `tblbitentrada`
   ADD PRIMARY KEY (`bitcod`);
 
 --
--- Indices de la tabla `tblbitsalida`
---
-ALTER TABLE `tblbitsalida`
-  ADD PRIMARY KEY (`bitcod`);
-
---
 -- Indices de la tabla `tblcategoria`
 --
 ALTER TABLE `tblcategoria`
@@ -2647,9 +2645,9 @@ ALTER TABLE `tblmunicipio`
   ADD KEY `fk_TMunicipio_TDepartamento1_idx` (`Dep_id`);
 
 --
--- Indices de la tabla `tblordenmantenimiento`
+-- Indices de la tabla `tblordenmanto`
 --
-ALTER TABLE `tblordenmantenimiento`
+ALTER TABLE `tblordenmanto`
   ADD PRIMARY KEY (`Odm_id`),
   ADD KEY `fk_Tblordenmantenimiento_TblEmpresa1_idx` (`Emp_id`) USING BTREE,
   ADD KEY `fk_Tblordenmantenimiento_TblMaquina1_idx` (`Maq_id`) USING BTREE,

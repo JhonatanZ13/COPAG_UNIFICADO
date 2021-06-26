@@ -38,9 +38,9 @@ foreach ($Tareas as $Tar) {
                 <div class="clearfix"></div>
             </div>
             <div class="col-md-12 checkbox-inline x_panel ">
-                <div class="checkbox ">
+                <div class="checkbox  ">
                     <div class="col-md-12 ">
-                        <label class="control-label">Selecione Los procesos a los que pertenece la tarea</label>
+                        <label class="control-label ">Selecione Los procesos a los que pertenece la tarea</label>
                     </div>
                     <?php 
                        foreach ($Procesos as $pro) {   
@@ -52,7 +52,7 @@ foreach ($Tareas as $Tar) {
 
                           }
                           ?>
-                           <div class="col-md-2">
+                           <div class="col-md-3">
                               <input type='checkbox' name='Procesos[]' value='<?=$pro['Pro_id']?>' <?php echo $checked;?>>
                               <label for="checkbox1"><?=$pro['Pro_nombre']?></label>
                            </div>
@@ -87,7 +87,7 @@ foreach ($Tareas as $Tar) {
 
                           }
                           ?>
-                           <div class="col-md-2">
+                           <div class="col-md-3">
                               <input type='checkbox' name='Herramientas[]' value='<?=$Her['Her_id']?>' <?php echo $checked;?>>
                               <label for="checkbox1"><?=$Her['Her_nombre']?></label>
                            </div>

@@ -12,7 +12,7 @@ class OrdenController
         $Usuario = $obj->consult($sql);
         $sql = "SELECT * FROM tblmaquina";
         $Maquina = $obj->consult($sql);
-        $sql = "SELECT * FROM tblempresa where Tempr_id=3";
+        $sql = "SELECT * FROM tblempresa where Tempr_id=6";
         $Empresa = $obj->consult($sql);
         $sql = "SELECT * FROM tblsubtipogeneral where Tge_id=6";
         $Manto = $obj->consult($sql);
@@ -48,7 +48,7 @@ public function procesosdinamicos(){
     for($i=0; $i<count($seleccionados);$i++){
       if($seleccionados[$i]==$pro["Pro_id"] && $yaesta[$i]==0){
         $yaesta[$i]=1;
-        echo "<div class='col-md-2'><input name='Pro_id[]' disabled type='checkbox' value='".$pro['Pro_id']."' checked><label>".$pro['Pro_nombre']."</label></div>";
+        echo "<div class='col-md-3'><input name='Pro_id[]' type='checkbox' value='".$pro['Pro_id']."' checked><label>".$pro['Pro_nombre']."</label></div>";
       }
     }
 
@@ -79,7 +79,7 @@ public function herramientasdinamicas(){
     for($i=0; $i<count($seleccionados);$i++){
       if($seleccionados[$i]==$herr["Her_id"] && $yaesta[$i]==0){
         $yaesta[$i]=1;
-        echo "<div class='col-md-2'><input name='Her_id[]' disabled type='checkbox' value='".$herr['Her_id']."' checked><label>".$herr['Her_nombre']."</label></div>";
+        echo "<div class='col-md-3'><input name='Her_id[]' type='checkbox' value='".$herr['Her_id']."' checked><label>".$herr['Her_nombre']."</label></div>";
       }
     }
 

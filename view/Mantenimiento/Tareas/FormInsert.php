@@ -38,7 +38,7 @@
                     <?php 
                        foreach ($Procesos as $pro) {    
                     ?>
-                    <div class="col-md-2 "  >
+                    <div class="col-md-3 "  >
 
                         <input type='checkbox' name='Procesos[]' value='<?=$pro['Pro_id']?>'>
                         <label for="checkbox1"><?=$pro['Pro_nombre']?></label>
@@ -69,7 +69,7 @@
                        foreach ($Herra as $Her) {    
                     
                        ?>
-                    <div class="col-md-2 justify-content: space-around">
+                    <div class="col-md-3 justify-content: space-around">
                         <input type='checkbox' name='Herramientas[]' value='<?=$Her['Her_id']?>'>
                         <label for="checkbox2"><?=$Her['Her_nombre']?></label>
                     </div>

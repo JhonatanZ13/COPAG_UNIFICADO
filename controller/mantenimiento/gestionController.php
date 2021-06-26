@@ -9,9 +9,9 @@ public function consult(){
 
     $obj = new GestionModel();
 
-    $sql = "SELECT m.maq_id, m.maq_nombre, e.est_nombre
-    FROM tblmaquina as m, tblestado as e
-    WHERE m.est_id = e.est_id"; 
+    $sql = "SELECT m.Maq_id, m.Maq_nombre,m.Maq_fichaTecnica,m.Maq_manual,e.Est_nombre
+    FROM tblMaquina as m, tblEstado as e
+    WHERE m.Est_id = e.Est_id";
     
     $maquinas = $obj->consult($sql);
     
@@ -21,9 +21,9 @@ public function consult(){
 
     public function ModalUpdate(){
         $obj = new GestionModel();
-        $maq_id = $_GET["maq_id"];
+        $maq_id = $_GET["Maq_id"];
 
-        $sql = "SELECT Maq_id,Maq_nombre FROM tblmaquina
+        $sql = "SELECT Maq_id,Maq_nombre FROM tblMaquina
         WHERE Maq_id='".$maq_id."'";
         
         $maquina =$obj->consult($sql);
@@ -53,9 +53,8 @@ public function consult(){
 
     }
 
-}
-?>
-
-
    
 
+}
+
+?>
