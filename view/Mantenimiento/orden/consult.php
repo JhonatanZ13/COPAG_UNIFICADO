@@ -182,13 +182,7 @@
 
                 <div id="procesoscontenedor" style="">        
 
-                   <!-- <div class="col-md-2 "> -->
-
-                     <!--  <input data-url="<?php// echo getUrl("Mantenimiento", "orden", "procesosdinamicos",false,"ajax")?>"
-                        type='checkbox' id="procesosbox" name='Pro_id[]' value='<?//=$pro['Pro_id']?>'> -->
-                        
-
-                  <!-- </div> -->
+                
 
 
                 </div>
