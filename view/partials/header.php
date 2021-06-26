@@ -15,7 +15,7 @@
 
     <!-- Bootstrap -->
     <link href="vendors/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-
+    <link href="vendors/copag/styles.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
@@ -24,6 +24,8 @@
 
     <!-- jQuery custom content scroller -->
     <link href="vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+
+    <link href="vendors/animate.css/animate.css" rel="stylesheet"/>
 
     <!-- Custom Theme Style -->
     <link href="build/css/custom.css" rel="stylesheet">
