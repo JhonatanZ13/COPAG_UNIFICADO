@@ -13,7 +13,7 @@
 
                 <div class="">
                     <h3 class="text-light">Recuperacion de contraseña
-                        <button data-status="0" id="showMore" class=" btn-sm btn-info fa fa-question-circle">
+                        <button data-status="0" id="showMore" class=" btn-sm btn-info fa fa-question-circle" style="border: none; outline: none;">
                         </button>
                     </h3>
                 </div>

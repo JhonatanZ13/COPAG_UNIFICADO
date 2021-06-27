@@ -10,7 +10,7 @@
                 <li class="nav-item dropdown open " style="padding-left: 15px;">
                     <a href="javascript:;" class="user-profile dropdown-toggle " aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
                     <?php 
-                        include_once '../controller/PanelDeControl/UserController.php';
+                        include_once '../controller/Access/AccessController.php';
 
                         if($_SESSION['rolUser']=='Administrador'){
                             $rolFoto=$manager;
@@ -21,7 +21,7 @@
                         } 
                     ?>
                         <img src="<?= $rolFoto?>" id="imagenCircular" class="img-circle bg-white" alt="">
-                        <span class="text-white"><?= $_SESSION['nameUser'];?></span>
+                        <span class="text-white"><?= $_SESSION['nameUser']." ".$_SESSION['surnameUser']?></span>
                     </a>
                     <div class="dropdown-menu dropdown-usermenu pull-right" style="color:white;" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="<?= getUrl("PanelDeControl","User","getProfile", array('Usu_id' => $_SESSION['idUser']));?>">Perfil</a>

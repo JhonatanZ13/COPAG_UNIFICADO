@@ -1,9 +1,6 @@
 <?php
 include_once '../model/Cpanel/UserModel.php';
 
-$manager = "../web/images/admin.png";
-$functionary = "../web/images/funcionario.png";
-$learner = "../web/images/aprendiz.png";
 
 class UserController
 {
@@ -106,18 +103,37 @@ class UserController
         $Usu_primerApellido = $_POST['Usu_primerApellido'];
         $Usu_segundoApellido = $_POST['Usu_segundoApellido'];
         $Usu_numeroDocumento = $_POST['Usu_numeroDocumento'];
+        @$Usu_password = $_POST['Usu_password'];
         $Usu_telefono = $_POST['Usu_telefono'];
         $Gen_id = $_POST['Gen_id'];
         $Usu_email = $_POST['Usu_email'];
         $Rol_id = $_POST['Rol_id'];
         $Area_id = $_POST['Area_id'];
 
-        $sql = "UPDATE TblUsuario SET Usu_id=$Usu_id, Usu_primerNombre='$Usu_primerNombre', Usu_segundoNombre='$Usu_segundoNombre', Usu_primerApellido='$Usu_primerApellido', Usu_segundoApellido='$Usu_segundoApellido', Usu_numeroDocumento='$Usu_numeroDocumento', Usu_telefono='$Usu_telefono', Gen_id=$Gen_id, Usu_email='$Usu_email', Rol_id=$Rol_id, Area_id='$Area_id' WHERE Usu_id=$Usu_id";
+        // esta session cambia las variables de sesion cuando se modifica algo de ellas
+        $_SESSION['nameUser']=$Usu_primerNombre = $_POST['Usu_primerNombre'];
+        $_SESSION['surnameUser']=$Usu_primerApellido = $_POST['Usu_primerApellido'];
+
+        $sql_rol = "SELECT * FROM TblRol WHERE Rol_id=$Rol_id";
+        $roles = $obj->consult($sql_rol);
+
+        foreach ($roles as $rol) {
+            $_SESSION['rolUser']=$rol['Rol_nombre'];
+        }
+
+        $sql_rol = "SELECT * FROM TblArea WHERE Area_id=$Area_id";
+        $areas = $obj->consult($sql_rol);
+
+        foreach ($areas as $area) {
+            $_SESSION['areaUser']=$area['Area_nombre'];
+        }
+        // fin de la parte variables de sesion
+
+        $sql = "UPDATE TblUsuario SET Usu_id=$Usu_id, Usu_primerNombre='$Usu_primerNombre', Usu_segundoNombre='$Usu_segundoNombre', Usu_primerApellido='$Usu_primerApellido', Usu_segundoApellido='$Usu_segundoApellido', Usu_numeroDocumento='$Usu_numeroDocumento', Usu_telefono='$Usu_telefono', Gen_id=$Gen_id, Usu_email='$Usu_email', Rol_id=$Rol_id, Area_id='$Area_id', Usu_password='".$Usu_password."' WHERE Usu_id=$Usu_id";
 
         $execution = $obj->update($sql);
 
         if ($execution) {
-
             redirect(getUrl("PanelDeControl", "User", "consultUsers"));
         } else {
             echo "Ups ocurrio un error";
@@ -151,8 +167,6 @@ class UserController
         $execution = $obj->delete($sql);
 
         if ($execution) {
-            echo '<div class="alert alert-success alert-dismissible" role="alert">registrado <a href="#" class="alert-link">registrado
-              </div>';
             redirect(getUrl("PanelDeControl", "User", "consultUsers"));
         } else {
             echo "Ups ocurrio un error";
@@ -198,9 +212,11 @@ class UserController
 
         $usuarios = $obj->consult($sql);
 
-        $manager = "../web/images/admin.png";
-        $functionary = "../web/images/funcionario.png";
-        $learner = "../web/images/aprendiz.png";
+        include_once '../Controller/Access/AccessController.php';
+
+        $manager = "../web/images/manager.png";
+        $functionary = "../web/images/functionary.png";
+        $learner = "../web/images/learner.png";
 
         include_once '../view/Panel/User/profileUser.php';
     }

@@ -1,5 +1,9 @@
 <?php
 
+    $manager = "../web/images/manager.png";
+    $functionary = "../web/images/functionary.png";
+    $learner = "../web/images/learner.png";
+    
     include_once '../model/Access/AccessModel.php';
 
     class AccessController{
@@ -16,11 +20,13 @@
 
             if(mysqli_num_rows($usuario)>0){
                 foreach ($usuario as $user) {
-                    $_SESSION['nameUser']=$user['Usu_primerNombre']." ".$user['Usu_primerApellido'];
+                    $_SESSION['nameUser']=$user['Usu_primerNombre'];
+                    $_SESSION['surnameUser']=$user['Usu_primerApellido'];
                     $_SESSION['rolUser']=$user['Rol_nombre'];
                     $_SESSION['idUser']=$user['Usu_id'];
                     $_SESSION['areaUser']=$user['Area_nombre'];
                     $_SESSION['auth']="ok";
+
                 }
                 redirect("index.php");
             }else {
@@ -34,4 +40,3 @@
         }
 
     }
-?>

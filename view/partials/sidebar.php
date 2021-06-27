@@ -1,5 +1,6 @@
 <?php
 include_once '../lib/helpers.php';
+include_once '../controller/Access/AccessController.php';
 ?>
 
 <div class="col-md-3 left_col menu_fixed">
@@ -14,7 +15,6 @@ include_once '../lib/helpers.php';
         <div class="profile clearfix">
             <div class="profile_pic">
                 <?php
-                include_once '../controller/PanelDeControl/UserController.php';
 
                 if ($_SESSION['rolUser'] == 'Administrador') {
                     $rolFoto = $manager;
@@ -29,7 +29,7 @@ include_once '../lib/helpers.php';
 
             <div class="profile_info">
                 <span class="">Bienvenido,</span>
-                <h2><?= $_SESSION['nameUser']; ?></h2><br><strong class="text-white"><?= $_SESSION['rolUser']; ?></strong>
+                <h2><?= $_SESSION['nameUser'] . " " . $_SESSION['surnameUser'] ?></h2><br><strong class="text-white"><?= $_SESSION['rolUser']; ?></strong>
             </div>
         </div>
         <!-- /menu profile quick info -->
@@ -91,7 +91,7 @@ include_once '../lib/helpers.php';
                             <li>
                                 <a href="<?php echo getUrl("Control", "Control", "getControl"); ?>">Control Stock</a>
                             </li>
-                            
+
                             <li>
                                 <a href="<?php echo getUrl("Reportes", "Reportes", "getReporte"); ?>">Reporte</a>
                             </li>
@@ -126,47 +126,78 @@ include_once '../lib/helpers.php';
                             </li>
                         </ul>
                     </li>
+                    <?php
+                    if ($_SESSION['rolUser'] != 'Aprendiz') {
+                    ?>
+                        <li>
+                            <a>
+                                <i class="fa fa-gears"></i> Panel de Control
+                                <span class="fa fa-chevron-down"></span>
+                            </a>
 
-                    <li>
-                        <a>
-                            <i class="fa fa-gears"></i> Panel de Control
-                            <span class="fa fa-chevron-down"></span>
-                        </a>
+                            <ul class="nav child_menu">
+                                <?php
+                                if ($_SESSION['rolUser'] == 'Administrador' || ($_SESSION['rolUser'] == 'Funcionario' &&  $_SESSION['areaUser'] == 'Inventario')) {
+                                ?>
+                                    <li>
+                                        <a href="<?php echo getUrl("PanelDeControl", "Article", "consultArticles"); ?>">Gestionar Articulo</a>
+                                    </li>
 
-                        <ul class="nav child_menu">
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "Article", "consultArticles"); ?>">Gestionar Articulo</a>
-                            </li>
+                                <?php } ?>
 
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "Company", "consultCompanies"); ?>">Gestionar Empresa</a>
-                            </li>
+                                <?php
+                                if ($_SESSION['rolUser'] == 'Administrador' || ($_SESSION['rolUser'] == 'Funcionario' &&  $_SESSION['areaUser'] == 'Produccion')) {
+                                ?>
 
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "Tool", "consultTools"); ?>">Gestionar Herramienta</a>
-                            </li>
+                                    <li>
+                                        <a href="<?php echo getUrl("PanelDeControl", "Company", "consultCompanies"); ?>">Gestionar Empresa</a>
+                                    </li>
 
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "Machine", "consultMachines"); ?>">Gestionar Maquina</a>
-                            </li>
+                                <?php } ?>
 
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "User", "consultUsers"); ?>">Gestionar Usuario</a>
-                            </li>
-                        </ul>
-                    </li>
+                                <?php
+                                if ($_SESSION['rolUser'] == 'Administrador' || ($_SESSION['rolUser'] == 'Funcionario' &&  $_SESSION['areaUser'] == 'Inventario')) {
+                                ?>
+                                    <li>
+                                        <a href="<?php echo getUrl("PanelDeControl", "Tool", "consultTools"); ?>">Gestionar Herramienta</a>
+                                    </li>
 
-                    <li>
-                        <a>
-                            <i class="fa fa-line-chart"></i>Produccion
-                            <span class="fa fa-chevron-down"></span>
-                        </a>
+                                <?php } ?>
 
-                        <ul class="nav child_menu">
-                            <li><a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>">Orden Produccion</a></li>
-                            <li><a href="<?php echo getUrl("Produccion", "Reporte", "getMainReporte"); ?>">Reporte produccion</a></li>
-                        </ul>
-                    </li>
+                                <?php
+                                if ($_SESSION['rolUser'] == 'Administrador' || ($_SESSION['rolUser'] == 'Funcionario' &&  $_SESSION['areaUser'] == 'Inventario')) {
+                                ?>
+                                <li>
+                                    <a href="<?php echo getUrl("PanelDeControl", "Machine", "consultMachines"); ?>">Gestionar Maquina</a>
+                                </li>
+                                <?php } ?>
+
+                                <?php
+                                if ($_SESSION['rolUser'] == 'Administrador') {
+                                ?>
+                                <li>
+                                    <a href="<?php echo getUrl("PanelDeControl", "User", "consultUsers"); ?>">Gestionar Usuario</a>
+                                </li>
+                                <?php } ?>
+                            </ul>
+                        </li>
+                    <?php } ?>
+                    <?php
+                    if ($_SESSION['rolUser'] == 'Administrador' || ($_SESSION['rolUser'] == 'Funcionario' && $_SESSION['areaUser'] == 'Produccion') || ($_SESSION['rolUser'] == 'Aprendiz' && $_SESSION['areaUser'] == 'Produccion')) {
+                    ?>
+                        <li>
+                            <a>
+                                <i class="fa fa-line-chart"></i>Produccion
+                                <span class="fa fa-chevron-down"></span>
+                            </a>
+
+                            <ul class="nav child_menu">
+
+                                <li><a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>">Orden Produccion</a></li>
+                                <li><a href="<?php echo getUrl("Produccion", "Reporte", "getMainReporte"); ?>">Reporte produccion</a></li>
+                            </ul>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
