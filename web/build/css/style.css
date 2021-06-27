@@ -92,19 +92,33 @@ input.parsley-success {
     align-items: center;
 }
 #contenedor-imagen{
-    width: 700px;
-    height: 700px;
+    width: 40vh;
+    height: 40vh;
     background: #ffffff;
     border-radius: 50%;
     animation: movimiento 2.5s linear infinite;
     transition: 1s;
 }
 #contenedor-imagen:hover{
-    width: 750px;
-    height: 750px;
+    width: 43vh;
+    height: 43vh;
     cursor: pointer;
 }
-
+@media screen and (min-width: 480px) {
+    #contenedor-imagen{
+        width: 70vh;
+        height: 70vh;
+        background: #ffffff;
+        border-radius: 50%;
+        animation: movimiento 2.5s linear infinite;
+        transition: 1s;
+    }
+    #contenedor-imagen:hover{
+        width: 73vh;
+        height: 73vh;
+        cursor: pointer;
+    }
+}
 /* Animacion fondo*/
 
 .fondo{
