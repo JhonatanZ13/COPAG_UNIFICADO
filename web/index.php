@@ -17,7 +17,7 @@
                         echo "<div class='col-md-12 col-sm-12'>";
                         
                             echo "<div class=''>";
-                            include_once '../view/partials/home.php';
+                            include_once '../view/partials/fondoanimado.php';
                                 if (isset($_GET['modulo'])) {
                                     resolve();
                                 }else{

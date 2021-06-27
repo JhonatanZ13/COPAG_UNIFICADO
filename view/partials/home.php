@@ -1,29 +1,8 @@
-<!-- <div class="content-home">
-    <img id="img-home" src="images/logo-pequeño.png" alt="">
-</div>  -->
-<div class="fondo">
-
-
-<div class='logo-animacion'>
-    <img src='images/logo_sena.png'  width="80px">
-</div>
-<div class='logo-animacion'>
-    <img src='images/logo_sena.png'  width="80px">
-</div>
-<div class='logo-animacion'>
-    <img src='images/logo_sena_v.png'  width="80px">
-</div>
-<div class='logo-animacion'>
-    <img src='images/logo_sena.png'  width="80px">
-</div>
-<div class='logo-animacion'>
-    <img src='images/logo_sena.png' width="80px" >
-</div>
-<div class='logo-animacion'>
-    <img src='images/logo_sena_v.png'  width="80px">
-</div>
-<div class='logo-animacion'>
-    <img src='images/logo_sena.png'  width="80px">
+<div class="x_content inicio">
+    <div class="m-auto w-75 ">
+        <div class="text-center contenedor-padre m-auto" id="contenedor-imagen">
+           <img src="images/Bienvenido2.png" alt="" width="500px"> 
+        </div>
+    </div>
 </div>
 
-</div>
