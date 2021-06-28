@@ -3,7 +3,7 @@
 
     <div class="clearfix"></div>
 </div>
-<form action="<?php echo getUrl("costos","solicitud","postUpdate");?>" method="post" class="">
+<form action="<?php echo getUrl("costos","solicitud","postUpdate");?>" method="post" class="" id="solicitudC">
 <div class="x_panel mt-1 mb-3 mr-4">
 
 <div class="x_title">
@@ -29,7 +29,7 @@
             </div>
         <div class="form-group col-6">
         <label for="">Destinatario</label>
-        <select class='display-5 form-control' name="destinatario">
+        <select class='display-5 form-control' name="destinatario" id="destinaId">
                      <?php  foreach ($usuario as $usu){
                                 if($usu['Usu_id']==$ped['destinatario']){
                                     echo"<option value='".$usu['Usu_id']."'selected>".$usu['Usu_primerNombre'].'&nbsp;'.$usu['Usu_segundoNombre'].'&nbsp;'.$usu['Usu_primerApellido'].'&nbsp;'.$usu['Usu_primerApellido']."</option>";
@@ -64,7 +64,7 @@
                 <div class="form-group col-6">
                         <label for="">Cliente</label>
 
-                        <select class='display-5 form-control' name="centro">
+                        <select class='display-5 form-control' name="cliente" id="empreS">
                             <?php  foreach ($empresa as $emp){
                                 if($emp['Emp_id']==$ped['Emp_id']){
                                     echo"<option value='".$emp['Emp_id']."'selected>".$emp['Emp_razonSocial']."</option>";
@@ -82,7 +82,7 @@
                      if ($TipoS==3){ ?>
                     <div class="form-group col-6">
                         <label for="">Seleccione</label>
-                        <select class='display-5 form-control' name="centro">
+                        <select class='display-5 form-control' name="centro" id="centroS">
 
                             <?php  foreach ($centro as $cen){
                                 if($cen['Cen_id']==$ped['Cen_id']){
@@ -106,10 +106,7 @@
                                 if($depto['Dep_id']==$ped['Dep_id']){
                                     echo"<option value='".$depto['Dep_id']."'selected>".utf8_encode($depto['Dep_nombre'])."</option>";
                                 }else{
-
                                 echo "<option value='".$depto['Dep_id']."'>".$depto['Dep_nombre']."</option>";}
-                            
-
                             }
                             ?>
                         </select>
@@ -138,9 +135,9 @@
                     <?php }?>
                     <div class="form-group col-6">
                         <label for="">objeto</label>
-                        <input type="text" name="objeto" class="form-control" id="validationCustom01"
-                            placeholder="Escriba tipo de producto que desea adquirir..."
-                            value="<?php echo $ped['Ped_objetivo']?>" required>
+                        <input type="text" name="objeto" class="form-control validar" id="objetoS"
+                            placeholder="Escriba tipo de producto que desea adquirir..." 
+                            value="<?php echo $ped['Ped_objetivo']?>">
 
                     </div>
                  
@@ -152,15 +149,15 @@
                     <div class="form-group col-6 ">
                         <label for="">Plazo de ejecucion</label><br>
                         <label class="ml-2">Dias</label>
-                        <input type="number" name="pjd" class="form-control" placeholder="Dias..."
-                            value="<?php echo $ped['Ped_plazoEjecucionDias']?>" required>
+                        <input type="number" name="pjd" class="form-control validar" placeholder="Dias..." id="pjdId" min="1" max="30" maxlength="2"  onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                            value="<?php echo $ped['Ped_plazoEjecucionDias']?>" >
                     </div>
 
 
                     <div class="form-group col-6 mt-n3 "><br>
                         <label for="">Lugar de ejecucion</label><br>
                         <label class="ml-2">Ciudad</label>
-                        <select class=' form-control' name="ljciu">
+                        <select class='form-control' name="ljciu" id="ljcId">
 
                             <?php  foreach ($municipio as $mun){
                                 
@@ -181,8 +178,8 @@
                     <div class="form-group col-6 ">
                         <label for="">.</label><br>
                         <label class="ml-2">Meses</label>
-                        <input type="number" name="pjm" class="form-control" placeholder="Meses..."
-                            value="<?php echo $ped['Ped_plazoEjecucionMeses']?>" required>
+                        <input type="number" name="pjm" class="form-control validar" placeholder="Meses..." min="0" max="12" maxlength="2"  onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                            value="<?php echo $ped['Ped_plazoEjecucionMeses']?>" id="pjmId">
                     </div>
 
 
@@ -191,7 +188,7 @@
                     <div class="form-group col-6 mt-n3 "><br>
                         <label for="">.</label><br>
                         <label class="ml-2">Centro</label>
-                        <select class=' form-control' name="ljcen">
+                        <select class=' form-control' name="ljcen" id="ljcenId">
 
                             <?php  foreach ($centro as $cen){
                                 if($cen['Cen_id']==$ped['Ped_lugarEjecucionCen']){
@@ -206,7 +203,9 @@
                             placeholder="Breve descripción del lugar de entrega del producto..."  required> -->
                     </div>
 
-
+                    <div class="col-12" id="contentAlertSolicitud">
+                  
+                  </div>
 
 
                     <div class="col-12 d-flex justify-content-end mb-5">

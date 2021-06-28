@@ -26,6 +26,21 @@
 
         return $url;
     }
+    function getUrl2($modulo,$controlador,$funcion,$parametro=false,$pagina=false){
+        if ($pagina==false) {
+            $pagina="index.php";
+        }
+
+        $url="$pagina?modulo=$modulo&controlador=$controlador&funcion=$funcion";
+
+        if ($parametro!=false) {
+            foreach ($parametro as $key => $valor) {
+                $url.="&$key=$valor";
+            }
+        }
+
+        return $url;
+    }
     function resolve(){
         //modulo:Carpetas que estan dentro del controlador
         //controlador: un archivo controller que esta dentro del modulo

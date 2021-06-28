@@ -56,7 +56,7 @@
         ?>
 
         <p>Ingrese motivo de rechazo: </p>
-        <textarea class="form-control" name="" id="" cols="3" rows="3" placeholder="Escriba el motivo..."
+        <textarea class="form-control"  maxlength="199" name="motivoRechazo" id="" cols="3" rows="3" placeholder="Escriba el motivo..."
             required></textarea>
     </div>
     <div class="modal-footer">

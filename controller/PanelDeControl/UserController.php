@@ -110,8 +110,8 @@ class UserController
         $Area_id = $_POST['Area_id'];
 
         // esta session cambia las variables de sesion cuando se modifica algo de ellas
-        $_SESSION['nameUser']=$Usu_primerNombre = $_POST['Usu_primerNombre'];
-        $_SESSION['surnameUser']=$Usu_primerApellido = $_POST['Usu_primerApellido'];
+        $_SESSION['nameUser'] = $Usu_primerNombre = $_POST['Usu_primerNombre'];
+        $_SESSION['surnameUser'] = $Usu_primerApellido = $_POST['Usu_primerApellido'];
 
         $sql_rol = "SELECT * FROM TblRol WHERE Rol_id=$Rol_id";
         $roles = $obj->consult($sql_rol);

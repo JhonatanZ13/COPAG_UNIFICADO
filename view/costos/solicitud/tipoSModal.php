@@ -1,7 +1,7 @@
-<form action="<?php echo getUrl("costos","solicitud","getInsert");?>" method="post" class="m-auto">
+<form action="<?php echo getUrl("costos","solicitud","getInsert");?>" method="post" class="m-auto" id="tipoSmodal">
     <div class="modal-body">
     <label for="">Seleccione el tipo de solicitud</label>
-                        <select class='display-5 form-control vSelect' name="TipoS" id="TipoSId" data-url="<?=getUrl("costos","solicitud","tipoSolid",false,"ajax")?> ">
+                        <select class='display-5 form-control vSelect' name="TipoS" id="TipoSId">
                             <option value="0" hidden selected >Tipo solicitud</option>
                             <?php foreach ($tipoS as $ts){
                                 // if ($ts['tiposolic_id']=1){
@@ -13,6 +13,9 @@
                             }    
                          ?>
                         </select>
+
+                        <div class="" id="contentAlertSolicitud">
+
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

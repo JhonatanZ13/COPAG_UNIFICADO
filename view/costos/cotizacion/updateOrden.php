@@ -1,5 +1,5 @@
 <div class="x_title">
-    <h2>Generar Cotizacio</h2>
+    <h2>Generar Cotizacion</h2>
     <div class="clearfix"></div>
 </div>
 

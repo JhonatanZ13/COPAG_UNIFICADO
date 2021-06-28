@@ -133,7 +133,7 @@ if (isset($_SESSION['error'])){
                     <?php   } ?>
                     <div class="form-group col-6">
                         <label for="">objeto</label>
-                        <input type="text" name="objeto" class="form-control validate" 
+                        <input type="text" id="objetoS" name="objeto" class="form-control validar" 
                             placeholder="Escriba tipo de producto que desea adquirir..." >
 
                     </div>
@@ -145,7 +145,7 @@ if (isset($_SESSION['error'])){
                     <div class="form-group col-6 ">
                         <label for="">Plazo de ejecucion</label><br>
                         <label class="ml-2">Dias</label>
-                        <input type="number" name="pjd" class="form-control validar" placeholder="Dias..." >
+                        <input type="number" id="pjdId" name="pjd" class="form-control validar" placeholder="Dias..." min="1" max="30" maxlength="2"  onkeypress='return event.charCode >= 48 && event.charCode <= 57' >
                     </div>
 
 
@@ -166,7 +166,7 @@ if (isset($_SESSION['error'])){
                     <div class="form-group col-6 ">
                         <label for="">.</label><br>
                         <label class="ml-2">Meses</label>
-                        <input type="number" name="pjm" class="form-control validar" placeholder="Meses..." >
+                        <input type="number" id="pjmId" name="pjm" class="form-control validar " placeholder="Meses..." min="0" max="12" maxlength="2"  onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                     </div>
 
 
@@ -185,8 +185,11 @@ if (isset($_SESSION['error'])){
                             placeholder="Breve descripción del lugar de entrega del producto..."  required> -->
                     </div>
 
-
+                    <div class="col-12" id="contentAlertSolicitud">
+                  
+                  </div>
                 </div>
+                
                 <div class="col-12 d-flex justify-content-end mb-5">
                     <a href="<?php echo getUrl("costos","solicitud","consult");?>"><button type='button'
                             class="btn btn-danger mt-5">Cancelar</button></a>

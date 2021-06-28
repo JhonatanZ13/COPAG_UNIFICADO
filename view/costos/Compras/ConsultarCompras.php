@@ -38,18 +38,22 @@ echo getUrl("costos","compras","getInsert");?>">
                                    <?php
                                foreach($compras as $comp){
                                 echo "<tr>";     
-                                echo "<td>".$comp['com_NoItem']."</td>";
+                                echo "<td>".$comp['Soc_id']."</td>";
                                 echo "<td>".$comp['Soc_fecha']."</td>";
-                                echo "<td>".$comp['com_NoItem']."</td>";
-                                
+                                echo "<td>".$comp['continsumos']."</td>";  
                                 echo "<td>
-                                <a href='".getUrl("costos", "compras","getUpdate",array("com_NoItem"=>$comp['com_NoItem']))."'>
-                                <button class='btn btn-success'><i class='fa fa-pencil'></i></button></a> 
-                                <a href='".getUrl("costos", "compras","getVisualize",array("com_NoItem"=>$comp['com_NoItem']))."'>
-                                <button class='btn btn-success'><i class='fa fa-eye'></i></button></a>
-                                <abbr title='Eliminar compra'>
-                                <button value='Eliminar Solicitud de Compra' data-url='".getUrl("costos","compras","modalDelete",false,"ajax")."' data-id='".$comp['com_NoItem']."' class='btn btn-danger botonModal'  id='botonModal' value='Eliminar' ><i class='fa fa-close'></i></button></a>
-                                </abbr></td>";  
+                                <a href='".getUrl("costos", "compras","getUpdate",array("Soc_id"=>$comp['Soc_id']))."'>
+                                <button class='btn btn-success btn-sm' data-toggle='tooltip' data-placement='bottom' title='Editar'><i class='fa fa-pencil'></i></button></a> 
+                                <a href='".getUrl("costos", "compras","getVisualize",array("Soc_id"=>$comp['Soc_id']))."'>
+                                <button class='btn btn-success btn-sm' data-toggle='tooltip' data-placement='bottom' title='Visualizar'><i class='fa fa-eye'></i></button></a>      
+                                </a>
+                                <a href='" . getUrl("Costos", "Excel", "postExcel",array("Soc_id"=>$comp['Soc_id']) , 'ajax') . "' target='_blank'><button class='btn btn-sm btn-success' data-toggle='tooltip' data-placement='bottom' title='Descargar'><i class='fa fa-file-excel-o'></i></button>
+                                </a>
+                              
+                                <button value='Eliminar solicitud de compras' data-id='".$comp['Soc_id']."' data-toggle='tooltip' data-placement='bottom' title='Eliminar' class='btn btn-danger btn-sm botonModal'
+                                 data-url='".getUrl("costos","compras","postDelete",false,"ajax")."' >
+                                 <i class='fa fa-close'></i></button></a>
+                               </td>";  
                                 echo "</tr>";
                             }
                                 ?>

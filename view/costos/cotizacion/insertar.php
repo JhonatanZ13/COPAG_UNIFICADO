@@ -1,5 +1,5 @@
 <div class="x_title">
-    <h2>Generar Cotizacio</h2>
+    <h2>Generar Cotizacion</h2>
     <div class="clearfix"></div>
 </div>
 
@@ -48,6 +48,36 @@
 
                 <div class="col-md-12">
                     <div class="form-group row">
+                        <label class="control-label col-md-2 col-sm-2 ">Destinatario:</label>
+                        <div class="col-md-4 col-sm-4 ">
+                            <select id="destinatario" class="form-control">
+                                <option value="0">Seleccione...</option>
+                                <?php
+                            $opciones = array('id' => 0,'des' => '');
+                            if(isset($respuestaDestinitario)){
+                                foreach($respuestaDestinitario AS $res){
+                                    $opciones['id'] = $res['Usu_id'];
+                                    $opciones['des'] = $res['Usu_nombre'];
+                                }
+                            }
+                            
+                            foreach($destinitario as $des){
+                                if($des['Usu_id'] == $opciones['id']){
+                                    echo "<option value='".$des['Usu_id']."' selected>".$des['Usu_nombre']."</option>";
+                                }else{
+                                    echo "<option value='".$des['Usu_id']."'>".$des['Usu_nombre']."</option>";
+                                }
+                            }
+                            
+                            ?>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group row">
                         <label class="control-label col-md-2 col-sm-2 ">Tipo de cliente:</label>
                         <div class="col-md-4 col-sm-4 ">
                             <select id="tipoSolicitudP" class="form-control">
@@ -78,6 +108,7 @@
 
 
                 <!-- Bloque Cliente -->
+                
 
                 <?php  if(isset($cliente)){
                     foreach ($cliente as $clien) {
@@ -256,8 +287,9 @@
                         </div>
                     </div>
                 </div>
-                
+                <p style="color:red" id="msgDestinatario" class="d-none">*Por favor seleccione un destinatario y click en guardar.</p>
                 <p style="color:red" id="msgCliente" class="d-none">*Por favor seleccione un cliente y click en guardar.</p>
+                
             </div>
             <!-- Boton Guardar Datos  -->
             <div class="form-group mt-3">
@@ -335,7 +367,7 @@
                                     
                                         <a href='<?php echo getUrl("costos","cotizacion","postDeleteDetelleCotizacion",array('Dpe_id' => $dc["Dpe_id"],'Ped_id'=>$Ped_id ));?>'>
                                             <button value="Cancelar Solicitud de Cotización"
-                                                class="btn btn-danger btn-sm botonModal" data-url=""><i
+                                                class="btn btn-danger btn-sm" data-url=""><i
                                                     class="fa fa-close"></i></button>
                                         </a>
                                     
@@ -377,9 +409,9 @@
             <button  class="btn btn-primary botonModal2"
             type="button"
             id="enviarPedidoCotizacion"
-            title="Aprobar Cotización"
+            title="Solicitud de Aprobacion - Cotización"
             value="<?php echo $Ped_id; ?>"
-            data-url="<?php echo getUrl('costos','cotizacion','aprobarCotizacionModal',false,'ajax');?>"
+            data-url="<?php echo getUrl('costos','cotizacion','solicitarAprobarCotizacionModal',false,'ajax');?>"
             >Enviar</button>
 
             <a href="<?php echo getUrl("costos","cotizacion","consult");?>">

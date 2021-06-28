@@ -72,7 +72,7 @@ include_once '../controller/Access/AccessController.php';
                             </li>
 
                             <li>
-                                <a href="form_advanced.html">Reporte</a>
+                                <a href="<?php echo getUrl("costos","reporte","consult");?>">Reporte</a>
                             </li>
                         </ul>
                     </li>

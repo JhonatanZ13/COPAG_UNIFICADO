@@ -6,11 +6,12 @@ class SolicitudController {
  
     public function consult(){
         $obj=new SolicitudModel();
-        $sql="SELECT tblpedido.Ped_id,tblempresa.Emp_razonSocial,tblestado.Est_nombre,tbltipoempresa.Tempr_descripcion,tblpedido.Ped_fecha 
+        $sql="SELECT tblpedido.Ped_id,tblpedido.Ped_ruta_pdf,tblempresa.Emp_razonSocial,tblestado.Est_nombre,tbltipoempresa.Tempr_descripcion,tblpedido.Ped_fecha 
         FROM tblpedido,tblestado,tblempresa,tbltipoempresa
         WHERE tblpedido.Est_id=tblestado.Est_id 
         AND tbltipoempresa.Tempr_id=tblpedido.Tempr_id 
-        AND tblpedido.Est_id=3";
+        AND tblempresa.Emp_id=tblpedido.Emp_id 
+        AND tblpedido.Est_id=12";
         $solicitudP=$obj->consult($sql);
      
         include_once '../view/costos/solicitud/consultar.php';
@@ -20,7 +21,7 @@ class SolicitudController {
 
         if (isset($_POST['TipoS'])){
         $TipoS=$_POST['TipoS'];
-    }else {$TipoS=$_GET['TipoS'];}
+    }else {$TipoS=$_GET['TipoS'];}  
         $cont=0;
         if (isset($_POST['TipoS']) or isset($_GET['TipoS']) ){
         if ($TipoS==0){
@@ -39,8 +40,14 @@ class SolicitudController {
             FROM tblproductobase";
             $pbase=$obj->consult($sql);
 
-            $sql="SELECT * FROM tblempresa";
-            $empresa=$obj->consult($sql);
+            if ($TipoS==5){
+                $sql="SELECT * FROM tblempresa WHERE Tempr_id=$TipoS";
+                $empresa=$obj->consult($sql);
+            }else{
+                $sql="SELECT * FROM tblempresa WHERE Tempr_id=3 OR Tempr_id=1";
+                $empresa=$obj->consult($sql);
+            }
+           
 
             $sql="SELECT * FROM Tbldepartamento";
             $departamento=$obj->consult($sql);
@@ -67,29 +74,15 @@ class SolicitudController {
     public function postInsert(){
 
       //  dd($_POST);
-
-            extract($_POST);
-        //   echo  count($producto)-1;
-        // $producto= $_POST['producto'];
-        // $cantidad= $_POST['cantidad'];
-        // $desc= $_POST['desc'];
-
-        // $ped_fecha = $_POST['ped_fecha'];
-        // $subdirector = $_POST['subdirector'];
-        // $centro = $_POST['centro'];
-        // $municipio = $_POST['municipio'];
-        // $dep = $_POST['dep'];
-        // $asunto = $_POST['asunto'];
-        // $objeto = $_POST['objeto'];
-        // $pj = $_POST['pj'];
-        // $lj = $_POST['lj'];
-
-       
+     extract($_POST);
         //desision que asigna las variables de sena proveedor sena
         if($tipoS==4){
             $centro=1;
-            $cliente=2;  
-            $dep=1;
+            
+            $centron=",`Cen_id`";
+            
+            $cliente=1;  //aqui va el id del sena CDTI como empresa
+            $dep=1; 
             $municipio=1;
         }
         //desision que asigna las variables de sena cliente externo editando el sql
@@ -115,10 +108,10 @@ class SolicitudController {
         // }
 
         // ----
-        if (empty($objeto)==true){
-            $cont++;
-          $_SESSION['error']["objeto"]="El campo objeto no puede estar vacio. ";     
-        }
+        // if (empty($objeto)==true){
+        //     $cont++;
+        //   $_SESSION['error']["objeto"]="El campo objeto no puede estar vacio. ";     
+        // }
 
 
         if ($cont>0){
@@ -131,7 +124,7 @@ class SolicitudController {
       
 
         $sql="INSERT INTO `tblpedido` (`Ped_id`, `Ped_fecha`, `destinatario`, `Ped_objetivo`, `Ped_plazoEjecucionDias`,`Ped_plazoEjecucionMeses`, `Ped_lugarEjecucionCiu`,`Ped_lugarEjecucionCen`, `Est_id`".$centron.",`Emp_id`,`Dep_id`,`Mun_id`,`Tempr_id`)
-        VALUES ('".$Ped_id."','".$ped_fecha."','".$destinatario."','".$objeto."','".$pjd."','".$pjm."','".$ljciu."','".$ljcen."', '3'".$centro.",'".$cliente."','".$dep."','".$municipio."','".$tipoS."')";
+        VALUES ('".$Ped_id."','".$ped_fecha."','".$destinatario."','".$objeto."','".$pjd."','".$pjm."','".$ljciu."','".$ljcen."', '12'".$centro.",'".$cliente."','".$dep."','".$municipio."','".$tipoS."')";
        
 
         $ejecutar=$obj->insert($sql);
@@ -154,11 +147,16 @@ class SolicitudController {
                     }
                 }
                 if ($ejecutar){
-                   redirect(getUrl("costos","solicitud","consult"));
+                $_SESSION['success']["solicitudOK"]="Solicitud N°".$Ped_id." guardada.";     
+
+                  redirect(getUrl("costos","solicitud","consult"));
+
+
                 }else{ echo "Ups ocurrio--".$sql;}
                 
         }else{ echo "Ups ocurrio un error 1---".$sql;}
 
+        
     }
     }
 
@@ -209,7 +207,9 @@ class SolicitudController {
     extract($_POST);
 
     if($tipoS==4){
+        
         $centro=1;
+        $centron=" ,`Cen_id`=".$centro;
         $cliente=2;  
         $dep=1;
         $municipio=1;
@@ -239,6 +239,7 @@ class SolicitudController {
                     }
                 }
                 if ($ejecutar){
+                    $_SESSION['success']["update"]="Solicitud actualizada!";
                    redirect(getUrl("costos","solicitud","consult"));
                 }else{ echo "Ups ocurrio--".$sql;}   
   
@@ -249,32 +250,80 @@ class SolicitudController {
     public function modalCancelar(){
         extract($_GET);
         $obj=new SolicitudModel();
-        include_once '../view/costos/solicitud/cancelarModal.php';
+        $sql="SELECT dp.Dpe_id,pb.Pba_descripcion, dp.Dpe_cantidad, dp.Dep_descripcion, dp.Dpe_valorUnitario, dp.Dpe_valorTotal FROM tbldetallepedido as dp, tblproductobase as pb WHERE dp.Ped_id=$Ped_id AND pb.Pba_id = dp.Pba_id";
+        $detalleCotizacion = $obj->consult($sql);
+    //     echo'<table id="tablamodal"
+        
+    //     width="100%">
+    //     <thead>
+    //         <tr>
+    //             <th cope="col">No. Item</th>
+    //             <th>Producto</th>
+    //             <th>Cantidad</th>
+    //         </tr>
+    //     <tbody>';
+         
+    //  echo "<tr>";
+                // $contadorItem = 0;
+                // foreach($detalleCotizacion as $dc){
+                //     $contadorItem++;
+                //     echo "
+                //     <td>".$contadorItem."</td>
+                //     <td>".$dc['Pba_descripcion']."</td>
+                //     <td>".$dc['Dpe_cantidad']."</td>
+                //     </tr>
+                //     ";
+                // }
+        
+    //    echo '</tbody></table>';
+    include_once '../view/costos/solicitud/cancelarModal.php';
+
+
     }
     public function modalCancelarPost(){
        extract($_POST);
        $obj=new SolicitudModel();
 
-       $sql="UPDATE `tblpedido` SET `Est_id`=5 WHERE `tblpedido`.`Ped_id` = $Ped_id";
+       $sql="UPDATE `tblpedido` SET `Est_id`=7 WHERE `tblpedido`.`Ped_id` = $Ped_id";
        $ejecutar= $obj->update($sql);
 
        $sql="UPDATE `tblpedido` SET `Ped_motivo`='".$Ped_motivo."' WHERE `tblpedido`.`Ped_id` = $Ped_id";
        $ejecutar= $obj->update($sql);
 
        if ($ejecutar){
-        redirect(getUrl("costos","solicitud","consult"));
+        $_SESSION['error']["cancelar"]="Solicitud Cancelada!";     
+
+        redirect(getUrl("costos","solicitud","consultarSolicitudAprobacion"));
        }
     }
-    public function modalAprobarPost(){
+    public function modalAprobarEnvio(){
+
         extract($_POST);
         $obj=new SolicitudModel();
-        $sql="UPDATE `tblpedido` SET `Est_id`=4 WHERE `tblpedido`.`Ped_id` = $Ped_id";
+        $sql="UPDATE `tblpedido` SET `Est_id`=5 WHERE `tblpedido`.`Ped_id` = $Ped_id";
+        $ejecutar= $obj->update($sql);
+          
+    }
+
+   
+
+    public function modalAprobar(){
+        extract($_POST);
+        $obj=new SolicitudModel();
+        $sql="UPDATE `tblpedido` SET `Est_id`=6 WHERE `tblpedido`.`Ped_id` = $Ped_id";
        $ejecutar= $obj->update($sql);
             // dd($_POST);
+            if ($ejecutar){
+                $_SESSION['success']["correoOk"]="Solicitud Aprobada!";     
+
+                redirect(getUrl("costos","solicitud","consultarSolicitudAprobacion"));
+               }
     }
-    public function modalAprobar(){
+    public function aprobarSolicitudModal(){
         extract($_GET);
         $obj=new SolicitudModel();
+        $sql="SELECT dp.Dpe_id,pb.Pba_descripcion, dp.Dpe_cantidad, dp.Dep_descripcion, dp.Dpe_valorUnitario, dp.Dpe_valorTotal FROM tbldetallepedido as dp, tblproductobase as pb WHERE dp.Ped_id=$Ped_id AND pb.Pba_id = dp.Pba_id";
+        $detalleCotizacion = $obj->consult($sql);
         include_once '../view/costos/solicitud/aprobarModal.php';
     }
     public function selectDinamico(){
@@ -299,6 +348,111 @@ class SolicitudController {
         OR Tempr_id=5";
         $tipoS=$obj->consult($sql);
         include_once '../view/costos/solicitud/tipoSModal.php';
+    }
+
+
+    public function consultarSolicitudAprobacion(){
+        $obj=new SolicitudModel();
+        $sql="SELECT
+        ped.Ped_id,
+        est.Est_nombre,
+        CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
+        emp.Emp_razonSocial,
+        ped.Ped_fecha,
+        ped.Ped_ruta_pdf
+        FROM
+        tblpedido AS ped,
+        tblestado AS est,
+        tblempresa AS emp
+        WHERE
+        est.Est_id = ped.Est_id AND
+        ped.Emp_id = emp.Emp_id AND
+        ( ped.Est_id = 5 )
+        ORDER BY est.Est_nombre DESC
+        ";
+
+        $consultPedido = $obj->consult($sql);
+        include_once '../view/costos/solicitud/consultarAprobacionSolicitud.php';
+    }
+
+    public function aprobarSolicitudConsult(){
+        extract($_GET);     
+        $obj=new SolicitudModel();
+      
+         $sql="SELECT * FROM tblpedido WHERE Ped_id=$Ped_id";
+         $pedido=$obj->consult($sql);
+        
+         $sql="SELECT * FROM Tbldepartamento";
+         $departamento=$obj->consult($sql);
+
+         $sql="SELECT * FROM Tblmunicipio";
+         $municipio=$obj->consult($sql);
+
+         $sql="SELECT * FROM Tblcentro";
+         $centro=$obj->consult($sql);
+
+         $sql="SELECT  tblproductobase.Pba_id,tblproductobase.Pba_descripcion
+         FROM tblproductobase";
+         $pbase=$obj->consult($sql);
+
+         $sql="SELECT tbldetallepedido.Pba_id,tbldetallepedido.Dpe_cantidad,tbldetallepedido.Dep_descripcion,tblproductobase.Pba_descripcion 
+         FROM tbldetallepedido,tblproductobase
+         WHERE tblproductobase.Pba_id=tbldetallepedido.Pba_id
+         AND Ped_id=$Ped_id";
+         $tproducto=$obj->consult($sql); 
+
+         $sql="SELECT tblusuario.Usu_id,tblusuario.Usu_primerNombre,tblusuario.Usu_segundoNombre,tblusuario.Usu_primerApellido,tblusuario.Usu_segundoApellido,tblusuario.Usu_email FROM tblusuario";
+         $usuario=$obj->consult($sql);
+
+         $sql="SELECT * FROM tblempresa";
+         $empresa=$obj->consult($sql);
+
+        //  $sql="SELECT * FROM tbltiposolicitud";
+        //  $tipoS=$obj->consult($sql);
+
+       
+         
+    include_once '../view/costos/solicitud/aprobarConsult.php';
+    }
+
+    public function getconsultSolicitud(){
+        extract($_GET);     
+        $obj=new SolicitudModel();
+      
+         $sql="SELECT * FROM tblpedido WHERE Ped_id=$Ped_id";
+         $pedido=$obj->consult($sql);
+        
+         $sql="SELECT * FROM Tbldepartamento";
+         $departamento=$obj->consult($sql);
+
+         $sql="SELECT * FROM Tblmunicipio";
+         $municipio=$obj->consult($sql);
+
+         $sql="SELECT * FROM Tblcentro";
+         $centro=$obj->consult($sql);
+
+         $sql="SELECT  tblproductobase.Pba_id,tblproductobase.Pba_descripcion
+         FROM tblproductobase";
+         $pbase=$obj->consult($sql);
+
+         $sql="SELECT tbldetallepedido.Pba_id,tbldetallepedido.Dpe_cantidad,tbldetallepedido.Dep_descripcion,tblproductobase.Pba_descripcion 
+         FROM tbldetallepedido,tblproductobase
+         WHERE tblproductobase.Pba_id=tbldetallepedido.Pba_id
+         AND Ped_id=$Ped_id";
+         $tproducto=$obj->consult($sql); 
+
+         $sql="SELECT tblusuario.Usu_id,tblusuario.Usu_primerNombre,tblusuario.Usu_segundoNombre,tblusuario.Usu_primerApellido,tblusuario.Usu_segundoApellido,tblusuario.Usu_email FROM tblusuario";
+         $usuario=$obj->consult($sql);
+
+         $sql="SELECT * FROM tblempresa";
+         $empresa=$obj->consult($sql);
+
+
+       
+
+       
+         
+    include_once '../view/costos/solicitud/consultSolicitud.php';
     }
    
 }

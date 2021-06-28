@@ -4,7 +4,27 @@
     <div class="clearfix"></div>
 </div>
 <div class="x_content">
+<?php 
+if (isset($_SESSION['error'])){
+ echo "<div class='alert alert-danger'>";
+  foreach ($_SESSION['error'] as $error){
+    echo $error;
+  }
 
+ echo "</div>";
+
+ unset($_SESSION['error']); 
+}else if (isset($_SESSION['success'])){
+    echo "<div class='alert  alert-primary'>";
+    foreach ($_SESSION['success'] as $success){
+      echo $success;
+    }
+  
+   echo "</div>";
+  
+   unset($_SESSION['success']);
+}
+?>
 
     <!-- inicio tabla  -->
     <div class="col-md-12 col-sm-12 ">
@@ -14,10 +34,17 @@
                 <ul class="nav navbar-right panel_toolbox">
                     <li><button class="btn btn-success btn-sm collapse-link">Cotizaciones pendientes<i
                                 class="fa fa-chevron-up pl-3"></i></button></li>
-                    <a href="<?php echo getUrl("costos","cotizacion","insert");?>">
-                        <li><button class="btn btn-success btn-sm">Crear cotizacion<i
+
+                    <a href="<?php echo getUrl("costos","cotizacion","consultarCotizacionAprobacion");?>">
+                        <li><button class="btn btn-success btn-sm">Administrar cotizaciones<i
                                     class="fas fa-plus-square pl-3"></i></button></li>
                     </a>
+                    <?php 
+                    // <a href="<?php echo getUrl("costos","cotizacion","insert");">
+                    //     <li><button class="btn btn-success btn-sm">Crear cotizacion<i
+                    //                 class="fas fa-plus-square pl-3"></i></button></li>
+                    // </a>
+                    ?>
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -40,7 +67,7 @@
                                     </tr>
                                 <tbody>
 
-                                <?php
+                                    <?php
                                 foreach ($consultPedido as $pedi) {
                                     echo "<tr>";
                                     echo "<td>".$pedi['Ped_id']."</td>";
@@ -48,18 +75,34 @@
                                     echo "<td>".$pedi['Emp_nombre']."</td>";
                                     echo "<td>".$pedi['Emp_razonSocial']."</td>";
                                     echo "<td>".$pedi['Ped_fecha']."</td>";
+
+                                    // "<button title='Solicitud de Aprobacion - Cotización' value='".$pedi['Ped_id']."'
+                                    // class='btn btn-primary btn-sm botonModal2' data-url='".getUrl("costos","cotizacion","solicitarAprobarCotizacionModal","","ajax")."'><i
+                                    //     class='fa fa-check'></i></button>";
                                     
-                                    echo "<td>
+                                    echo "<td>";
+
                                     
-                                        <button title='Aprobar Cotización' value='".$pedi['Ped_id']."'
-                                            class='btn btn-primary btn-sm botonModal2' data-url='".getUrl("costos","cotizacion","aprobarCotizacionModal","","ajax")."'><i
-                                                class='fa fa-check'></i></button>
+
+
+                                    if($pedi['cantidad'] != 0 && $pedi['total'] != NULL){
+                                        
+                                        echo "<button title='Solicitud de Aprobacion - Cotización' value='".$pedi['Ped_id']."'
+                                            class='btn btn-primary btn-sm botonModal2' data-url='".getUrl("costos","cotizacion","solicitarAprobarCotizacionModal","","ajax")."'><i
+                                                class='fa fa-check'></i></button>";
+                                        
+                                    }else{
+                                        echo "<button title='Añada Cotizacion' value=''
+                                            class='btn btn-info btn-sm' disabled=disabled data-url=''><i
+                                                class='fa fa-check'></i></button>";
+                                    }
                                     
-                                        <a href='".getUrl("costos","cotizacion","updateOrden",array('Ped_id'=>$pedi['Ped_id']))."'>
+                                    
+                                    echo    "<a href='".getUrl("costos","cotizacion","updateOrden",array('Ped_id'=>$pedi['Ped_id']))."'>
                                             <button class='btn btn-success btn-sm'><i class='fa fa-pencil'></i></button>
                                         </a>
 
-
+                              
                                         
                                         <button title='Rechazar Cotización' value='".$pedi['Ped_id']."'
                                         class='btn btn-danger btn-sm botonModal2' data-url='".getUrl("costos","cotizacion","rechazarModal","","ajax")."'><i
@@ -72,7 +115,7 @@
                                 }
                                 
                                 ?>
-                                    
+
                                 </tbody>
                             </table>
                         </div>
