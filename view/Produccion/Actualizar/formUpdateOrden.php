@@ -1214,8 +1214,10 @@
              <h5 class="display-5s">Por favor rellene o revise todos los campos obligatorios.</h5>
             </div class="col-md-12">
                 <div class="col-md-6 float-right">
+                    <a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>">
+                        <button type="button" class="btn btn-danger float-right">Cancelar</button>
+                    </a>
                     <input type="submit" class="btn btn-success float-right" value="Actualizar Orden" id="actualizarordenp">
-                    <a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>"><button type="button" class="btn btn-danger float-right">Cancelar</button></a>
                 </div>
             </div>
     </form>

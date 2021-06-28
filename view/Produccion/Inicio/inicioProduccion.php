@@ -63,7 +63,18 @@
     <!-- Tabla de consulta Ordenes de Producción -->
     <div class="x_panel">
     <a href="<?php echo getUrl("Produccion", "Produccion", "formInsertOrden");?>"><button class="btn btn-success">Crear Orden de Produccion <i class="fa fa-plus"></i></button></a>
-    <a href="<?php echo getUrl("Produccion", "Produccion", "getMainAdmin");?>"><button class="btn btn-success">Administrar Ordenes Pendientes <i class="glyphicon glyphicon-cog"></i></button></a>
+
+<?php 
+    if ($_SESSION['rolUser'] != 'Aprendiz') {
+?>
+    <a href="<?php echo getUrl("Produccion", "Produccion", "getMainAdmin");?>">
+        <button class="btn btn-success">Administrar Ordenes Pendientes
+            <i class="glyphicon glyphicon-cog"></i>
+        </button>
+    </a>
+<?php 
+    }
+?>
     </div>
     <div class="x_panel mt-1">
 
@@ -101,33 +112,39 @@
                         <tbody>
                             <?php
                             foreach ($ordenes as $or) {
-                                echo "<tr class='even pointer'>";
-                                echo "<td>" . $or['Odp_id'] . "</td>";
-                                echo "<td>" . $or['Emp_razonSocial'] . "</td>";
-                                echo "<td>" . $or['Pba_descripcion'] . "</td>";
-                                echo "<td>" . $or['Usu_primerNombre'] .' '. $or['Usu_segundoApellido'] ."</td>";
-                                echo "<td>" . $or['Odp_fechaCreacion'] . "</td>";
-                                echo "<td>" . $or['Odp_fechaEntrega'] . "</td>";
-                                echo "<td> <strong>" . $or['Est_nombre'] . "</strong></td>";
-                                echo "<td class=''>
-                                <a target='_blank' href='" . getUrl("Produccion", "Produccion", "getOrdenPdf", array("Odp_id" => $or['Odp_id']), "ajax") . "'>
+                            ?>
+
+                            <tr class='even pointer'>
+                                <td><?= $or['Odp_id']; ?></td>
+                                <td><?= $or['Emp_razonSocial']; ?></td>
+                                <td><?= $or['Pba_descripcion']; ?></td>
+                                <td><?= $or['Usu_primerNombre'] .' '. $or['Usu_primerApellido']; ?></td>
+                                <td><?= $or['Odp_fechaCreacion']; ?></td>
+                                <td><?= $or['Odp_fechaEntrega']; ?></td>
+                                <td> <strong><?= $or['Est_nombre']; ?></strong></td>
+                                <td class='row'>
+                                <a target='_blank' href='<?= getUrl("Produccion", "Produccion", "getOrdenPdf", array("Odp_id" => $or['Odp_id']), "ajax"); ?>'>
                                     <button class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Descargar PDF'><i class='fa fa-file-pdf-o'></i>
                                 </button></a> 
                                 
-                                <a href='" . getUrl("Produccion", "Produccion", "getConsult", array("Odp_id" => $or['Odp_id'])) . "'>
+                                <a href='<?= getUrl("Produccion", "Produccion", "getConsult", array("Odp_id" => $or['Odp_id'])); ?>'>
                                     <button class='btn btn-sm btn-info' data-toggle='tooltip' data-placement='bottom' title='Visualizar'><i class='fa fa-eye'></i>
                                     </button>
                                 </a> 
                                             
-                                <a  href='" . getUrl("Produccion", "Produccion", "formUpdateOrden", array("Odp_id" => $or['Odp_id'])) . "'>
+                                <a  href='<?= getUrl("Produccion", "Produccion", "formUpdateOrden", array("Odp_id" => $or['Odp_id'])); ?>'>
                                     <button class='btn btn-sm btn-primary' data-toggle='tooltip' data-placement='bottom' title='Editar'><i class='fa fa-edit'></i></button>
-                                <a/>
-                                
-                                <button id='modalEliminar' data-id='".$or['Odp_id']."' data-url='" . getUrl("Produccion", "Produccion", "postDelete", array("Odp_id" => $or['Odp_id']), "ajax") . "' 
+                                </a>
+                            <?php
+                                if ($_SESSION['rolUser'] != 'Aprendiz') {
+                            ?>
+                                <button id='modalEliminar' data-id='<?= $or['Odp_id']; ?>' data-url='<?= getUrl("Produccion", "Produccion", "postDelete", array("Odp_id" => $or['Odp_id']), "ajax"); ?>' 
                                 class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Eliminar'><i class='fa fa-trash-o'></i></button>
 
-                                </td>";
-                                echo "</tr>";
+                                </td>
+                            </tr>
+                            <?php
+                                }
                             }
                             ?>
                         </tbody>

@@ -1,5 +1,4 @@
 <?php
-
 foreach ($usuarios as $user) {
 ?>
 
@@ -16,7 +15,7 @@ foreach ($usuarios as $user) {
 
 					<h1 class="">Perfil</h1>
 					<br />
-					<form action="<?php echo getUrl("PanelDeControl", "User", "postUpdate"); ?>" method="post" data-parsley-validate class="form-horizontal form-label-left">
+					<form action="<?php echo getUrl("PanelDeControl", "User", "postProfile"); ?>" method="post" data-parsley-validate class="form-horizontal form-label-left">
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback">
 							<label for=""><?= $_SESSION['rolUser']; ?></label><br>
@@ -28,7 +27,7 @@ foreach ($usuarios as $user) {
 							} elseif ($_SESSION['rolUser'] == 'Aprendiz') {
 								$rolFoto = $learner;
 							} ?>
-							<img class="border border-info" src="<?= $rolFoto ?>" style="width: 250px;">
+							<img class="border border-info" src="<?= $rolFoto ?>" style="width: 200px; height: 250px;">
 						</div>
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback" hidden>
