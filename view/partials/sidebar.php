@@ -216,7 +216,7 @@ include_once '../controller/Access/AccessController.php';
 
                         <ul class="nav child_menu">
                             <li><a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>">Orden Produccion</a></li>
-                            <li><a href="fixed_footer.html">Reporte</a></li>
+                            <li><a href="<?php echo getUrl("Produccion", "Reporte", "getMainReporte"); ?>">Reporte produccion</a></li>
                         </ul>
                     </li>
                     
