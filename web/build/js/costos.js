@@ -1378,6 +1378,7 @@ $(document).ready(function () {
     } else {
       $(".calcularResultado").val("");
     }
+    calcularTotalCotizacion();
   });
 
   $(document).on("change", ".calcularCostoUnitario", function () {
@@ -1393,6 +1394,7 @@ $(document).ready(function () {
     } else {
       $(".calcularResultado").val("");
     }
+    calcularTotalCotizacion();
   });
 
   //Calular Tintas y total
@@ -1776,6 +1778,9 @@ $(document).ready(function () {
   function calcularTotalCotizacion() {
     var totalTintas = $("#totalTintas").val();
     var totalMaterial = $("#totalMaterial").val();
+
+    //Plancha
+    var totalPlancha = $(".calcularResultado").val();
     var insumos = 0;
 
     if (isNaN(parseFloat(totalTintas))) {
@@ -1784,9 +1789,12 @@ $(document).ready(function () {
     if (isNaN(parseFloat(totalMaterial))) {
       totalMaterial = 0;
     }
+    if (isNaN(parseFloat(totalPlancha))) {
+      totalPlancha = 0;
+    }
 
     
-    insumos = parseFloat(totalTintas) + parseFloat(totalMaterial);
+    insumos = parseFloat(totalTintas) + parseFloat(totalMaterial) + parseFloat(totalPlancha);
     $("#totalInsumos").val(insumos);
     
 
@@ -1871,6 +1879,7 @@ $(document).ready(function () {
     } else {
       $(".calcularResultado").val("");
     }
+    calcularTotalCotizacion();
   }
 
   //Validacion pedido - Cotizacion -> Cliente existente
@@ -2875,7 +2884,7 @@ $(document).ready(function () {
         estado,
       type: "POST",
       success: function (datos) {
-        console.log(datos);
+        // console.log(datos);
 
         $("#filtroReporteCostos").html(datos);
         // $("#datatable-responsive-costos-cotizacion-pendiente").html(datos);
@@ -2919,6 +2928,16 @@ $(document).ready(function () {
       },
     });
   });
+  validarActializarReporteCostos();
+  function validarActializarReporteCostos(){
+    if ($("#estado").val() == "0") {
+      $("#getReporte").attr("disabled", true);
+      $("#getReporteExcel").attr("disabled", true);
+    } else {
+      $("#getReporte").attr("disabled", false);
+      $("#getReporteExcel").attr("disabled", false);
+    }
+  }
 
   $(document).on("click", "#getReporteExcel", function () {
     // window.location = $(this).attr("data-url");
@@ -2941,6 +2960,7 @@ $(document).ready(function () {
       type: "POST",
       success: function (datos) {
         console.log("Ejecutado: " + datos);
+        
         window.location = datos;
       },
     });
@@ -2987,20 +3007,20 @@ $(document).ready(function () {
   cargarTotalesCotizacion();
 
   //calcular Planchas
-  function calcularTotalPlancha() {
-    var costo = $(".calcularCantidad").val();
-    var cantidad = $(".calcularCostoUnitario").val();
-    if (costo !== "") {
-      var resultado = costo * cantidad;
-      if (resultado > 0) {
-        $(".calcularResultado").val(resultado);
-      } else {
-        $(".calcularResultado").val("");
-      }
-    } else {
-      $(".calcularResultado").val("");
-    }
-  }
+  // function calcularTotalPlancha() {
+  //   var costo = $(".calcularCantidad").val();
+  //   var cantidad = $(".calcularCostoUnitario").val();
+  //   if (costo !== "") {
+  //     var resultado = costo * cantidad;
+  //     if (resultado > 0) {
+  //       $(".calcularResultado").val(resultado);
+  //     } else {
+  //       $(".calcularResultado").val("");
+  //     }
+  //   } else {
+  //     $(".calcularResultado").val("");
+  //   }
+  // }
 
   
 

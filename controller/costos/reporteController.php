@@ -6,12 +6,7 @@ class ReporteController {
 
     public function consult(){
         $obj=new ReporteModel();
-
-
-
-
         include_once '../view/costos/Reporte/consultar.php';
-
     }
 
     public function getFiltroReporte(){
@@ -20,8 +15,6 @@ class ReporteController {
         $fechaInicio=$_POST["fechaInicio"];
         $fechaFin=$_POST["fechaFin"];
         $estado=$_POST["estado"];
-
-        
 
         // echo $fechaInicio."<br>";
         // echo $fechaFin."<br>";
@@ -87,9 +80,7 @@ class ReporteController {
         // echo $sql;
         $consultar = $obj->consult($sql);
                 
-
         // echo $sql;
-
         echo "<table id='datatable-responsive-costos-cotizacion-pendiente'
         class='table table-striped table-bordered dt-responsive nowrap' cellspacing='0'
         width='100%'>
@@ -100,7 +91,7 @@ class ReporteController {
             <th>Centro/Empresa</th>
             <th>Fecha Solicitud</th>
             <th>Responsable</th>
-            <th>acciones</th>
+            
         </tr>
         <tbody>";
 
@@ -111,9 +102,6 @@ class ReporteController {
             echo "<td>".$c['Emp_razonSocial']."</td>";
             echo "<td>".$c['Ped_fecha']."</td>";
             echo "<td>".$c['Est_nombre']."</td>";
-            echo "<td><button title='' value=''
-                    class='btn btn-danger btn-sm botonModal' data-url=''><i
-                    class='fa fa-close'></i></button></td>";
 
             echo "</tr>";
         }
@@ -131,30 +119,29 @@ class ReporteController {
 
         switch ($tipoReporte) {
             case '0':
-                    echo "<option value='0'>Seleccione...</option>
+                    echo "  <option value='99'>Todos los estados</option>
                           ";
                 break;
             case '1':
 
-                    echo "<option value='0'>Seleccione...</option>
+                    echo "  <option value='12'>Solicitud - pendiente envio</option>
                             <option value='5'>Pendiente por aprobacion - solicitud</option>
                             <option value='6'>Aprobado - solicitud</option>
                             <option value='7'>No aprobado - solicitud</option>
+                            <option value='98'>Todos - solicitud</option>
                             ";
                 break;
 
             case '2':
-                    echo "<option value='0'>Seleccione...</option>
-                            <option value='1'>Activo</option>
-                            <option value='8'>Pendiente por aprobacion - cotizacion</option>
+                    echo "  <option value='8'>Pendiente por aprobacion - cotizacion</option>
                             <option value='9'>Aprobado - cotizacion</option>
                             <option value='10'>No aprobado - cotizacion</option>
-                            <option value='98'>Todos</option>
+                            <option value='98'>Todos - Cotizacion</option>
                             ";
                 break;
             
             default:
-                    echo "<option value='0'>Seleccione...</option>";
+                    echo "<option value='0'>Opcion no valida</option>";
                 break;
         }
 
@@ -168,7 +155,6 @@ class ReporteController {
         $fechaFin=$_POST["fechaFin"];
         $estado=$_POST["estado"];
 
-        
         $cotizacion = array(8,9);
         $esCotizacion = false;
         for($i=0;$i<COUNT($cotizacion);$i++){

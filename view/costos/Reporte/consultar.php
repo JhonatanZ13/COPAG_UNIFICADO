@@ -72,7 +72,7 @@
                         <label class="control-label col-md-2 col-sm-2 ">Estado:</label>
                         <div class="col-md-5 col-sm-5 ">
                             <select id="estado" class="form-control">
-                                <option value="0">Seleccione...</option>
+                                <option value='99'>Todos los estados</option>
                                 
                                 <!-- <option value="1">Activo</option> -->
                             </select>
@@ -119,13 +119,11 @@
                                 width="100%">
                                 <thead style="background-color:#17A481; color:#fff;">
                                     <tr>
-                                        <th cope="col">No. Item</th>
-                                        <th>Producto</th>
-                                        <th>Cantidad</th>
-                                        <th>Descripcion</th>
-                                        <th>Valor Unitario</th>
-                                        <th>Valor Total</th>
-                                        <th>acciones</th>
+                                        <th cope='col'>Codigo Pedido</th>
+                                        <th>Nombre Cliente</th>
+                                        <th>Centro/Empresa</th>
+                                        <th>Fecha Solicitud</th>
+                                        <th>Responsable</th>
                                     </tr>
                                 <tbody>
 

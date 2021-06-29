@@ -371,69 +371,56 @@ class ExcelController
         $fechaFin = $_GET["fechaFin"];
         $estado = $_GET["estado"];
 
-
         $sheet = new Spreadsheet();
         $excel = $sheet->getActiveSheet();
         $obj = new ExcelModel();
 
-        if ($estado == 99) {
-            $sql = "SELECT
-            ped.Ped_id,
-            est.Est_nombre,
-            CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
-            emp.Emp_razonSocial,
-            ped.Ped_fecha
-            FROM
-            tblpedido AS ped,
-            tblestado AS est,
-            tblempresa AS emp
-            WHERE
-            est.Est_id = ped.Est_id AND
-            ped.Emp_id = emp.Emp_id AND
-            ped.Ped_fecha >= '$fechaInicio' AND
-            ped.Ped_fecha <= '$fechaFin' 
-            ORDER BY ped.Ped_id ASC";
-        } else if ($estado == 98) {
 
-            $sql = "SELECT
-            ped.Ped_id,
-            est.Est_nombre,
-            CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
-            emp.Emp_razonSocial,
-            ped.Ped_fecha
-            FROM
-            tblpedido AS ped,
-            tblestado AS est,
-            tblempresa AS emp
-            WHERE
-            est.Est_id = ped.Est_id AND
-            ped.Emp_id = emp.Emp_id AND
-            ped.Ped_fecha >= '$fechaInicio' AND
-            ped.Ped_fecha <= '$fechaFin' AND
-            (ped.Est_id = 1 OR ped.Est_id = 8 OR ped.Est_id = 9 OR ped.Est_id = 10)
-            ORDER BY ped.Ped_id ASC";
+        $sql="SELECT
+        ped.Ped_id,
+        est.Est_nombre,
+        CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
+        emp.Emp_razonSocial,
+        ped.Ped_fecha
+        FROM
+        tblpedido AS ped,
+        tblestado AS est,
+        tblempresa AS emp
+        WHERE
+        est.Est_id = ped.Est_id AND
+        ped.Emp_id = emp.Emp_id AND
+        ped.Ped_fecha >= '$fechaInicio' AND
+        ped.Ped_fecha <= '$fechaFin'
+        ";
+
+        
+
+        if ($estado == 99) {
+            $sql .= "";
+        } else if ($estado == 98) {
+            //Todos los estados Cotizacion
+            $sql .= "AND
+            (ped.Est_id = 8 OR 
+            ped.Est_id = 9 OR 
+            ped.Est_id = 12)
+            ";
+        }else if($estado == 97){
+            //Todos los estados Solicitud
+            $sql .= "AND
+            (ped.Est_id = 5 OR 
+            ped.Est_id = 6 OR 
+            ped.Est_id = 7 OR
+            ped.Est_id = 7 OR)
+            ";
         } else {
-            $sql = "SELECT
-            ped.Ped_id,
-            est.Est_nombre,
-            CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
-            emp.Emp_razonSocial,
-            ped.Ped_fecha
-            FROM
-            tblpedido AS ped,
-            tblestado AS est,
-            tblempresa AS emp
-            WHERE
-            est.Est_id = ped.Est_id AND
-            ped.Emp_id = emp.Emp_id AND
-            ped.Ped_fecha >= '$fechaInicio' AND
-            ped.Ped_fecha <= '$fechaFin' AND
+            $sql .= "AND
             ped.Est_id = $estado
-            ORDER BY ped.Ped_id ASC";
+            ";
         }
 
-
-
+        
+        $sql .= "ORDER BY ped.Ped_id ASC";
+        // echo "<scrip>console.log(".$sql.");</scrip>";
         $consultPedidos = $obj->consult($sql);
 
         $excel->getStyle('B6:F6')

@@ -69,7 +69,7 @@
 
  <!-- Costos -->
  <script src="build/js/costos.js"></script>
- <script src="build/js/compras.js"></script>
+ <!-- <script src="build/js/compras.js"></script> -->
  <!----- Inventario -------------->
  <script src="vendors/jquery/dist/globalInventario.js"></script>
 
