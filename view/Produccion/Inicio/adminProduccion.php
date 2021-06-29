@@ -1,3 +1,5 @@
+<?php  if ($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario'){ ?>
+
 <div class="container">
     <div class="page-title">
         <div class="title_left">
@@ -134,3 +136,11 @@
         </div>
     </div>
 </div>
+
+<?php }else{
+    
+    echo "<div class='x_panel'>";
+    echo "No tienes los permisos necesarios para acceder a esta vista :D <br>";
+    echo "<a href='http://localhost/copagunificado/web/index.php'> <button class='btn btn-primary mt-3'> Volver </button> </a>";
+    echo "</div>";
+} ?>

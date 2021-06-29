@@ -772,7 +772,7 @@
         //Funcion Eliminar
 
         public function postDelete(){
-            
+            if ($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario'){
             $Odp_id = $_POST['Odp_id'];
             $obj = new ProduccionModel();
             $sql = "SELECT * FROM tblordenproduccion WHERE Odp_id=$Odp_id";
@@ -815,6 +815,9 @@
 
             if ($deletefinal) {
                 redirect(getUrl("Produccion","Produccion","getMain"));
+            }
+            }else{
+                echo "No tienes los permisos necesarios para realizar esta accion";
             }
 
         }
