@@ -307,7 +307,7 @@ $(document).ready(function () {
     });
   });
 
-  $("#alert").delay(4000).fadeOut();
+  $("#alert").delay(1000).fadeOut();
   //$("#alert_reg").delay(4000).addClass("invisible");
 
 });
