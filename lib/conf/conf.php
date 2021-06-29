@@ -3,7 +3,7 @@
     $server="localhost";
     $user="root";
     $pass="";
-    $database="db_copag";
+    $database="copag";
     $port="3306";
 
 ?>

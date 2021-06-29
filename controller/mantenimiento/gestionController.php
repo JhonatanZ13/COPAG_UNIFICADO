@@ -5,19 +5,19 @@ require_once '../model/mantenimiento/GestionModel.php';
 class GestionController
 {
 //FUNCION PARA CONSULTAR DATOS INGRESADOS EN LA MAQUINA
-public function consult(){
+    public function consult(){
 
-    $obj = new GestionModel();
+        $obj = new GestionModel();
 
-    $sql = "SELECT m.Maq_id, m.Maq_nombre,m.Maq_fichaTecnica,m.Maq_manual,e.Est_nombre
-    FROM tblMaquina as m, tblEstado as e
-    WHERE m.Est_id = e.Est_id";
-    
-    $maquinas = $obj->consult($sql);
-    
-    include_once '../view/Mantenimiento/gestion/consult.php';
+        $sql = "SELECT m.Maq_id, m.Maq_nombre,m.Maq_fichaTecnica,m.Maq_manual,e.Est_nombre
+        FROM tblMaquina as m, tblEstado as e
+        WHERE m.Est_id = e.Est_id";
+        
+        $maquinas = $obj->consult($sql);
+        
+        include_once '../view/Mantenimiento/gestion/consult.php';
 
-}
+    }
 
     public function ModalUpdate(){
         $obj = new GestionModel();
@@ -28,13 +28,10 @@ public function consult(){
         
         $maquina =$obj->consult($sql);
 
-        $sql = "SELECT * FROM tblEstado WHERE Est_id";
+        $sql = "SELECT * FROM tblEstado WHERE Est_id=11 || Est_id=14 || Est_id=13 ";
         $estado =$obj->consult($sql);
 
         include_once '../view/Mantenimiento/gestion/ModalUpdate.php';
-
-
-
 
     }
 
@@ -53,8 +50,4 @@ public function consult(){
 
     }
 
-   
-
 }
-
-?>

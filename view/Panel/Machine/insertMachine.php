@@ -9,56 +9,68 @@
 
             <div class="x_content">
                 <br />
-                <form action="<?php echo getUrl("PanelDeControl","Machine","postInsert")?>" enctype="multipart/form-data" method="post" data-parsley-validate class="form-horizontal form-label-left">
+                <form id="formulariov" action="<?php echo getUrl("PanelDeControl","Machine","postInsert")?>" enctype="multipart/form-data" method="post" data-parsley-validate class="form-horizontal form-label-left">
 
                     <div class="col-md-6">
-                        <div class="form-group has-feedback">
-                            <label for="fullname">Nombre Maquina <b style="color:red;">*</b></label>
-                            <input type="text" class="form-control" name="Maq_nombre" required />
+                        <div class="form-group has-feedback" id="grupo__nombreMaquina">
+                            <label class="formulario__label">Nombre Maquina <b style="color:red;">*</b></label>
+                            <input type="text" class="form-control formulario__input" name="Maq_nombre">
+                            <p class="formulario__input-error">El nombre tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
                         </div>
 
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback" id="grupo__tipoMaquina">
                             <label for="fullname">Tipo de maquina <b style="color:red;">*</b></label>
-                            <select name="Stg_id" class="form-control" required>
+                            <select id="selectMaquina" name="Stg_id" class="form-control formulario__input">
                                 <option value="">Seleccione ...</option>
-                                <?php 
-                                    foreach ($tmaquina as $tmaq) {     
+                                <?php
+                                    foreach ($tmaquina as $tmaq) {
                                 ?>
-                                    <option value='<?= $tmaq['Stg_id'] ?>'><?= $tmaq['Stg_nombre'] ?></option>";
+                                    <option value='<?= $tmaq['Stg_id'] ?>'><?= $tmaq['Stg_nombre'] ?></option>;
                                     }
                                 <?php } ?>
                             </select>
+                            <p class="formulario__input-error">Tiene que seleccionar un tipo de maquina.</p>
                         </div>
 
-                        <div class="form-group has-feedback">
-                            <label for="fullname">Serial <b style="color:red;">*</b></label>
-                            <input type="text" class="form-control" name="Maq_serial" required />
+                        <div class="form-group has-feedback" id="grupo__serial">
+                            <label class="formulario__label">Serial <b style="color:red;">*</b></label>
+                            <input type="text" class="form-control formulario__input" name="Maq_serial" />
+                            <p class="formulario__input-error">El nombre tiene que ser de 4 a 40 caracteres y solo puede contener numeros, letras y guion bajo.</p>
                         </div>
 
-                        <div class="form-group has-feedback">
-                            <label for="fullname">Descripcion <b style="color:red;">*</b></label>
-                            <textarea class="form-control" name="Maq_descripcion" ></textarea>
+                        <div class="form-group has-feedback" id="grupo__descripcion">
+                            <label class="formulario__label">Descripcion <b style="color:red;">*</b></label>
+                            <textarea class="form-control formulario__input" name="Maq_descripcion" ></textarea>
+                            <p class="formulario__input-error">La descripcion tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
+
                         </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback" id="grupo__ficha">
                             <label for="fullname">Ficha Tecnica</label><br>
-                            <input type="file" name="Maq_fichaTecnica"/>
+                            <input class="formulario__input" type="file" name="Maq_fichaTecnica"/>
+                            <p class="formulario__input-error">El archivo tiene que ser un PDF.</p>
                         </div>
 
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback" id="grupo__manual">
                             <label for="fullname">Manual Maquina</label><br>
-                            <input type="file" name="Maq_manual"/>
+                            <input class="formulario__input" type="file" name="Maq_manual"/>
+                            <p class="formulario__input-error">El archivo tiene que ser un PDF.</p>
                         </div>
 
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback" id="grupo__imagenMaquina">
                             <label for="fullname">Imagen</label><br>
-                            <input type="file" id="seleccionArchivos" name="Maq_imagen"/><br>
+                             <input class="formulario__input" type="file" id="seleccionArchivos" name="Maq_imagen"/><br>
+                            <p class="formulario__input-error">El archivo tiene que ser un JPG o PNG.</p>
                         </div>
                         
                         <img src="images/pictureDefault.png" id="imagenPrevisualizacion" style="width: 200px; height: 200px;">
-                        
+                        <p></p>
+                    </div>
+
+                    <div class="formulario__mensaj" id="formulario__mensaje">
+                    	<p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
                     </div>
 
                     <div class="row col-12 justify-content-end">

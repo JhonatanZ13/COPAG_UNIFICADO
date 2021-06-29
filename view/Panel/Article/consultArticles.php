@@ -45,9 +45,9 @@
 
                                 <?php
                                     if ($articulo["Est_id"] == 1) {
-                                        echo "<button class='iconLong btn btn-danger btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$articulo['Arti_id']."' data-url='".getUrl('PanelDeControl','Article','getDelete',array('Arti_id'=>$articulo['Arti_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
+                                        echo "<button class='iconLong btn btn-danger btn-sm' id='inhabilitarPanel' value='Habilitar' data-objeto='Articulo' data-name='Arti_id' data-id='".$articulo['Arti_id']."' data-url='".getUrl('PanelDeControl','Article','postDelete',array('Est_id'=>$articulo['Est_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
                                     } else {
-                                        echo "<button class='iconLong btn btn-success btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$articulo['Arti_id']."' data-url='".getUrl("PanelDeControl","Article","getDelete",array("Arti_id"=>$articulo['Arti_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
+                                        echo "<button class='iconLong btn btn-success btn-sm' id='inhabilitarPanel' value='Inhabilitar' data-objeto='Articulo' data-name='Arti_id' data-id='".$articulo['Arti_id']."' data-url='".getUrl("PanelDeControl","Article","postDelete",array("Est_id"=>$articulo['Est_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
                                     }
                                 ?>
                                 

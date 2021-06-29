@@ -63,15 +63,23 @@
  <script src="build/js/validaupdate.js"></script>
 
  <!----- Fin area de produccion -------------->
+ 
+ <!-- validaciones de panel de control -->
+ <script src="build/js/panel.js"></script>
 
-  <!----- Mantenimiento -------------->
+  <!-- --- Mantenimiento ------------ -->
  <script src="vendors/jquery/dist/globalMantenimiento.js"></script>
 
  <!-- Costos -->
  <script src="build/js/costos.js"></script>
  <script src="build/js/compras.js"></script>
+
  <!----- Inventario -------------->
- <script src="vendors/jquery/dist/globalInventario.js"></script>
+ <script src="build/js/globalInventario.js"></script>
+
+ <!----- Mantenimiento -------------->
+<script src="build/js/validamantoTI.js"></script>
+<script src="build/js/validamantoOI.js"></script>
 
  <!-- inicio sweetalert -->
  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

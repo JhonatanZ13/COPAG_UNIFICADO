@@ -16,74 +16,6 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on("change", "#selectDepto", function() {
-        var id = $(this).val();
-        var url = $(this).attr("data-url");
-
-        $.ajax({
-            url: url,
-            data: "id=" + id,
-            type: "POST",
-            success: function(datos) {
-                $("#selectCiudad").html(datos);
-            }
-        })
-
-    })
-
-    $(document).on("change", "#imagen", function() {
-        var img = $(this).val();
-        var url = $(this).attr("data-url");
-        $.ajax({
-            url: url,
-            data: "img=" + img,
-            type: "POST",
-            success: function(datos) {
-                $("#chargeImage").html(datos);
-            }
-        })
-    })
-
-    $(document).on("click", "#botonModal", function() {
-        var url = $(this).attr('data-url');
-        var titulo = $(this).val();
-        var datos = $(this).attr('data-id');
-
-        if (datos == "") {
-            datos == 0;
-        }
-
-        $.ajax({
-            url: url,
-            data: "datos=" + datos,
-            type: "POST",
-            success: function(datos) {
-                $("#contenedor").html(datos);
-                $("#titulo").html(titulo);
-                $("#modal").modal("show");
-            }
-        });
-    });
-
-    $(document).on("change", "#seleccionArchivos", function() {
-
-        const $seleccionArchivos = document.querySelector("#seleccionArchivos"),
-            $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion");
-        // Los archivos seleccionados, pueden ser muchos o uno
-        const archivos = $seleccionArchivos.files;
-        // Si no hay archivos salimos de la función y quitamos la imagen
-        if (!archivos || !archivos.length) {
-            $imagenPrevisualizacion.src = "";
-            return;
-        }
-        // Ahora tomamos el primer archivo, el cual vamos a previsualizar
-        const primerArchivo = archivos[0];
-        // Lo convertimos a un objeto de tipo objectURL
-        const objectURL = URL.createObjectURL(primerArchivo);
-        // Y a la fuente de la imagen le ponemos el objectURL
-        $imagenPrevisualizacion.src = objectURL;
-    });
-
     $("#table").DataTable({
 
         responsive: true,
@@ -113,6 +45,82 @@ $(document).ready(function() {
 
     });
 
+    /* =====================================================
+                    INICIO PANEL
+    =====================================================*/
+
+    $(document).on("change", "#selectDepto", function() {
+        var id = $(this).val();
+        var url = $(this).attr("data-url");
+
+        $.ajax({
+            url: url,
+            data: "id=" + id,
+            type: "POST",
+            success: function(datos) {
+                $("#selectCiudad").html(datos);
+            }
+        })
+
+    })
+
+    $(document).on("click", "#botonModal", function() {
+        var url = $(this).attr('data-url');
+        var titulo = $(this).val();
+        var datos = $(this).attr('data-id');
+
+        if (datos == "") {
+            datos == 0;
+        }
+
+        $.ajax({
+            url: url,
+            data: "datos=" + datos,
+            type: "POST",
+            success: function(datos) {
+                $("#contenedor").html(datos);
+                $("#titulo").html(titulo);
+                $("#modal").modal("show");
+            }
+        });
+    });
+
+    // inicio de panel
+    $(document).on("change", "#imagen", function() {
+        var img = $(this).val();
+        var url = $(this).attr("data-url");
+        $.ajax({
+            url: url,
+            data: "img=" + img,
+            type: "POST",
+            success: function(datos) {
+                $("#chargeImage").html(datos);
+            }
+        })
+    })
+
+    $(document).on("change", "#seleccionArchivos", function() {
+
+        const $seleccionArchivos = document.querySelector("#seleccionArchivos"),
+            $imagenPrevisualizacion = document.querySelector("#imagenPrevisualizacion");
+        // Los archivos seleccionados, pueden ser muchos o uno
+        const archivos = $seleccionArchivos.files;
+        // Si no hay archivos salimos de la función y quitamos la imagen
+        if (!archivos || !archivos.length) {
+            $imagenPrevisualizacion.src = "";
+            return;
+        }
+        // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+        const primerArchivo = archivos[0];
+        // Lo convertimos a un objeto de tipo objectURL
+        const objectURL = URL.createObjectURL(primerArchivo);
+        // Y a la fuente de la imagen le ponemos el objectURL
+        $imagenPrevisualizacion.src = objectURL;
+    });
+
+    //readonly para inputs
+    $('.readonly').attr('readonly', true);
+
     $(document).on("click", "#showMore", function() {
         var status = $("#showMore").attr("data-status");
 
@@ -140,13 +148,603 @@ $(document).ready(function() {
 
     });
 
+    // modales de panel de control
+    $(document).on("click", "#inhabilitarPanel", function() {
+        var url = $(this).attr("data-url");
+        var id = $(this).attr("data-id");
+        var name = $(this).attr("data-name");
+        var funcion = $(this).val();
+        var objeto = $(this).attr("data-objeto");
+        if (funcion == "Habilitar") {
+            var text = "Habilitado";
+        } else {
+            var text = "Inhabilitado";
+        }
+        swal({
+            title: '¿Deseas ' + funcion + ' este ' + objeto + '?',
+            text: '',
+            type: 'warning',
+            icon: 'warning',
+            buttons: {
+                confirm: {
+                    text: 'Aceptar',
+                    className: 'btn btn-success'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-danger'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+                $.ajax({
+                    url: url,
+                    data: name + "=" + id,
+                    type: "POST",
+                    success: function() {
+                        swal({
+                            title: 'Se ha ' + text + ' correctamente',
+                            icon: 'success'
+                        });
+                        setTimeout('document.location.reload()', 2000);
+                    }
+                });
+            }
+        });
+
+    });
+    /* =====================================================
+                    FIN PANEL
+    =====================================================*/
+
+
+    /* =====================================================
+                    INICIO MANTENIMIENTO
+    =====================================================*/
+
+    $(".selector").on('click', 'select', function() {
+        var value = $('.selector select').val();
+        // var valueText=$('.selector select').text();
+        console.log(value);
+
+
+        if (value == 20) {
+
+            $(this).closest('.contenedor_de_datos').find('.empresa_desactivada').show();
+        } else {
+            $(this).closest('.contenedor_de_datos').find('.empresa_desactivada').hide();
+            document.getElementsByClassName("limpiarinput")[0].value = "";
+            document.getElementsByClassName("empresa_elegida")[0].value = "";
+
+        }
+    });
+
+    //tareas procesos
+    $(".tareasbox").on('change', function() {
+        var array = [];
+        $("#procesoscontenedor").html("");
+        $(".tareasbox:checked").each(function() {
+            var id_tarea = $(this).val();
+            array.push(id_tarea);
+
+            // console.log(id_tarea);
+
+        });
+        console.log(array);
+        var url = $(this).eq(0).attr("data-url");
+        var jsonString = JSON.stringify(array);
+        $.ajax({
+            url: url,
+            data: { data: jsonString },
+            type: "POST",
+            success: function(datos) {
+                $("#procesoscontenedor").append(datos);
+                //console.log(datos);
+
+            }
+        });
+
+    });
+
+    //tareas herramientas
+    $(".tareasbox").on('change', function() {
+        var array = [];
+        $("#herramientascontenedor").html("");
+        $(".tareasbox:checked").each(function() {
+            var id_tarea = $(this).val();
+            array.push(id_tarea);
+
+            // console.log(id_tarea);
+
+        });
+        console.log(array);
+        var url = $(this).eq(0).attr("data-url2");
+        var jsonString = JSON.stringify(array);
+        $.ajax({
+            url: url,
+            data: { data: jsonString },
+            type: "POST",
+            success: function(datos) {
+                $("#herramientascontenedor").append(datos);
+                //console.log(datos);
+
+            }
+        });
+
+    });
+    //fin
+
+    //habilitar boton de pdf y eliminar orden  
+    $(document).on("click", "#habilitar", function() {
+
+        var td = $(this).parent('td');
+        swal({
+            title: '¿Desea Habilitar El campo Editar estado?',
+            text: 'Si la maquina sigue en mantenimiento no habilitar',
+            type: 'info',
+            icon: 'info',
+            buttons: {
+                confirm: {
+                    text: ' Aceptar',
+                    className: 'btn btn-success'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+
+                $(this).submit();
+
+                td.find("#botonpdf").show();
+                td.find("#AlertDeleteReporte").show();
+                td.find("#habilitar").hide();
+                td.find("#inhabilitar").show();
+            }
+
+        });
+
+    });
+
+    //inhabilitar boton de pdf y borrar orden
+    $(document).on("click", "#inhabilitar", function() {
+
+        var td = $(this).parent('td');
+        swal({
+            title: '¿Desea Inhabilitar los campos pdf y eliminar?',
+            text: 'Si ya estan inhabilitados no inhabilitara',
+            type: 'info',
+            icon: 'info',
+            buttons: {
+                confirm: {
+                    text: ' Aceptar',
+                    className: 'btn btn-success'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+                $(this).submit();
+
+            }
+            td.find("#botonpdf").hide();
+            td.find("#AlertDeleteReporte").hide();
+            td.find("#habilitar").show();
+            td.find("#inhabilitar").hide();
+        });
+
+    });
+
+    //habilitar estado
+    $(document).on("click", "#habilitarEstado", function() {
+
+        var td = $(this).parent('td');
+
+        swal({
+            title: '¿Desea Habilitar El campo Editar estado?',
+            text: 'Si la maquina sigue en mantenimiento no habilitar',
+            type: 'info',
+            icon: 'info',
+            buttons: {
+                confirm: {
+                    text: ' Aceptar',
+                    className: 'btn btn-success'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+
+                $(this).submit();
+
+                td.find("#botonModal").show();
+                td.find("#inhabilitarestado").show();
+                td.find("#habilitarEstado").hide();
+            }
+
+        });
+
+    });
+    //inhabilitar estado
+    $(document).on("click", "#inhabilitarestado", function() {
+
+        var td = $(this).parent('td');
+
+        swal({
+            title: '¿Desea Inhabilitar el campo Editar?',
+            text: 'Si La Maquina sigue en mantenimiento inhabilitar',
+            type: 'info',
+            icon: 'info',
+            buttons: {
+                confirm: {
+                    text: ' Aceptar',
+                    className: 'btn btn-success'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+                $(this).submit();
+
+            }
+            td.find("#botonModal").hide();
+            td.find("#inhabilitarestado").hide();
+            td.find("#habilitarEstado").show();
+        });
+
+
+    });
+
+    $(document).on("submit", "#AlertUpdateEstado", function() {
+        event.preventDefault();
+        swal({
+            title: '¿Desea editar el estado de la maquina?',
+            text: 'Se editara el estado de la maquina .',
+            type: 'info',
+            icon: 'info',
+            buttons: {
+                confirm: {
+                    text: 'Editar Estado',
+                    className: 'btn btn-success'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+                $(this).submit();
+
+            }
+
+        });
+
+    });
+
+    //ALERTA DE CONFIRMACION INSERCION EN LA TABLA ORDENMANTENIMIENTO
+    $(document).on("submit", "#AlertInsertOrden", function() {
+
+        if (validarCamposVaciosMantoOI() == true) {
+            event.preventDefault();
+            swal({
+                title: '¿Desea Generar esta Orden de mantenimieto?',
+                text: 'Se insertaran todos los datos que lleno.',
+                type: 'info',
+                icon: 'info',
+                buttons: {
+                    confirm: {
+                        text: 'Registrar Orden',
+                        className: 'btn btn-success'
+                    },
+
+                    cancel: {
+                        visible: true,
+                        text: "Cancelar",
+                        className: 'btn btn-primary'
+                    }
+
+                }
+            }).then((Delete) => {
+                if (Delete) {
+                    $(this).submit();
+
+                }
+                setTimeout('document.location.reload()', 100);
+            });
+
+        }
+    });
+
+    ////ALERTA DE CONFIRMACION INSERCION EN LA TABLA PROCESO
+    $(document).on("submit", "#AlertModalProceso", function() {
+
+        if (validarCamposVaciosMantoPI() == true) {
+            event.preventDefault();
+            swal({
+                title: '¿Desea Insertar este proceso?',
+                text: 'Se insertaran todos los datos que lleno.',
+                type: 'info',
+                icon: 'info',
+                buttons: {
+                    confirm: {
+                        text: 'Registrar Proceso',
+                        className: 'btn btn-success'
+                    },
+
+                    cancel: {
+                        visible: true,
+                        text: "Cancelar",
+                        className: 'btn btn-primary'
+                    }
+
+                }
+            }).then((Delete) => {
+                if (Delete) {
+                    $(this).submit();
+
+                }
+                AlertModalProceso.reset();
+            });
+        } else {
+
+        }
+
+    });
+
+    ////ALERTA DE CONFIRMACION EDICION EN LA TABLA PROCESO
+    $(document).on("submit", "#AlertModalUpdateProceso", function() {
+        event.preventDefault();
+        swal({
+            title: '¿Desea Editar este proceso?',
+            text: 'Se editaran todos los datos que lleno.',
+            type: 'info',
+            icon: 'info',
+            buttons: {
+                confirm: {
+                    text: 'Editar Proceso',
+                    className: 'btn btn-success'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+                $(this).submit();
+
+            }
+
+        });
+
+    });
+
+    ////ALERTA DE CONFIRMACION ELIMINACION EN LA TABLA PROCESO
+    $(document).on("click", "#AlertDelete", function() {
+        var url = $(this).attr("data-url");
+        var id = $(this).attr("data-id");
+
+        swal({
+            title: '¿Desea eliminar El proceso?',
+            text: 'Si el proceso está relacioando con una tarea no se eliminara.',
+
+            type: 'warning',
+            icon: 'warning',
+            buttons: {
+                confirm: {
+                    text: 'Eliminar',
+                    className: 'btn btn-danger'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+                $.ajax({
+                    url: url,
+                    data: "Pro_id=" + id,
+                    type: "POST",
+                    success: function() {
+
+                        setTimeout('document.location.reload()', 1000);
+                    }
+                });
+            }
+        });
+
+    });
+
+    ////ALERTA DE CONFIRMACION ELIMINACION EN LA TABLA ORDENMANTO
+    $(document).on("click", "#AlertDeleteReporte", function() {
+        var url = $(this).attr("data-url");
+        var id = $(this).attr("data-id");
+        swal({
+            title: '¿Desea eliminar la Orden? SOLO CUANDO SEA NECESARIO',
+            text: 'Si la elimina se perderan Las Tareas y Procesos',
+            type: 'warning',
+            icon: 'warning',
+            buttons: {
+                confirm: {
+                    text: 'Eliminar',
+                    className: 'btn btn-danger'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+                $.ajax({
+                    url: url,
+                    data: "Odm_id=" + id,
+                    type: "POST",
+                    success: function() {
+
+                        swal({
+
+                            title: 'Se a eliminado correctamente',
+                            icon: 'success'
+                        });
+                        setTimeout('document.location.reload()', 1000);
+                    }
+                });
+            }
+        });
+
+    });
+
+    ////ALERTA DE CONFIRMACION ELIMINACION EN LA TABLA TAREA
+
+    $(document).on("click", "#ModalDelete", function() {
+        var url = $(this).attr("data-url");
+        var id = $(this).attr("data-id");
+        swal({
+            title: '¿Desea eliminar La tarea?',
+            text: 'Si la elimina se perderan todos los datos.',
+            type: 'warning',
+            icon: 'warning',
+            buttons: {
+                confirm: {
+                    text: 'Eliminar',
+                    className: 'btn btn-danger'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+                $.ajax({
+                    url: url,
+                    data: "Tar_id=" + id,
+                    type: "POST",
+                    success: function() {
+                        swal({
+                            title: 'Se a eliminado correctamente',
+                            icon: 'success'
+                        });
+                        setTimeout('document.location.reload()', 1000);
+                    }
+                });
+            }
+        });
+
+    });
+
+    ////ALERTA DE CONFIRMACION INSERCION EN LA TABLA TAREA
+    $(document).on("submit", "#FormConfirmacion", function() {
+        if (validarCamposVaciosMantoTI() == true) {
+
+            event.preventDefault();
+            swal({
+                title: '¿Desea insertar esta Tarea?',
+                text: 'Se insertaran todos los datos que lleno.',
+                type: 'info',
+                icon: 'info',
+                buttons: {
+                    confirm: {
+                        text: 'Registrar Tarea',
+                        className: 'btn btn-success'
+                    },
+
+                    cancel: {
+                        visible: true,
+                        text: "Cancelar",
+                        className: 'btn btn-primary'
+                    }
+
+                }
+            }).then((Delete) => {
+                if (Delete) {
+                    $(this).submit();
+
+                }
+                FormConfirmacion.reset();
+
+            });
+
+        } else {
+
+        }
+
+    });
+
+    ////ALERTA DE CONFIRMACION EDITAR EN LA TABLA TAREA
+    $(document).on("submit", "#FormConfirmacionUpdate", function() {
+        event.preventDefault();
+        swal({
+            title: '¿Desea Editar esta Tarea?',
+            text: 'Se Editaran todos los datos que modifique.',
+            type: 'info',
+            icon: 'info',
+            buttons: {
+                confirm: {
+                    text: 'Editar Tarea',
+                    className: 'btn btn-success'
+                },
+
+                cancel: {
+                    visible: true,
+                    text: "Cancelar",
+                    className: 'btn btn-primary'
+                }
+
+            }
+        }).then((Delete) => {
+            if (Delete) {
+                $(this).submit();
+            }
+        });
+    });
+
+
+    /* =====================================================
+                    FIN mantenimiento
+    =====================================================*/
 });
-
-
-//este es una prueba para colocar todos los views en readonly
-
-$(document).ready(function() {
-    // la funcion attr() nos permite colocar o leer atributos del elemento
-    $('.readonly').attr('readonly', true);
-});
-

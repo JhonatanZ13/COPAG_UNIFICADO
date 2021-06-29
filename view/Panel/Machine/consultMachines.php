@@ -40,11 +40,13 @@
                                 </a>
 
                                 <?php
-                                    if ($maq["Est_id"] == 1) {
-                                        echo "<button class='iconLong btn btn-danger btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$maq['Maq_id']."' data-url='".getUrl('PanelDeControl','Machine','getDelete',array('Maq_id'=>$maq['Maq_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
-                                    } else {
-                                        echo "<button class='iconLong btn btn-success btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$maq['Maq_id']."' data-url='".getUrl("PanelDeControl","Machine","getDelete",array("Maq_id"=>$maq['Maq_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
+                                
+                                    if ($maq["Est_id"] == 1 || $maq["Est_id"] == 14) {
+                                        echo "<button class='iconLong btn btn-danger btn-sm' id='inhabilitarPanel' value='Inhabilitar' data-objeto='Maquina' data-name='Maq_id' data-id='".$maq['Maq_id']."' data-url='".getUrl('PanelDeControl','Machine','postDelete',array('Est_id'=>$maq['Est_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
+                                    }else if($maq["Est_id"] == 0){
+                                        echo "<button class='iconLong btn btn-success btn-sm' id='inhabilitarPanel' value='Habilitar' data-objeto='Maquina' data-name='Maq_id' data-id='".$maq['Maq_id']."' data-url='".getUrl("PanelDeControl","Machine","postDelete",array("Est_id"=>$maq['Est_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
                                     }
+                                
                                 ?>
                             </td>
                         </tr>

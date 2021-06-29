@@ -110,8 +110,8 @@ class UserController
         $Area_id = $_POST['Area_id'];
 
         // esta session cambia las variables de sesion cuando se modifica algo de ellas
-        $_SESSION['nameUser'] = $Usu_primerNombre = $_POST['Usu_primerNombre'];
-        $_SESSION['surnameUser'] = $Usu_primerApellido = $_POST['Usu_primerApellido'];
+        $_SESSION['nameUser']=$Usu_primerNombre = $_POST['Usu_primerNombre'];
+        $_SESSION['surnameUser']=$Usu_primerApellido = $_POST['Usu_primerApellido'];
 
         $sql_rol = "SELECT * FROM TblRol WHERE Rol_id=$Rol_id";
         $roles = $obj->consult($sql_rol);
@@ -139,22 +139,11 @@ class UserController
         }
     }
 
-    public function getDelete()
-    {
-        $obj = new UserModel();
-
-        $Usu_id = $_GET['Usu_id'];
-
-        $sql = "SELECT * FROM TblUsuario WHERE Usu_id=$Usu_id";
-        $usuarios = $obj->consult($sql);
-
-        include_once '../view/Panel/User/deleteUser.php';
-    }
-
     public function postDelete()
     {
         $obj = new UserModel();
 
+        $Est_id=$_GET['Est_id'];
         extract($_POST);
 
         if ($Est_id == 1) {
@@ -166,6 +155,8 @@ class UserController
         $execution = $obj->delete($sql);
 
         if ($execution) {
+            echo '<div class="alert alert-success alert-dismissible" role="alert">registrado <a href="#" class="alert-link">registrado
+              </div>';
             redirect(getUrl("PanelDeControl", "User", "consultUsers"));
         } else {
             echo "Ups ocurrio un error";
@@ -230,7 +221,7 @@ class UserController
         $Usu_primerApellido = $_POST['Usu_primerApellido'];
         $Usu_segundoApellido = $_POST['Usu_segundoApellido'];
         $Usu_numeroDocumento = $_POST['Usu_numeroDocumento'];
-        @$Usu_password = $_POST['Usu_password'];
+        $Usu_password = $_POST['Usu_password'];
         $Usu_telefono = $_POST['Usu_telefono'];
         $Gen_id = $_POST['Gen_id'];
         $Usu_email = $_POST['Usu_email'];

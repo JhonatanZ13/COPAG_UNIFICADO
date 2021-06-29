@@ -43,9 +43,9 @@
 
                                 <?php
                                     if ($user["Est_id"] == 1) {
-                                        echo "<button class='row ml-1 iconLong btn btn-danger btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$user['Usu_id']."' data-url='".getUrl('PanelDeControl','User','getDelete',array('Usu_id'=>$user['Usu_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
+                                        echo "<button class='row ml-1 iconLong btn btn-danger btn-sm' id='inhabilitarPanel' value='Inhabilitar' data-objeto='Usuario' data-name='Usu_id' data-id='".$user['Usu_id']."' data-url='".getUrl('PanelDeControl','User','postDelete',array('Est_id'=>$user['Est_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
                                     } else {
-                                        echo "<button class='row ml-1 iconLong btn btn-success btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$user['Usu_id']."' data-url='".getUrl("PanelDeControl","User","getDelete",array("Usu_id"=>$user['Usu_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
+                                        echo "<button class='row ml-1 iconLong btn btn-success btn-sm' id='inhabilitarPanel' value='Habilitar' data-objeto='Usuario' data-name='Usu_id' data-id='".$user['Usu_id']."' data-url='".getUrl("PanelDeControl","User","postDelete",array("Est_id"=>$user['Est_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
                                     }
                                 ?>
                                 

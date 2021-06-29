@@ -9,17 +9,19 @@
 
             <div class="x_content">
                 <br />
-                <form action="<?php echo getUrl("PanelDeControl","Article","postInsert")?>" enctype="multipart/form-data" method="post" data-parsley-validate class="form-horizontal form-label-left">
+                <form id="formularioArticulo" action="<?php echo getUrl("PanelDeControl","Article","postInsert")?>" enctype="multipart/form-data" method="post" data-parsley-validate class="form-horizontal form-label-left">
 
                     <div class="col-md-6">
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback" id="grupo__nombreArticulo">
                             <label for="fullname">Nombre del Articulo <b style="color:red;">*</b></label>
-                            <input type="text" id="fullname" class="form-control" name="Arti_nombre" />
+                            <input type="text" id="fullname" class="form-control formulario__input" name="Arti_nombre" />
+                            <p class="formulario__input-error">El nombre tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
+
                         </div>
 
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback" id="grupo__tipoArticulo">
                             <label for="fullname">Tipo de Articulo <b style="color:red;">*</b></label>
-                            <select name="Tart_id" class="form-control" >
+                            <select name="Tart_id" class="form-control formulario__input" >
                                 <option value="">Seleccione...</option>
                                     <?php 
                                         foreach ($tarticulos as $tart) {     
@@ -28,41 +30,50 @@
                                         
                                     <?php } ?>
                             </select>
+                            <p class="formulario__input-error">Tiene que seleccionar un tipo de articulo.</p>
+
                         </div>
 
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback" id="grupo__tipoMedida">
                             <label for="fullname">Medida <b style="color:red;">*</b></label>
                             <div class="item form-group">
-                                <input type="text" class="form-control" name="Arti_medida"  />
-                                <select name="Med_id" class="form-control" >
+                                <input type="text" class="form-control formulario__input" name="Arti_medida"  />
+                                <select name="Med_id" class="form-control formulario__input" >
                                     <option value="">Seleccione...</option>
                                         <?php 
                                             foreach ($tmedidas as $medida) {     
                                         ?>
-                                            <option value='<?= $medida['Med_id'] ?>'><?= $medida['Med_descripcion'] ?></option>";
+                                            <option value='<?= $medida['Med_id'] ?>'><?= $medida['Med_descripcion'] ?></option>;
                                             }
 
                                         <?php } ?>
                                 </select>
                             </div>
+                            <p class="formulario__input-error">Tiene que seleccionar un tipo de medida, la medida solo puede ser numeros y 1 a 45 caracteres.</p>
+
                         </div>
 
-                        <div class="form-group has-feedback">
+                        <div class="form-group has-feedback" id="grupo__descripcionArticulo">
                             <label for="fullname">Descripcion <b style="color:red;">*</b><br/><small>(Maximo 50 caracteres)</small></label>
-                            <textarea style="max-height: 100px; min-height: 100px;" class="form-control" name="Arti_descripcion" ></textarea>
+                            <textarea style="max-height: 100px; min-height: 100px;" class="form-control formulario__input" name="Arti_descripcion" ></textarea>
+                            <p class="formulario__input-error">La descripcion tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
                         </div>
                     </div>
-                    
-                    <div class="col-md-6">
-                        <div class="form-group has-feedback">
+
+                    <div class="col-md-6" style="margin-bottom: 200px;">
+                        <div class="form-group has-feedback" id="grupo__imagenArticulo">
                             <label for="fullname">Imagen</label><br>
-                            <input type="file" id="seleccionArchivos" name="Arti_imagen"/><br>
+                            <input class="formulario__input" type="file" id="seleccionArchivos" name="Arti_imagen"/><br>
+                            <p class="formulario__input-error">El archivo tiene que ser un JPG o PNG.</p>
                         </div>
                         
                         <img src="images/pictureDefault.png" id="imagenPrevisualizacion" style="width: 200px; height: 200px;">
                     </div>
-
+                    <div class="formulario__mensaj" id="formulario__mensaje">
+                         <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+                    </div>
                     <div class="row col-12 justify-content-end">
+
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-success">Registrar</button>
                             <a href="<?php echo getUrl("PanelDeControl","Article","consultArticles")?>"><button class="btn btn-danger" type="button">Cancelar</button></a>

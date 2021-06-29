@@ -27,7 +27,8 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-end">
+
+    <div class="d-flex justify-content-end x_panel">
         <button id="agregarDiv" type="button" class="btn btn-success justify-content-end">
             <i class="fa fa-chevron-circle-down"></i>
             MAS
@@ -35,8 +36,11 @@
     </div>
 
     <div class="x_title"></div>
-    <button type="submit" disabled name="enviar" id="send" class="btn btn-primary btn-lg btn-block">
-        <i class="fa fa-plus-circle fa-lg mr-1"></i>
-        AGREAGAR
-    </button>
+    
+    <div class="x_panel">
+        <button type="submit" disabled name="enviar" id="send" class="btn btn-primary btn-lg btn-block">
+            <i class="fa fa-plus-circle fa-lg mr-1"></i>
+            AGREGAR
+        </button>
+    </div>
 </form>

@@ -451,21 +451,25 @@ $(document).ready(function () {
     var mensaje = "";
     var errores = 0;
    
+    if (!validardestinatario()) {
+      mensaje = mensaje + "<br>*Por favor seleccione el destinatario.";
+      errores++;
+    }else   if (!validarCliente()) {
+      mensaje = mensaje + "<br>*Por favor seleccione un cliente.";
+      errores++;
+    }else {
+ 
+    if($("#tablap .is-invalid").length>0){
+      mensaje = mensaje + "<br>*Verifique que la tabla este llenada correctamente.";
+      errores++;
+
+    }
 
     if ($("#tablap tr").length - 2 == 0) {
       mensaje = mensaje + "<br>*Debe tener por lo menos un producto agregado.";
       errores++;
     }
 
-    if (!validardestinatario()) {
-      mensaje = mensaje + "<br>*Por favor seleccione el destinatario.";
-      errores++;
-    }
-
-    if (!validarCliente()) {
-      mensaje = mensaje + "<br>*Por favor seleccione un cliente.";
-      errores++;
-    }
     if (!validarCentro()) {
       mensaje = mensaje + "<br>*Por favor seleccione el centro de formación.";
       errores++;
@@ -510,7 +514,7 @@ $(document).ready(function () {
         mensaje + "<br>*Por favor seleccione el centro del lugar de ejecucion.";
       errores++;
     }
-
+  }
     //Resultado final
     if (errores > 0) {
       alertSolicitud("danger", "Error!", mensaje);

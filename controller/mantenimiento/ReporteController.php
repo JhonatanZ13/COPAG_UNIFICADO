@@ -9,7 +9,7 @@ public function consult(){
 
     $obj = new ReporteModel();
 
-    $sql = "SELECT o.Odm_id, Stg.Stg_nombre, o.Odm_fechaInicio, o.Odm_fechaFin, o.Odm_observacionesFin
+    $sql = "SELECT o.Odm_id, Stg.Stg_nombre, o.Odm_fechaInicio, o.Odm_fechaFin, o.Odm_observacionesFin, o.Odm_pdf
     FROM tblordenmanto as o, tblsubtipogeneral as Stg
     WHERE o.Stg_id = Stg.Stg_id"; 
     
@@ -50,16 +50,19 @@ public function DeleteModal()
         
         
     }
-/*
-    if ($ejecutar) {
-        redirect(getUrl("Mantenimiento", "Reporte", "consult"));
-    } else {
-        echo "Error al eliminar";
-    }*/
+
+   
 }
 
 
+    public function viewpdf(){
+        $obj=new ReporteModel();
+        $Odm_pdf=$_GET['Odm_pdf'];
 
+        header("Content-type:application/pdf");
+        header("Content-Disposition: inline; filename=Reporte.pdf");
+        readfile("$Odm_pdf");
+    }
 
 }
 ?>

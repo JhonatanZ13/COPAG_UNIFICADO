@@ -13,35 +13,39 @@
 
 			<div class="x_content">
 				<br />
-				<form action="<?php echo getUrl("PanelDeControl", "User", "postUpdate"); ?>" method="post" data-parsley-validate class="form-horizontal form-label-left">
+				<form id="actualizarUsuario" action="<?php echo getUrl("PanelDeControl", "User", "postUpdate"); ?>" method="post" data-parsley-validate class="form-horizontal form-label-left">
 
 					<div class="col-md-6 col-sm-6 form-group has-feedback" hidden>
-						<input type="number" id="Usu_id" class="form-control" name="Usu_id" value="<?= $user['Usu_id'];?>" />
+						<input type="number" id="Usu_id" class="form-control formulario__input" name="Usu_id" value="<?= $user['Usu_id'];?>" />
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__primerNombreUsuario">
 						<label for="fullname">Primer Nombre <b style="color:red;">*</b></label>
-						<input type="text" id="Usu_primerNombre" class="form-control" name="Usu_primerNombre" value="<?= $user['Usu_primerNombre'];?>" required />
+						<input type="text" id="Usu_primerNombre" class="form-control formulario__input" name="Usu_primerNombre" value="<?= $user['Usu_primerNombre'];?>"/>
+						<p class="formulario__input-error">El primer nombre social tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__segundoNombreUsuario">
 						<label for="fullname">Segundo Nombre</label>
-						<input type="text" id="Usu_segundoNombre" class="form-control" name="Usu_segundoNombre" value="<?= $user['Usu_segundoNombre'];?>"  />
+						<input type="text" id="Usu_segundoNombre" class="form-control formulario__input" name="Usu_segundoNombre" value="<?= $user['Usu_segundoNombre'];?>" />
+						<p class="formulario__input-error">El segundo nombre social tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__primerApellidoUsuario">
 						<label for="fullname">Primer Apellido <b style="color:red;">*</b></label>
-						<input type="text" id="Usu_primerApellido" class="form-control" name="Usu_primerApellido" value="<?= $user['Usu_primerApellido'];?>" required />
+						<input type="text" id="Usu_primerApellido" class="form-control formulario__input" name="Usu_primerApellido" value="<?= $user['Usu_primerApellido'];?>"/>
+						<p class="formulario__input-error">El primer apellido social tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__segundoApellidoUsuario">
 						<label for="fullname">Segundo Apellido</label>
-						<input type="text" id="Usu_segundoApellido" class="form-control" name="Usu_segundoApellido" value="<?= $user['Usu_segundoApellido'];?>"  />
+						<input type="text" id="Usu_segundoApellido" class="form-control formulario__input" name="Usu_segundoApellido" value="<?= $user['Usu_segundoApellido'];?>" />
+						<p class="formulario__input-error">El seegundo apellido social tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__tipoDocumentoUsuario">
 						<label for="fullname">Tipo de Documento <b style="color:red;">*</b></label>
-						<select name="Stg_id" class="form-control" required> 
+						<select name="Stg_id" class="form-control formulario__input" required>
 							<?php
 							foreach ($tipodocumento as $tdoc) {
 								foreach ($usuarios as $user) {	
@@ -58,21 +62,24 @@
 							} 
 							?>
 						</select>
+						<p class="formulario__input-error">Tiene que elegir un tipo de documento.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__numeroDocumentoUsuario">
 						<label for="fullname">Numero de Documento <b style="color:red;">*</b></label>
-						<input type="number" id="Usu_numeroDocumento" class="form-control" name="Usu_numeroDocumento" value="<?= $user['Usu_numeroDocumento']; ?>" required />
+						<input type="number" id="Usu_numeroDocumento" class="form-control formulario__input" name="Usu_numeroDocumento" value="<?= $user['Usu_numeroDocumento']; ?>"/>
+						<p class="formulario__input-error">El Numero de documento debe tener de 8 a 12 digitos y no puede estar compuesto por puntos, ni comas.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__telefonoUsuario">
 						<label for="fullname">Numero de Telefono <b style="color:red;">*</b></label>
-						<input type="number" id="Usu_telefono" class="form-control" name="Usu_telefono" value="<?= $user['Usu_telefono']; ?>" required />
+						<input type="number" id="Usu_telefono" class="form-control formulario__input" name="Usu_telefono" value="<?= $user['Usu_telefono']; ?>"/>
+						<p class="formulario__input-error">El telefono solo puede contener numeros y el maximo son 14 dígitos.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__generoUsuario">
 						<label for="fullname">Genero <b style="color:red;">*</b></label>
-						<select name="Gen_id" class="form-control" required>
+						<select name="Gen_id" class="form-control formulario__input" required>
 							<?php
 							foreach ($genero as $gen) {
 								foreach ($usuarios as $user) {
@@ -89,16 +96,18 @@
 							} 
 							?>
 						</select>
+						<p class="formulario__input-error">Tiene que elegir un genero.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__emailUsuario">
 						<label for="fullname">Correo Electronico <b style="color:red;">*</b></label>
-						<input type="email" id="Usu_email" class="form-control" name="Usu_email" value="<?= $user['Usu_email']; ?>" required />
+						<input type="email" id="Usu_email" class="form-control formulario__input" name="Usu_email" value="<?= $user['Usu_email']; ?>"/>
+						<p class="formulario__input-error">El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__rolUsuario">
 						<label for="fullname">Rol de Usuario <b style="color:red;">*</b></label>
-						<select name="Rol_id" class="form-control" required>
+						<select name="Rol_id" class="form-control formulario__input" required>
 							<option value="">Seleccione...</option>
 							<?php
 							foreach ($roles as $rol) {
@@ -116,11 +125,12 @@
 							} 
 							?>
 						</select>
+						<p class="formulario__input-error">Tiene que elegir un rol.</p>
 					</div>
 
-					<div class="col-md-6 col-sm-6 form-group has-feedback">
+					<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__areaUsuario">
                         <label for="fullname">Area del Usuario <b style="color:red;">*</b></label>
-                        <select name="Area_id" class="form-control" required>
+                        <select name="Area_id" class="form-control formulario__input" required>
                             <option value="">Seleccione...</option>
                             <?php
                             foreach ($areas as $area) {
@@ -137,6 +147,11 @@
 								}
 							} ?>
                         </select>
+                        <p class="formulario__input-error">Tiene que elegir un area.</p>
+                    </div>
+
+                    <div class="col-md-12 formulario__mensaj" id="formulario__mensaje">
+                      <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
                     </div>
 
 					<br><br>

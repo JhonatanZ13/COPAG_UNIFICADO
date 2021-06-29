@@ -90,9 +90,9 @@ if (isset($_SESSION['error'])){
                     
                       <div class="form-group col-2 ">
                       <label for="" class="mt-1">Crear cliente</label><br>
-
+                        <a href="<?php echo getUrl("PanelDeControl", "Company", "getInsert");?>">
                     <button class="btn btn-success btn-sm" type="button"><i
-                                    class="fa fa-plus-square "></i></button>
+                                    class="fa fa-plus-square "></i></button></a>
                    
                     </div>
                     <?php }?>

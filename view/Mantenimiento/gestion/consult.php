@@ -7,12 +7,12 @@
 </div>
 <div class="col-md-12 col-sm-11 ">
     <div class="x_panel">
-        
+
         <div class="x_content">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
-                        <table id="table-mantenimiento" class="table table-striped table-bordered" style="width:100%">
+                        <table id="table" class="table table-striped table-bordered" style="width:100%">
                             <thead style="background-color: #17A481;; color:#fff;">
                                 <tr>
                                     <th>Id</th>
@@ -24,7 +24,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php
+                                <?php
 
                           foreach ($maquinas as $maq){
                            echo "<tr>";
@@ -32,19 +32,42 @@
                            echo "<td>".$maq['Maq_id']."</td>";
                            echo "<td>".$maq['Maq_nombre']."</td>";
 
-                          echo "<td>
+                          echo "<td>";
 
-                          <a  target='_blank' href=".getUrl("PanelDeControl", "Machine", "viewPdfFicha", array("Maq_fichaTecnica" => $maq['Maq_fichaTecnica']), "ajax")."'><button  class='btn btn-primary btn-sm '> <i class='fa fa-file-pdf-o '></i></button></a>  
+                          if ($maq['Maq_fichaTecnica']) { 
 
-                          </td>";
+                            
+                         ?>
+                                <a href="<?php echo getUrl("PanelDeControl", "Machine", "viewPdfFicha", array("Maq_fichaTecnica" => $maq['Maq_fichaTecnica']), "ajax") ?>"
+                                    target="blank">
+                                    <button type="button" class="btn-small btn-info btn-sm ">
+                                        <i class="fa fa-file-pdf-o"></i>
+                                    </button>
+                                </a>
+                                <?php
+
+                            
+                          }
+
+                          "</td>";
+
+                        
 
 
-
-                           echo "<td>
+                           echo "<td>";
                                    
-                           <a  target='_blank' href=".getUrl("PanelDeControl", "Machine", "viewPdfManual", array("Maq_manual" => $maq['Maq_manual']), "ajax")."'><button  class='btn btn-primary btn-sm '> <i class='fa fa-file-pdf-o '></i></button></a>  
+                           ?>
+                                <a href="<?php echo getUrl("PanelDeControl", "Machine", "viewPdfManual", array("Maq_manual" => $maq['Maq_manual']), "ajax") ?>"
+                                    target="blank">
+                                    <button type="button" class="btn-small btn-info btn-sm">
+                                        <i class="fa fa-file-pdf-o"></i>
+                                    </button>
+                                </a>
+
+
+                                <?php
                            
-                           </td>";                                    
+                           "</td>";                                    
                            
                         //    echo "<td><img src='".$maq['Maq_fichaTecnica']."'width='100px'></td>";
                         //    echo "<td><img src='".$maq['Maq_manual']."'width='100px'></td>";
@@ -73,31 +96,18 @@
                            echo "</td>";
                            echo "</tr>";
 
-                           } ?>  
+                           } ?>
 
 
 
                             </tbody>
-                        
-                          </table>
-                        </div>
+
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-   
-</div>                      
-                       
-                       
+</div>
 
-
-
-
-                        
-                        
-                        
-
-                        
-
-
+</div>

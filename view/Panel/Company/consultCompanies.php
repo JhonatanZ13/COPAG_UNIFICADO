@@ -43,9 +43,9 @@
 
                                 <?php
                                     if ($emp["Est_id"] == 1) {
-                                        echo "<button class='iconLong btn btn-danger btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$emp['Emp_id']."' data-url='".getUrl('PanelDeControl','Company','getDelete',array('Emp_id'=>$emp['Emp_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
+                                        echo "<button class='iconLong btn btn-danger btn-sm' id='inhabilitarPanel' value='Inhabilitar' data-objeto='Empresa' data-name='Emp_id' data-id='".$emp['Emp_id']."' data-url='".getUrl('PanelDeControl','Company','postDelete',array('Est_id'=>$emp['Est_id']),'ajax')."'><i class='fa fa-lock' aria-hidden='true'></i></button>";
                                     } else {
-                                        echo "<button class='iconLong btn btn-success btn-sm' id='botonModal' value='Habilitar o Inhabilitar' data-id='".$emp['Emp_id']."' data-url='".getUrl("PanelDeControl","Company","getDelete",array("Emp_id"=>$emp['Emp_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
+                                        echo "<button class='iconLong btn btn-success btn-sm' id='inhabilitarPanel' value='Habilitar' data-objeto='Empresa' data-name='Emp_id' data-id='".$emp['Emp_id']."' data-url='".getUrl("PanelDeControl","Company","postDelete",array("Est_id"=>$emp['Est_id']),"ajax")."'><i class='fa fa-unlock' aria-hidden='true'></i></button>";
                                     }
                                 ?>
                                 

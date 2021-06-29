@@ -120,22 +120,11 @@
             }           
         }
 
-        public function getDelete(){
-            $obj=new CompanyModel();
-            
-            $Emp_id=$_GET['Emp_id'];
-            
-            $sql = "SELECT * FROM TblEmpresa WHERE Emp_id='$Emp_id'";
-            $empresa=$obj->consult($sql);
-
-            include_once '../view/Panel/Company/deleteCompany.php';
-        }
-
         public function postDelete(){
             $obj=new CompanyModel();
 
             $Emp_id=$_POST['Emp_id'];
-            $Est_id=$_POST['Est_id'];
+            $Est_id=$_GET['Est_id'];
 
             if($Est_id==1){
                 $sql="UPDATE TblEmpresa SET Est_id=0 WHERE Emp_id='$Emp_id'";

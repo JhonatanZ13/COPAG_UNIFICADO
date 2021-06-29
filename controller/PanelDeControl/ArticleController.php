@@ -111,22 +111,11 @@
             }      
         }
 
-        public function getDelete(){
-            $obj=new ArticleModel();
-            
-            $Arti_id=$_GET['Arti_id'];
-
-            $sql = "SELECT * FROM TblArticulo WHERE Arti_id=$Arti_id";
-            $articulo=$obj->consult($sql);
-
-            include_once '../view/Panel/Article/deleteArticle.php';
-        }
-
         public function postDelete(){
             $obj=new ArticleModel();
 
             $Arti_id=$_POST['Arti_id'];
-            $Est_id=$_POST['Est_id'];
+            $Est_id=$_GET['Est_id'];
 
             if($Est_id==1){
                 $sql="UPDATE tblarticulo SET Est_id=0 WHERE Arti_id='$Arti_id'";

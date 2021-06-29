@@ -40,8 +40,8 @@
             move_uploaded_file($_FILES['Maq_manual']['tmp_name'],$rutamanual);
             $Maq_descripcion=$_POST['Maq_descripcion'];
 
-            if (empty($Maq_imagen)) {
-                $ruta="../web/images/logo-pequeño.png";
+            if (empty($$Maq_imagen)) {
+                $ruta="../web/images/pictureDefault.png";
             }
 
             $sql="INSERT INTO TblMaquina VALUE($id,'".$Maq_nombre."', '".$Maq_serial."', '".$Maq_descripcion."', '".$ruta."', 1,1,'".$Stg_id."','".$rutaficha."','".$rutamanual."')";
@@ -89,13 +89,10 @@
             $imagenVieja=$_POST['imagenVieja'];
             $fichaVieja=$_POST['fichaVieja'];
             $manualViejo=$_POST['manualViejo'];
-            
-            if (empty($Maq_imagen)) {
-                $ruta="../web/images/logo-pequeño.png";
-            }
+
 
             if($Maq_imagen){
-                $sql="UPDATE tblmaquina SET Maq_imagen='$ruta'
+                $sql="UPDATE tblmaquina SET Maq_imagen='".$ruta."'
                       WHERE Maq_id=$Maq_id";
                 unlink($imagenVieja);
                 $ejecutar=$obj->insert($sql);  
@@ -127,36 +124,27 @@
             }      
         }
 
-        public function getDelete(){
-
-            $Maq_id=$_GET['Maq_id'];
-            $obj=new MachineModel();
-            
-            $sql = "SELECT * FROM tblmaquina WHERE Maq_id='$Maq_id'";
-            $maquinas=$obj->consult($sql);
-
-            include_once '../view/Panel/Machine/deleteMachine.php';
-        }
-
         public function postDelete(){
             $obj=new MachineModel();
 
             $Maq_id=$_POST['Maq_id'];
-            $Est_id=$_POST['Est_id'];
+            $Est_id=$_GET['Est_id'];
 
-            if($Est_id==1){
-                $sql="UPDATE tblmaquina SET Est_id=0 WHERE Maq_id='$Maq_id'";
-            }else {
-                $sql="UPDATE tblmaquina SET Est_id=1 WHERE Maq_id='$Maq_id'";
-            }
 
-            $ejecutar=$obj->insert($sql);
+                if($Est_id==1){
+                    $sql="UPDATE tblmaquina SET Est_id=0 WHERE Maq_id='$Maq_id'";
+                }else {
+                    $sql="UPDATE tblmaquina SET Est_id=1 WHERE Maq_id='$Maq_id'";
+                }
 
-            if($ejecutar){
-                redirect(getUrl("PanelDeControl","Machine","consultMachines"));
-            }else {
-                echo "Ups ocurrio un error ";
-            }
+                $ejecutar=$obj->insert($sql);
+
+                if($ejecutar){
+                    redirect(getUrl("PanelDeControl","Machine","consultMachines"));
+                }else {
+                    echo "Ups ocurrio un error ";
+                }
+            
         }
 
         public function viewMachine(){

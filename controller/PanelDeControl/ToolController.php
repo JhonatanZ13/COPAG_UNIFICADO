@@ -34,13 +34,13 @@
             $Her_cantidad = 1;
             $Est_id = 1;
             $Her_foto = $_FILES['Her_foto']['name'];
-            $ruta = "../web/images/Herramientas/".$Her_foto;
+            $ruta = "../web/images/Herramienta/".$Her_foto;
             move_uploaded_file($_FILES['Her_foto']['tmp_name'],$ruta);
 
             // esta condicion es para que coloque una imagen por defecto en caso de no tenerla en el momento
-            if (empty($$Her_foto)) {
-                $ruta="../web/images/pictureDefault.png";
-            }
+//             if (empty($$Her_foto)) {
+//                 $ruta="../web/images/pictureDefault.png";
+//             }
 
             $sql_insert_tools = "INSERT TblHerramienta VALUE($Her_id,'".$Her_nombre."','".$Her_descripcion."',$Her_cantidad,'".$ruta."', $Stg_id, $Est_id)";
 
@@ -77,7 +77,7 @@
             $Her_nombre = $_POST['Her_nombre'];
             $Her_descripcion = $_POST['Her_descripcion'];
             $Her_foto = $_FILES['Her_foto']['name'];
-            $ruta = "../web/images/Herramientas/".$Her_foto;
+            $ruta = "../web/images/Herramienta/".$Her_foto;
             move_uploaded_file($_FILES['Her_foto']['tmp_name'],$ruta);
             $oldImage = $_POST['oldImage'];
 
@@ -98,20 +98,9 @@
 
         }
 
-        public function getDelete(){
-            $obj=new ToolModel();
-            
-            $Her_id=$_GET['Her_id'];
-
-            $sql = "SELECT * FROM TblHerramienta WHERE Her_id=$Her_id";
-            $tools=$obj->consult($sql);
-
-            include_once '../view/Panel/Tool/deleteTool.php';
-        }
-
         public function postDelete(){
             $obj=new ToolModel();
-
+            $Est_id=$_GET['Est_id'];
             extract($_POST);
 
             if($Est_id==1){
