@@ -1,4 +1,4 @@
-<div class="fondo">
+<div class="fondo" >
 
     <div class='logo-animacion'>
         <img src='images/LogoverdeSENA.png' width="80px">

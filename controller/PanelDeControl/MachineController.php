@@ -40,8 +40,14 @@
             move_uploaded_file($_FILES['Maq_manual']['tmp_name'],$rutamanual);
             $Maq_descripcion=$_POST['Maq_descripcion'];
 
-            if (empty($$Maq_imagen)) {
-                $ruta="../web/images/pictureDefault.png";
+            if (empty($Maq_imagen)) {
+                $ruta="../web/images/maquinaPredeterminada.jpg";
+            }
+            if (empty($Maq_fichaTecnica)) {
+                $rutaficha="../web/images/Maquina/Ficha/";
+            }
+            if (empty($Maq_manual)) {
+                $rutamanual="../web/images/Maquina/Manual/";
             }
 
             $sql="INSERT INTO TblMaquina VALUE($id,'".$Maq_nombre."', '".$Maq_serial."', '".$Maq_descripcion."', '".$ruta."', 1,1,'".$Stg_id."','".$rutaficha."','".$rutamanual."')";
@@ -68,7 +74,7 @@
 
             include_once '../view/Panel/Machine/updateMachine.php';
         }
-
+ 
         public function postUpdate(){
             $obj=new MachineModel();
 
@@ -94,19 +100,19 @@
             if($Maq_imagen){
                 $sql="UPDATE tblmaquina SET Maq_imagen='".$ruta."'
                       WHERE Maq_id=$Maq_id";
-                unlink($imagenVieja);
+                @unlink($imagenVieja);
                 $ejecutar=$obj->insert($sql);  
             }
             if($Maq_fichaTecnica){
                 $sql="UPDATE tblmaquina SET Maq_fichaTecnica='$rutaficha'
                       WHERE Maq_id=$Maq_id";
-                unlink($fichaVieja);
+                @unlink($fichaVieja);
                 $ejecutar=$obj->insert($sql);
             }
             if($Maq_manual){
                 $sql="UPDATE tblmaquina SET Maq_manual='$rutamanual'
                       WHERE Maq_id=$Maq_id";
-                unlink($manualViejo);
+                @unlink($manualViejo);
                 $ejecutar=$obj->insert($sql);
             }
 

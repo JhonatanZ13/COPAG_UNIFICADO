@@ -67,7 +67,7 @@
                             <p class="formulario__input-error">El archivo tiene que ser un JPG o PNG.</p>
                         </div>
                         
-                        <img src="images/pictureDefault.png" id="imagenPrevisualizacion" style="width: 200px; height: 200px;">
+                        <img src="images/articuloPredeterminado.jpg" id="imagenPrevisualizacion" style="width: 200px; height: 200px;">
                     </div>
                     <div class="formulario__mensaj" id="formulario__mensaje">
                          <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>

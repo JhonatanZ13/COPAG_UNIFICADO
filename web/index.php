@@ -10,7 +10,7 @@
                 include_once '../view/partials/sidebar.php';
                 include_once '../view/partials/navbar.php';
                 //$fondo="background-image:url(images/bg-sena.png)";
-                echo "<div class='right_col' role='main' style=''>";
+                echo "<div class='right_col' role='main' style='min-height: 600px;'>";
                 
                     echo "<div class='clearfix'></div>";
                     echo "<div class='row'>";
@@ -18,11 +18,13 @@
                         
                             echo "<div class=''>";
                             include_once '../view/partials/fondoanimado.php';
+
                                 if (isset($_GET['modulo'])) {
                                     resolve();
                                 }else{
                                     include_once '../view/partials/home.php';
                                 }
+                            
                             echo "</div>";
                         echo "</div>";
                     echo "</div>";

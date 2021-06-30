@@ -6,11 +6,13 @@
             ."window.location.href='$url'"
             ."</script>";
     }
+
     function dd($var){
         echo "<pre>";
         die(print_r($var));
         echo "</pre>";
     }
+
     function getUrl($modulo,$controlador,$funcion,$parametro=false,$pagina=false){
         if ($pagina==false) {
             $pagina="index";
@@ -26,6 +28,7 @@
 
         return $url;
     }
+
     function getUrl2($modulo,$controlador,$funcion,$parametro=false,$pagina=false){
         if ($pagina==false) {
             $pagina="index.php";
@@ -41,13 +44,14 @@
 
         return $url;
     }
+
     function resolve(){
         //modulo:Carpetas que estan dentro del controlador
         //controlador: un archivo controller que esta dentro del modulo
         //funcion: es un metodo o funcion que está dentro del archivo controlador
-        $modulo=ucwords($_GET['modulo']);
-        $controlador=ucwords($_GET['controlador']);
-        $funcion=$_GET['funcion'];
+        @$modulo=ucwords($_GET['modulo']);
+        @$controlador=ucwords($_GET['controlador']);
+        @$funcion=$_GET['funcion'];
 
         if (is_dir("../controller/$modulo")) {
             
@@ -57,21 +61,23 @@
 
                 $nombreClase=$controlador."Controller";
                 $objeto=new $nombreClase();
-
+ 
                 if (method_exists($objeto,$funcion)) {
                     $objeto->$funcion();
                 }else{
-                    echo "La funcion o metodo especificado no existe";
+                    include_once '../view/partials/page404.php';
+                    // echo "La funcion o metodo especificado no existe";
                 }
 
             }else{
-                echo "El controlador especificado no existe";
+                include_once '../view/partials/page404.php';
+                // echo "El controlador especificado no existe";
             }
 
         }else{
-            echo "El modulo especificado no existe";
+            include_once '../view/partials/page404.php';
+            // echo "El modulo especificado no existe";
         }
-
 
     }
 

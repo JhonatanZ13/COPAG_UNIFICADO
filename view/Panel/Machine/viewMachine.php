@@ -37,28 +37,31 @@ foreach ($maquina as $maq) {
                             
                         </div>
 
+                        <?php if ($maq['Maq_fichaTecnica'] != "../web/images/Maquina/Ficha/") { ?>
+
                         <div class="col-md-6 form-group has-feedback">
                             <label for="fullname">Ficha Tecnica</label><br>
-                            <?php 
-                                if ($maq['Maq_fichaTecnica']) { 
-                            ?>
+
                                 <a href="<?php echo getUrl("PanelDeControl", "Machine", "viewPdfFicha", array("Maq_fichaTecnica" => $maq['Maq_fichaTecnica']), "ajax") ?>" target="blank">
-                                    <button type="button" class="btn-small btn-info">
+                                    <button type="button" class="btn btn-sm btn-info">
                                         <i class="fa fa-file-pdf-o"></i>&nbsp;Ver Ficha Tecnica
                                     </button>
                                 </a>
-                            <?php } ?>
                         </div>
+                        
+                        <?php } if ($maq['Maq_manual'] != "../web/images/Maquina/Manual/") { ?>
 
                         <div class="col-md-6 form-group has-feedback">
                             <label for="fullname">Manual Maquina</label><br>
 
                             <a href="<?php echo getUrl("PanelDeControl", "Machine", "viewPdfManual", array("Maq_manual" => $maq['Maq_manual']), "ajax") ?>" target="blank">
-                                <button type="button" class="btn-small btn-info">
+                                <button type="button" class="btn btn-sm btn-info">
                                     <i class="fa fa-file-pdf-o"></i>&nbsp;Ver Manual Maquina
                                 </button>
                             </a>
                         </div>
+
+                        <?php } ?>
 
                         <div class="col-md-6 form-group has-feedback">
                             <label for="fullname">Imagen</label><br>

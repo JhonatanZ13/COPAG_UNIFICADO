@@ -1,4 +1,8 @@
-<div class="col-md-12 col-sm-12  ">
+<?php
+    if(($_SESSION['rolUser'] != 'Aprendiz')){
+?>
+
+<div class="col-md-12 col-sm-12  "> 
     <div class="x_panel">
         <div class="x_title">
             <a href="<?php echo getUrl("PanelDeControl", "Tool", "getInsert"); ?>">
@@ -23,6 +27,7 @@
                     <tbody>
                         <?php
                             foreach ($tools as $tool) {
+                                if($_SESSION['rolUser'] == 'Administrador'){
                         ?>
                         <tr>
                             <td><?= $tool['Her_id']; ?></td>
@@ -48,7 +53,24 @@
                             </td>
                         </tr>
                         
-                        <?php
+                        <?php   }elseif($_SESSION['rolUser'] == 'Funcionario' && $tool["Est_id"] == 1){  ?>
+                                <tr>
+                                <td><?= $tool['Her_id']; ?></td>
+                            <td><?= $tool['Her_nombre']; ?></td>
+                            <td><?= $tool['Stg_nombre']; ?></td>  
+                            <td><?= $tool['Est_nombre']; ?></td>  
+                            <td>
+                                <a class='btn btn-info btn-sm' href='<?php echo getUrl("PanelDeControl", "Tool", "viewTool", array("Her_id"=>$tool['Her_id'])); ?>'>
+                                    <i class='text-secundary fa fa-eye' aria-hidden='true'></i>
+                                </a>
+
+                                <a class='btn btn-primary btn-sm' href='<?php echo getUrl("PanelDeControl", "Tool", "getUpdate", array("Her_id"=>$tool['Her_id'])); ?>'>
+                                    <i class='fa fa-pencil' aria-hidden='true'></i>
+                                </a>
+                            </td>
+                                </tr>
+                        <?php 
+                                }
                             }
                         ?>
                     </tbody>
@@ -57,3 +79,9 @@
         </div>
     </div>
 </div>
+
+<?php
+    }else{
+        include_once '../view/partials/page404.php';
+    }
+?>

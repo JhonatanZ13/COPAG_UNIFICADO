@@ -1,4 +1,8 @@
-<div class="col-md-12 col-sm-12  ">
+<?php
+    if(($_SESSION['rolUser'] != 'Aprendiz')){
+?>
+
+<div class="col-md-12 col-sm-12  "> 
     <div class="x_panel">
         <div class="x_title">
             <a href="<?php echo getUrl("PanelDeControl", "Machine", "getInsert");?>"><button class="btn btn-success">Registrar</button></a>
@@ -23,7 +27,8 @@
  
                     <tbody>
                     <?php
-                    foreach ($maquinas as $maq){
+                        foreach ($maquinas as $maq){
+                            if($_SESSION['rolUser'] == 'Administrador'){
                     ?>
                         <tr>
                             <td><?= $maq['Maq_id']; ?></td>
@@ -50,12 +55,35 @@
                                 ?>
                             </td>
                         </tr>
-                    <?php
-                        }
-                    ?>
+
+                    <?php   }elseif($_SESSION['rolUser'] == 'Funcionario' && ($maq["Est_id"] == 1 || $maq["Est_id"] == 11 || $maq["Est_id"] == 13 || $maq["Est_id"] == 14)){  ?>
+                        <tr>
+                            <td><?= $maq['Maq_id']; ?></td>
+                            <td><?= $maq['Maq_nombre']; ?></td>
+                            <td><?= $maq['Stg_nombre']; ?></td>
+                            <td><?= $maq['Est_nombre']; ?></td>
+                            <td>
+                                <a class='btn btn-info btn-sm' href='<?php echo getUrl("PanelDeControl", "Machine", "viewMachine", array("Maq_id"=>$maq['Maq_id'])); ?>'>
+                                    <i class='text-secundary fa fa-eye' aria-hidden='true'></i>
+                                </a>
+
+                                <a class='btn btn-primary btn-sm' href='<?php echo getUrl("PanelDeControl", "Machine", "getUpdate", array("Maq_id"=>$maq['Maq_id'])); ?>'>
+                                    <i class='fa fa-pencil' aria-hidden='true'></i>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php
+                                }
+                            }
+                        ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+<?php
+    }else{
+        include_once '../view/partials/page404.php';
+    }
+?>

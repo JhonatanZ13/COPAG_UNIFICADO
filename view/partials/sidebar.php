@@ -47,11 +47,7 @@ include_once '../controller/Access/AccessController.php';
                             <i class="fa fa-home"></i>Inicio
                         </a>
                     </li>
-
-                    <?php 
-                        if ($_SESSION['areaUser'] == 'Costos' || $_SESSION['rolUser'] == 'Administrador') {
-                    ?>
-
+                    
                     <li>
                         <a>
                             <i class="fa fa-money"></i> Costos
@@ -77,11 +73,6 @@ include_once '../controller/Access/AccessController.php';
                         </ul>
                     </li>
 
-                    <?php } 
-                    
-                    if ($_SESSION['areaUser'] == 'Inventario') {
-                    ?>
-
                     <li>
                         <a>
                             <i class="fa fa-folder-open"></i>Inventario
@@ -94,15 +85,9 @@ include_once '../controller/Access/AccessController.php';
                                 <a href="<?php echo getUrl("Entrada", "Entrada", "getEntrada"); ?>">Entrada de Bodega</a>
                             </li>
 
-                            <?php 
-                            if ($_SESSION['rolUser'] != 'Aprendiz') {
-                            ?>
-
                             <li>
                                 <a href="<?php echo getUrl("Salida", "Salida", "getSalidaMasiva"); ?>">Salida de Bodega</a>
                             </li>
-                            
-                            <?php } ?>
 
                             <li>
                                 <a href="<?php echo getUrl("Control", "Control", "getControl"); ?>">Control Stock</a>
@@ -113,8 +98,6 @@ include_once '../controller/Access/AccessController.php';
                             </li>
                         </ul>
                     </li>
-
-                    <?php } ?>
 
                     <li>
                         <a>
@@ -145,10 +128,6 @@ include_once '../controller/Access/AccessController.php';
                         </ul>
                     </li>
 
-                <?php
-                if ($_SESSION['rolUser'] != 'Aprendiz') { 
-                    if($_SESSION['areaUser'] != 'Costos'){
-                ?>
                     <li>
                         <a>
                             <i class="fa fa-gears"></i> Panel de Control
@@ -157,56 +136,30 @@ include_once '../controller/Access/AccessController.php';
 
                         <ul class="nav child_menu">
 
-                            <?php
-                            if ($_SESSION['rolUser'] == 'Administrador' || ($_SESSION['rolUser'] == 'Funcionario' && $_SESSION['areaUser'] == 'Inventario')) {
-                            ?>
-
                                 <li>
                                     <a href="<?php echo getUrl("PanelDeControl", "Article", "consultArticles"); ?>">Gestionar Articulo</a>
                                 </li>
 
-                            <?php } 
-                            
-                            if ($_SESSION['rolUser'] == 'Administrador' || ($_SESSION['rolUser'] == 'Funcionario' && $_SESSION['areaUser'] == 'Produccion')) {?>
 
                             <li>
                                 <a href="<?php echo getUrl("PanelDeControl", "Company", "consultCompanies"); ?>">Gestionar Empresa</a>
                             </li>
 
-                            <?php
-                            } 
-
-                            if ($_SESSION['rolUser'] == 'Administrador' || ($_SESSION['rolUser'] == 'Funcionario' && $_SESSION['areaUser'] == 'Inventario')) {
-                            ?>
                             <li>
                                 <a href="<?php echo getUrl("PanelDeControl", "Tool", "consultTools"); ?>">Gestionar Herramienta</a>
                             </li>
-                            <?php
-                            }
-
-                            if ($_SESSION['rolUser'] == 'Administrador' || ($_SESSION['rolUser'] == 'Funcionario' && $_SESSION['areaUser'] == 'Mantenimiento')) {
-                            ?>
+                            
                             <li>
                                 <a href="<?php echo getUrl("PanelDeControl", "Machine", "consultMachines"); ?>">Gestionar Maquina</a>
                             </li>
 
-                            <?php } 
-
-                            if ($_SESSION['rolUser'] == 'Administrador') {?>
+                        
                             <li>
                                 <a href="<?php echo getUrl("PanelDeControl", "User", "consultUsers"); ?>">Gestionar Usuario</a>
                             </li>
                             
-                            <?php } ?>
                         </ul>
                     </li>
-
-                    <?php 
-                        }
-                    } 
-
-                        if ($_SESSION['areaUser'] == 'Produccion') {
-                    ?>
 
                     <li>
                         <a>
@@ -220,9 +173,6 @@ include_once '../controller/Access/AccessController.php';
                         </ul>
                     </li>
                     
-                    <?php  
-                        } 
-                    ?>
                 </ul>
             </div>
         </div>

@@ -65,7 +65,7 @@
                             <p class="formulario__input-error">El archivo tiene que ser un JPG o PNG.</p>
                         </div>
                         
-                        <img src="images/pictureDefault.png" id="imagenPrevisualizacion" style="width: 200px; height: 200px;">
+                        <img src="images/maquinaPredeterminada.jpg" id="imagenPrevisualizacion" style="width: 200px; height: 200px;">
                         <p></p>
                     </div>
 

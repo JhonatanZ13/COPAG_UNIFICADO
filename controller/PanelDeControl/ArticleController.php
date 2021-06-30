@@ -1,5 +1,5 @@
 <?php
-
+ 
     include_once '../model/Cpanel/ArticleModel.php';
 
     class ArticleController{
@@ -41,7 +41,7 @@
 
             // esta condicion es para que coloque una imagen por defecto en caso de no tenerla en el momento
             if (empty($$Arti_imagen)) {
-                $ruta="../web/images/pictureDefault.png";
+                $ruta="../web/images/articuloPredeterminado.jpg";
             }
 
             $sql="INSERT INTO tblarticulo VALUE($id,'".$Arti_nombre."','".$Tart_id."','".$Arti_medida."', '".$Med_id."','".$ruta."','".$Arti_descripcion."',1, 1)";

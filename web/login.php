@@ -16,13 +16,13 @@ if (isset($_SESSION['auth']) && ($_SESSION['auth'] == 'ok')) {
         <div class="login_wrapper">
             <div class="containerLogin">
                 <div class="mt-3">
-                    <img class="" src="images/Logo negro SENA.png" width="40%">
+                    <img class="" src="images/LogonegroSENA.png" width="40%">
                 </div>
 
                 <div class="">
                     <h3 class="text-light">Sistema COPAG</h3>
                 </div>
-
+ 
                 <div class=" col-md-10 clearfix"></div>
                 <form action="<?php echo getUrl("Access", "Access", "login", false, "ajax"); ?>" class="form-group m-3" method="post">
                     <div class="form-group has-feedbackmt-4">
