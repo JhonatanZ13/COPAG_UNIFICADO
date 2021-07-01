@@ -25,7 +25,7 @@
 
     <!---------------------- Inicio formulario ----------------------->
 
-    <form class="form-horizontal form-label-left" id="formInsertProduccion" data-parsley-validate action="<?php echo getUrl("Produccion", "Produccion", "postInsertOrdProduccion"); ?>" method="POST" onsubmit="return validarCamposVacios();">
+    <form class="form-horizontal form-label-left" id="formInsertProduccion" data-parsley-validate action="<?php echo getUrl("Produccion", "Produccion", "postInsertOrdProduccion"); ?>" method="POST">
 
         <input type="hidden" name="Odp_id" value="<?= $Odp_id ?>">
 
@@ -137,7 +137,7 @@
                                 </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <select id="elegirProducto" class="form-control" name="Pba_id" onchange="habilitardatosproducto()">
-                                        <option selected value="">Elegir..</option>
+                                        <option selected value="">Elegir...</option>
                                         <?php
                                         foreach ($productos as $res) {
                                         ?>
@@ -150,14 +150,14 @@
                             <div class="form-group row" id="grupoCantidad">
                                 <label class="col-form-label col-md-3 col-sm-3">Cantidad</label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <input disabled type="text" id="cantidad" class="form-control" name="Pte_cantidad">
+                                    <input disabled type="text" id="cantidad" class="form-control" name="Pte_cantidad" value="">
                                     <p id="cantidadP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor numerico</p>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-form-label col-md-3 col-sm-3">Cantidad de paginas</label>
                                 <div class="col-md-9 col-sm-9 ">
-                                    <input disabled type="text" id="cantidadPaginas" class="form-control" name="Pte_numeroPaginas">
+                                    <input disabled type="text" value="" id="cantidadPaginas" class="form-control" name="Pte_numeroPaginas">
                                     <p id="cantidadPP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor numerico</p>
                                 </div>
                             </div>
@@ -876,8 +876,8 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-danger invisible" role="alert" id="alert_reg">
-            <h5 class="display-5s">Por favor rellene todos los campos obligatorios.</h5>
+        <div id="alertaproduccion">
+        
         </div>
         <!-- <div class="formulario__mensaje" id="formulario__mensaje">
             <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>

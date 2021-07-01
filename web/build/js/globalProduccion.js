@@ -252,9 +252,14 @@ $(document).ready(function () {
     });
     
   });
-  
-  $(document).on("submit","#formUpdateProduccion",function(){
+//
+//
+//actualizar orden Alerta
+//
+//
+  /* $(document).on("submit","#formUpdateProduccion",function(){
     event.preventDefault();
+    if(validarCamposVacios2() == true){
     swal({
       title: '¿Desea actualizar esta orden?',
       text: 'Se guardaran todos los cambios que realizo',
@@ -278,10 +283,16 @@ $(document).ready(function () {
         $(this).submit();
       }
     });
-  });
-
-  $(document).on("submit","#formInsertProduccion",function(){
+  }
+  }); */
+//
+//
+//insertar orden Alerta
+//
+//
+  /* $(document).on("submit","#formInsertProduccion",function(){
     event.preventDefault();
+    if(validarCamposVacios() == true){
     swal({
       title: '¿Desea insertar esta orden?',
       text: 'Se insertaran todos los datos que lleno.',
@@ -305,7 +316,9 @@ $(document).ready(function () {
         $(this).submit();
       }
     });
-  });
+  }
+  }); */
+
 
   $("#alert").delay(1000).fadeOut();
   //$("#alert_reg").delay(4000).addClass("invisible");

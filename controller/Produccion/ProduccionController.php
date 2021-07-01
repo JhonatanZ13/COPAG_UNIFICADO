@@ -182,13 +182,13 @@
             $Pte_id = $obj->autoIncrement('tblproductoterminado', 'Pte_id');
     /* ============ Producto terminado ===============*/
 
-            $Pte_cantidad = $_POST['Pte_cantidad'];
-            $Pte_numeroPaginas = $_POST['Pte_numeroPaginas'];
-            $Pte_tamañoAbierto = $_POST['Pte_tamañoAbierto'];
-            $Pte_tamañoCerrado = $_POST['Pte_tamañoCerrado'];
-            $Pte_diseñador = $_POST['Pte_diseñador'];
-            $Pba_id = $_POST['Pba_id'];
-            $sql = "INSERT INTO tblproductoterminado VALUES($Pte_id, $Pte_cantidad, $Pte_numeroPaginas, '$Pte_tamañoAbierto', '$Pte_tamañoCerrado', '$Pte_diseñador', $Pba_id)";
+            $Pte_cantidad = isset($_POST['Pte_cantidad']) ? $_POST['Pte_cantidad'] : "";
+            $Pte_numeroPaginas =  isset($_POST['Pte_numeroPaginas']) ? $_POST['Pte_numeroPaginas'] : "";
+            $Pte_tamañoAbierto = isset($_POST['Pte_tamañoAbierto']) ? $_POST['Pte_tamañoAbierto'] : "";
+            $Pte_tamañoCerrado = isset($_POST['Pte_tamañoCerrado']) ? $_POST['Pte_tamañoCerrado'] : "";
+            $Pte_diseñador = isset($_POST['Pte_diseñador']) ? $_POST['Pte_diseñador'] : "";
+            $Pba_id = isset($_POST['Pba_id']) ? $_POST['Pba_id'] : "";
+            $sql = "INSERT INTO tblproductoterminado VALUES($Pte_id, '$Pte_cantidad', '$Pte_numeroPaginas', '$Pte_tamañoAbierto', '$Pte_tamañoCerrado', '$Pte_diseñador', $Pba_id)";
             $insertarPte = $obj->insert($sql);
 
     /* =============== Pre-Impresion ==================*/
@@ -772,7 +772,7 @@
         //Funcion Eliminar
 
         public function postDelete(){
-            if ($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario'){
+            
             $Odp_id = $_POST['Odp_id'];
             $obj = new ProduccionModel();
             $sql = "SELECT * FROM tblordenproduccion WHERE Odp_id=$Odp_id";
@@ -815,9 +815,6 @@
 
             if ($deletefinal) {
                 redirect(getUrl("Produccion","Produccion","getMain"));
-            }
-            }else{
-                echo "No tienes los permisos necesarios para realizar esta accion";
             }
 
         }

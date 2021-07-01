@@ -25,7 +25,7 @@
 
     <!---------------------- Inicio formulario ----------------------->
 
-    <form id="formUpdateProduccion" class="form-horizontal form-label-left" action="<?php echo getUrl("Produccion", "Produccion", "postUpdateOrdenProduccion"); ?>"  method="POST" onsubmit="return validarCamposVacios2();">
+    <form id="formUpdateProduccion" class="form-horizontal form-label-left" action="<?php echo getUrl("Produccion", "Produccion", "postUpdateOrdenProduccion"); ?>"  method="POST">
 
         <input type="hidden" name="Odp_id" value="<?= $Odp_id ?>">
 
@@ -147,8 +147,8 @@
                                         <label class="control-label col-md-3 col-sm-3" for="">Elegir producto<span class="required">*</span>
                                         </label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <select class="form-control" id="elegirProducto" name="Pba_id">
-                                                <option selected value="">Elegir..</option>
+                                            <select id="elegirProducto" class="form-control"  name="Pba_id">
+                                                <option value="">Elegir...</option>
                                                 <?php
                                                 foreach ($productos as $res) {
                                                     if ($res['Pba_id'] == $pter['Pba_id']) {
@@ -459,7 +459,9 @@
 
                                 <!--Card tintas y rip ---->
                                 <?php $contpliego = 1; ?>
-                                <?php foreach ($consultpliegos as $pli) { ?>
+                                <?php 
+                                if(mysqli_num_rows($consultpliegos)>0){
+                                foreach ($consultpliegos as $pli) { ?>
                                     <div class="col-md-6 col-sm-6 copyPliego">
                                         <input type="hidden" name="Pli_id" value="<?= $pli['Pli_id'] ?>">
                                         <?php if ($contpliego > 1) { ?>
@@ -530,7 +532,109 @@
 
                                     </div>
                                 <?php $contpliego++;
-                                } ?>
+                                    }
+                                }else{
+                                ?>
+                                <div class="col-md-6 col-sm-6 copyPliego">
+                                <div class="x_panel ">
+                                    <div class="">
+                                        <div class="col-md-12">
+                                            <h4>Personalizar pliego</h4>
+                                            <div class="">
+                                                <select id="personalizarPliego" name="Pli_rip[]" class="form-control">
+                                                    <option selected>Elegir</option>
+                                                    <?php
+                                                    foreach ($tiporip as $res) {
+                                                    ?>
+                                                        <option value='<?= $res['Stg_id'] ?>'> <?= $res['Stg_nombre'] ?></option>
+
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                            <h4>Tintas</h4>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="">
+                                                        <select id="tintas" name="Stg_id_pli[]" class="form-control">
+                                                            <option selected>Elegir</option>
+                                                            <option value="7">CMYK</option>
+                                                            <option value="8">Solo negro</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-2">
+                                        <h4>Tinta especial</h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="">
+                                                    <div class="input-group">
+                                                        <input placeholder="Ejemplo: #e01ab5" id="tintaEspecial" type="text" class="form-control" name="Pli_tintaespecial[]" /> <br>
+                                                        <p id="tintaEspecialP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor de tinta. por ejemplo: #e01ab5 </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-6 col-sm-6 copyPliego">
+                                <div class="x_panel ">
+                                    <div class="">
+                                        <div class="col-md-12">
+                                            <h4>Personalizar pliego</h4>
+                                            <div class="input-group">
+                                                <div class="x_panel">
+                                                //Pegar foreach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h4>Tintas</h4>
+
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="x_panel">
+                                                        <div class="col-md-6">
+                                                            <input type="radio" class="" name="Stg_id_pli[]" checked> CMYK
+                                                        </div>
+                                                        <div class="col-md-1 ml-1" style="border: 1px solid #00FFFF; height:20px; background:#00FFFF;"></div>
+                                                        <div class="col-md-1 ml-1" style="border: 1px solid #E5097F; height:20px; background:#E5097F;"></div>
+                                                        <div class="col-md-1 ml-1" style="border: 1px solid #FFE900; height:20px; background:#FFE900;"></div>
+                                                        <div class="col-md-1 ml-1" style="border: 1px solid #000000; height:20px; background:#000000;"></div>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="x_panel">
+                                                        <div class="col-md-8">
+                                                            <input type="radio" class="" name="Stg_id_pli[]"> SOLO NEGRO
+                                                        </div>
+                                                        <div class="col-md-3 ml-1" style="border: 1px solid #000000; height:20px; width:100%; background:#000000;"></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="col-form-label col-md-3 col-sm-3 text-left">Tinta especial</label>
+                                            <div class="col-md-9 col-sm-9">
+                                                <div class="input-group">
+                                                    <input type="text" value="#e01ab5" class="form-control" name="Pli_tintaespecial[]" />
+                                                    <span class=""><i></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                                <?php } ?>
                             </div>
 
                             <button type="button" id="agregarPliego" class="btn btn-success">Agregar pliego <i class="fa fa-plus"></i></button>
@@ -1210,14 +1314,14 @@
             </div>
             
             <div class="col-md-12 mt-5">
-            <div class="alert alert-danger invisible" role="alert" id="alert_reg">
-             <h5 class="display-5s">Por favor rellene o revise todos los campos obligatorios.</h5>
-            </div class="col-md-12">
+                <div id="alertaproduccion">
+            
+                </div>
                 <div class="col-md-6 float-right">
                     <a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>">
                         <button type="button" class="btn btn-danger float-right">Cancelar</button>
                     </a>
-                    <input type="submit" class="btn btn-success float-right" value="Actualizar Orden" id="actualizarordenp">
+                    <input type="submit" class="btn btn-success float-right" value="Actualizar Orden">
                 </div>
             </div>
     </form>

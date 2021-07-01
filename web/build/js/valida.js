@@ -81,17 +81,17 @@ const expresiones = {
 
 const campos = {
 	Pte_cantidad:false,
-	Pte_numeroPaginas:false,
-	Pte_tamañoAbierto:false,
+	Pte_numeroPaginas:true,
+	Pte_tamañoAbierto:true,
 	Pte_tamañoCerrado:true,
 	Pte_diseñador:false,
-	Sus_tamañoPliego:false,
-	Sus_cantidadSustrato:false,
-	Sus_tamañoCorte:false,
-	Sus_tirajePedido:false,
+	Sus_tamañoPliego:true,
+	Sus_cantidadSustrato:true,
+	Sus_tamañoCorte:true,
+	Sus_tirajePedido:true,
 	Sus_porcentajeDesperdicio:true,
 	Pim_encargado:false,
-	Imp_formatoCorte:false,
+	Imp_formatoCorte:true,
 	Pli_tintaespecial:true,
 	Imp_encargado:false,
 	numeradodesde:true,
@@ -107,7 +107,7 @@ const validarFormulario = (e) =>{
 	var vacio="";
     switch (e.target.name) {
 		case "Pte_cantidad":
-			if (expresiones.solonumeros.test(e.target.value)) {
+			if (expresiones.solonumeros2.test(e.target.value)) {
 				document.getElementById('cantidad').classList.remove('parsley-error');
 				document.getElementById('cantidadP').classList.remove('form_input-error-activo');
 				campos['Pte_cantidad'] = true;
@@ -115,6 +115,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('cantidad').classList.add('parsley-error');
 				document.getElementById('cantidadP').classList.add('form_input-error-activo');
 				campos['Pte_cantidad'] = false;
+				if(e.target.value == ""){// esta condicion hace que los input puedan estar y enviarse vacios en caso de ser requerido.
+					document.getElementById('cantidad').classList.add('parsley-error');
+					document.getElementById('cantidadP').classList.add('form_input-error-activo');
+					campos2['Pte_cantidad'] = false;
+				}
 			}
 		break;
 		case "Pte_numeroPaginas":
@@ -126,6 +131,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('cantidadPaginas').classList.add('parsley-error');
 				document.getElementById('cantidadPP').classList.add('form_input-error-activo');
 				campos['Pte_numeroPaginas'] = false;
+				if(e.target.value == ""){// esta condicion hace que los input puedan estar y enviarse vacios en caso de ser requerido.
+					document.getElementById('cantidadPaginas').classList.remove('parsley-error');
+					document.getElementById('cantidadPP').classList.remove('form_input-error-activo');
+					campos2['Pte_numeroPaginas'] = true;
+				}
 			}
 		break;
 		case "Pte_tamañoAbierto":
@@ -137,6 +147,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('tamañoAbierto').classList.add('parsley-error');
 				document.getElementById('tamañoAbiertoP').classList.add('form_input-error-activo');
 				campos['Pte_tamañoAbierto'] = false;
+				if(e.target.value == ""){// esta condicion hace que los input puedan estar y enviarse vacios en caso de ser requerido.
+					document.getElementById('tamañoAbierto').classList.remove('parsley-error');
+					document.getElementById('tamañoAbiertoP').classList.remove('form_input-error-activo');
+					campos2['Pte_tamañoAbierto'] = true;
+				}
 			}
 		break;
 		case "Pte_tamañoCerrado":
@@ -148,6 +163,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('tamañoCerrado').classList.add('parsley-error');
 				document.getElementById('tamañoCerradoP').classList.add('form_input-error-activo');
 				campos['Pte_tamañoCerrado'] = false;
+				if(e.target.value == ""){// esta condicion hace que los input puedan estar y enviarse vacios en caso de ser requerido.
+					document.getElementById('tamañoCerrado').classList.remove('parsley-error');
+					document.getElementById('tamañoCerradoP').classList.remove('form_input-error-activo');
+					campos2['Pte_tamañoCerrado'] = true;
+				}
 			}
 		break;
 		case "Pte_diseñador":
@@ -170,6 +190,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('tamañoSus').classList.add('parsley-error');
 				document.getElementById('tamañoSusP').classList.add('form_input-error-activo');
 				campos['Sus_tamañoPliego'] = false;
+				if(e.target.value == ""){// esta condicion hace que este input pueda estar y enviarse vacio.
+					document.getElementById('tamañoSus').classList.remove('parsley-error');
+					document.getElementById('tamañoSusP').classList.remove('form_input-error-activo');
+					campos2['Sus_tamañoPliego'] = true;
+				}
 			}
 		break;
 		case "Sus_cantidadSustrato[]":
@@ -181,6 +206,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('cantidadSus').classList.add('parsley-error');
 				document.getElementById('cantidadSusP').classList.add('form_input-error-activo');
 				campos['Sus_cantidadSustrato'] = false;
+				if(e.target.value == ""){// esta condicion hace que este input pueda estar y enviarse vacio.
+					document.getElementById('cantidadSus').classList.remove('parsley-error');
+					document.getElementById('cantidadSusP').classList.remove('form_input-error-activo');
+					campos2['Sus_cantidadSustrato'] = true;
+				}
 			}
 		break;
 		case "Sus_tamañoCorte[]":
@@ -192,6 +222,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('corteSus').classList.add('parsley-error');
 				document.getElementById('corteSusP').classList.add('form_input-error-activo');
 				campos['Sus_tamañoCorte'] = false;
+				if(e.target.value == ""){// esta condicion hace que este input pueda estar y enviarse vacio.
+					document.getElementById('corteSus').classList.remove('parsley-error');
+					document.getElementById('corteSusP').classList.remove('form_input-error-activo');
+					campos2['Sus_tamañoCorte'] = true;
+				}
 			}
 		break;
 		case "Sus_tirajePedido[]":
@@ -203,6 +238,22 @@ const validarFormulario = (e) =>{
 				document.getElementById('tirajePedidoSus').classList.add('parsley-error');
 				document.getElementById('tirajePedidoSusP').classList.add('form_input-error-activo');
 				campos['Sus_tirajePedido'] = false;
+				if(e.target.value == ""){// esta condicion hace que este input pueda estar y enviarse vacio.
+					document.getElementById('tirajePedidoSus').classList.remove('parsley-error');
+					document.getElementById('tirajePedidoSusP').classList.remove('form_input-error-activo');
+					campos2['Sus_tirajePedido'] = true;
+				}
+			}
+		break;
+		case "Sus_tirajeTotal[]":
+			if (expresiones2.solonumeros2.test(e.target.value)) {
+				document.getElementById('tirajeTotalSus').classList.remove('parsley-error');
+				document.getElementById('tirajeTotalSusP').classList.remove('form_input-error-activo');
+				campos2['Sus_tirajeTotal'] = true;
+			} else {
+				document.getElementById('tirajeTotalSus').classList.add('parsley-error');
+				document.getElementById('tirajeTotalSusP').classList.add('form_input-error-activo');
+				campos2['Sus_tirajeTotal'] = false;
 			}
 		break;
 		case "Sus_porcentajeDesperdicio[]":
@@ -236,6 +287,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('formatoCorteImpresion').classList.add('parsley-error');
 				document.getElementById('formatoCorteImpresionP').classList.add('form_input-error-activo');
 				campos['Imp_formatoCorte'] = false;
+				if(e.target.value == ""){// esta condicion hace que este input pueda estar y enviarse vacio.
+					document.getElementById('formatoCorteImpresion').classList.remove('parsley-error');
+					document.getElementById('formatoCorteImpresionP').classList.remove('form_input-error-activo');
+					campos2['Imp_formatoCorte'] = true;
+				}
 			}
 		break;
 		case "Pli_tintaespecial[]":
@@ -247,6 +303,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('tintaEspecial').classList.add('parsley-error');
 				document.getElementById('tintaEspecialP').classList.add('form_input-error-activo');
 				campos['Pli_tintaespecial'] = false;
+				if(e.target.value == ""){// esta condicion hace que los input puedan estar y enviarse vacios en caso de ser requerido.
+					document.getElementById('tintaEspecial').classList.remove('parsley-error');
+					document.getElementById('tintaEspecialP').classList.remove('form_input-error-activo');
+					campos2['Pli_tintaespecial'] = true;
+				}
 			}
 		break;
 		case "Imp_encargado":
@@ -259,7 +320,7 @@ const validarFormulario = (e) =>{
 				document.getElementById('encargadoImpresionP').classList.add('form_input-error-activo');
 				campos['Imp_encargado'] = false;
 			}
-		break;
+		break; //Inputs de los terminados
 		case "numeradodesde":
 			if (expresiones.solonumeros.test(e.target.value)) {
 				document.getElementById('numeradoDesde').classList.remove('parsley-error');
@@ -269,6 +330,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('numeradoDesde').classList.add('parsley-error');
 				document.getElementById('numeradoDesdeP').classList.add('form_input-error-activo');
 				campos['numeradodesde'] = false;
+				if(e.target.value == ""){// esta condicion hace que este input pueda estar y enviarse vacio.
+					document.getElementById('numeradoDesde').classList.remove('parsley-error');
+					document.getElementById('numeradoDesdeP').classList.remove('form_input-error-activo');
+					campos2['numeradoDesde'] = true;
+				}
 			}
 		break;
 		case "numeradohasta":
@@ -280,6 +346,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('numeradoHasta').classList.add('parsley-error');
 				document.getElementById('numeradoHastaP').classList.add('form_input-error-activo');
 				campos['numeradohasta'] = false;
+				if(e.target.value == ""){// esta condicion hace que los input puedan estar y enviarse vacios en caso de ser requerido.
+					document.getElementById('numeradoHasta').classList.remove('parsley-error');
+					document.getElementById('numeradoHastaP').classList.remove('form_input-error-activo');
+					campos2['numeradoHasta'] = true;
+				}
 			}
 		break;
 		case "estamcolor":
@@ -291,6 +362,11 @@ const validarFormulario = (e) =>{
 				document.getElementById('estampadoColor').classList.add('parsley-error');
 				document.getElementById('estampadoColorP').classList.add('form_input-error-activo');
 				campos['estamcolor'] = false;
+				if(e.target.value == ""){// esta condicion hace que los input puedan estar y enviarse vacios en caso de ser requerido.
+					document.getElementById('estamcolor').classList.remove('parsley-error');
+					document.getElementById('estamcolorP').classList.remove('form_input-error-activo');
+					campos2['estamcolor'] = true;
+				}
 			}
 		break;
 		case "plenumerocuerpos":
@@ -346,17 +422,33 @@ inputs.forEach((input) => {
 
 });
 
-function validarCamposVacios(){
+$(document).on("submit", "#formInsertProduccion", function(){
+	event.preventDefault();
 
 	var tipocliente = $("#tipoCliente").val();
 	var elegircliente = $("#elegirCliente").val();
 	var elegirproducto = $("#elegirProducto").val();
+    var alertaVacio = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+				"<strong>Por favor llene todos los campos obligatorios. (*)</strong><br> " +
+				"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+				"<span aria-hidden='true'>&times;</span>" +
+				"</button>" +
+				"</div>";
+
+	var alertafaltantes = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+	"<strong>Por favor revise que todos los datos esten correctamente escritos.</strong><br> " +
+	"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+	"<span aria-hidden='true'>&times;</span>" +
+	"</button>" +
+	"</div>";				
 
 	if (tipocliente == "" || elegircliente == "" || elegirproducto == "") {
-		$("#alert_reg").removeClass("invisible");
+
+		$("#alertaproduccion").html(alertaVacio);
 		setTimeout(function(){
-			$('#alert_reg').addClass("invisible");
+			$('#alertaproduccion').html("");
 		}, 5000);
+
 		if(elegirproducto == ""){
 			$("#elegirProducto").addClass("parsley-error");
 			setTimeout(function(){
@@ -378,15 +470,35 @@ function validarCamposVacios(){
 			}, 10000);
 			
 		}
-		return false;	
-	}
-	if(campos.Pte_cantidad && campos.Pte_numeroPaginas && campos.Pte_tamañoAbierto && campos.Pte_tamañoCerrado && campos.Pte_diseñador && campos.Sus_tamañoPliego && campos.Sus_cantidadSustrato && campos.Sus_tamañoCorte && campos.Sus_tirajePedido && campos.Sus_porcentajeDesperdicio && campos.Pim_encargado && campos.Imp_formatoCorte && campos.Pli_tintaespecial && campos.Imp_encargado && campos.numeradodesde && campos.numeradohasta && campos.estamcolor && campos.plenumerocuerpos && campos.embolcantidad && campos.fajacantidad && campos.desbcantidad){
-		return true;
+	}else if(campos.Pte_cantidad && campos.Pte_numeroPaginas && campos.Pte_tamañoAbierto && campos.Pte_tamañoCerrado && campos.Pte_diseñador && campos.Sus_tamañoPliego && campos.Sus_cantidadSustrato && campos.Sus_tamañoCorte && campos.Sus_tirajePedido && campos.Sus_porcentajeDesperdicio && campos.Pim_encargado && campos.Imp_formatoCorte && campos.Pli_tintaespecial && campos.Imp_encargado && campos.numeradodesde && campos.numeradohasta && campos.estamcolor && campos.plenumerocuerpos && campos.embolcantidad && campos.fajacantidad && campos.desbcantidad){
+		swal({
+			title: '¿Desea insertar esta orden?',
+			text: 'Se insertaran todos los datos que lleno.',
+			type: 'info',
+			icon: 'info',
+			buttons: {
+			  confirm: {
+				text: 'Registrar orden',
+				className: 'btn btn-success'
+			  },
+		
+			  cancel: {
+				visible: true,
+				text: "Cancelar",
+				className: 'btn btn-primary'
+			  }
+		
+			}
+		  }).then((Delete) => {
+			if (Delete) {
+			  $(this).submit();
+			}
+		  });
 	} else {
-		$("#alert_reg").removeClass("invisible");
+		$("#alertaproduccion").html(alertafaltantes);
 		setTimeout(function(){
-			$('#alert_reg').addClass("invisible");
+			$('#alertaproduccion').html("");
 		}, 5000);
 		return false;
 	}
-}
+});
