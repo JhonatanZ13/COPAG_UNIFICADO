@@ -105,12 +105,10 @@ class MailController
             if ($execution) {
                 //aqui hiria una alerta para mostrar que ya se cambio 
                 redirect(getUrl("Access", "Access", "login"));
-            }else {
-                
-                echo '<script>alert("El token ya no tiene validez");</script>';
             }
         }
     }
+    
     public function postAprobacionCotizacion()
     {
 //echo '<script>alert("hola");</script>';
