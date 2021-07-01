@@ -1,6 +1,6 @@
 <div class="x_content">
     <!-- Header info -->
-    <div>
+    <div class="x_panel">
         <h3>Orden de produccion No. <?= $Odp_id ?></h3>
         <h4>Funcionario que atiende:  <?= $usu_name ?></h4>
     </div>
@@ -30,7 +30,6 @@
         <input type="hidden" name="Odp_id" value="<?= $Odp_id ?>">
 
         <div class="x_content">
-            <div class="ln_solid"></div>
             <div class="row">
 
                 <!--------- Datos del cliente ---------->
