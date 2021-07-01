@@ -281,44 +281,62 @@ input.parsley-success {
 }
 
 
+/* para ocultar el scroll */
+
+body::-webkit-scrollbar {
+    width: 20px;
+    /* Tamaño del scroll en vertical */
+    height: 8px;
+    /* Tamaño del scroll en horizontal */
+    display: none;
+    /* Ocultar scroll */
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+
+body::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Cambiamos el fondo cuando esté en active */
+
+body::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+}
+
+
 /* =====================================================
                     INICIO PANEL
 =====================================================*/
 
-.formulario__input-error {
+.formularioPanel__input-error {
     font-size: 12px;
     color: red;
     margin-bottom: 0;
     display: none;
 }
 
-.formulario__input-error-activo {
+.formularioPanel__input-error-activo {
     display: block;
 }
 
-.formulario_grupo-correcto .formulario_validacion-estado {
-    color: #1ed12d;
-    opacity: 1;
-}
-
-.formulario_grupo-incorrecto .formulario_label {
-    color: #bb2929;
-}
-
-.formulario_grupo-incorrecto .formulario_validacion-estado {
-    color: #bb2929;
-    opacity: 1;
-}
-
-.formulario_grupo-incorrecto .formulario_input {
+.formularioPanel__grupo-incorrecto .formularioPanel__input {
     border: 1px solid #bb2929;
 }
 
-.formulario__mensaje {
+.formularioPanel__mensaje {
     grid-column: span 2;
 }
 
-.formulario__mensaj {
+.formularioPanel__mensaj {
     color: black;
     height: 45px;
     line-height: 45px;
@@ -329,11 +347,11 @@ input.parsley-success {
     margin-bottom: 20px;
 }
 
-.formulario__mensaje-activo {
+.formularioPanel__mensaje-activo {
     display: flex;
 }
 
-.formulario__mensaje p {
+.formularioPanel__mensaje p {
     margin: 0;
 }
 

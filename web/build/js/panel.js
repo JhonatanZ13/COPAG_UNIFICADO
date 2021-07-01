@@ -58,6 +58,10 @@ const inputsActualizarUsuario = document.querySelectorAll('#actualizarUsuario in
 const selectActualizarUsuario = document.querySelectorAll('#actualizarUsuario select');
 const textareaActualizarUsuario = document.querySelectorAll('#actualizarUsuario textarea');
 
+//Elementos Formulario Login
+
+const formularioLogin = document.getElementById('formularioLogin');
+const inputsLogin = document.querySelectorAll('#formularioLogin input');
 
 //variables de entorno
 
@@ -75,21 +79,21 @@ let camposUsuario = [];
 //expresiones validas
 
 const expresioness = {
-    nombresEspeciales: /^[a-zA-Z0-9\_\-\s]{4,40}$/, // Letras, numeros, guion y guion_bajo y espacio
-    descripcion: /^[a-zA-ZÀ-ÿ0-9\_\-\()\.\:\,\s]{4,45}$/,
+    nombresEspeciales: /^[a-zA-Z0-9\_\-\s]{1,40}$/, // Letras, numeros, guion y guion_bajo y espacio
+    descripcion: /^[a-zA-ZÀ-ÿ0-9\_\-\()\.\:\,\s]{3,200}$/,
     razonSocial: /^[a-zA-ZÀ-ÿ0-9\_\-\.\s]{4,40}$/,
     serial: /^[a-zA-Z0-9\_\-]{4,40}$/, // Letras, numeros, guion y guion_bajo
     nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
     direccion: /^[a-zA-Z0-9\s\#\-]{1,45}$/,
     password: /^.{4,12}$/, // 4 a 12 digitos.
     correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    correosena: /^[a-zA-Z0-9_.+-]+@+s+e+n+a+\.[a-zA-Z0-9-.]+$/,
-    correosena2: /^[a-zA-Z0-9_.+-]+@+m+i+s+e+n+a+\.[a-zA-Z0-9-.]+$/,
-    telefono: /^\d{1,14}$/, // 7 a 14 numeros.
+    correosena: /^[a-zA-Z0-9_.+-]+@+sena+\.[a-zA-Z0-9-.]+$/,
+    correosena2: /^[a-zA-Z0-9_.+-]+@+misena+\.[a-zA-Z0-9-.]+$/,
+    telefono: /^[0-9]{7,14}$/, // 7 a 14 numeros.
     pdf: /pdf/,
     imagen: /[png-jpg][jpeg]/,
     estado: /true/,
-    nit: /^\d{8,12}$/
+    nit: /^[0-9\-\s]{8,12}$/
 };
 
 //Campos de validacion de Maquina
@@ -320,7 +324,7 @@ const validarFormulariov = (e) => {
                 validarCampo(expresioness.estado, maquina, 'tipoHerramienta', camposHerramienta);
                 break;
             case 'Her_descripcion':
-                validarCampo(expresioness.nombresEspeciales, e.target, 'descripcionHerramienta', camposHerramienta);
+                validarCampo(expresioness.descripcion, e.target, 'descripcionHerramienta', camposHerramienta);
                 break;
             case 'Her_foto':
                 ext = e.target.value.split('.');
@@ -449,14 +453,14 @@ const validarFormulariov = (e) => {
 
 const validarCampo = (expresion, input, campo, campos) => {
     if (expresion.test(input.value)) {
-        document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
-        document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
-        document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove('formulario__input-error-activo');
+        document.getElementById(`grupo__${campo}`).classList.remove('formularioPanel__grupo-incorrecto');
+        document.getElementById(`grupo__${campo}`).classList.add('formularioPanel__grupo-correcto');
+        document.querySelector(`#grupo__${campo} .formularioPanel__input-error`).classList.remove('formularioPanel__input-error-activo');
         campos[campo] = true;
     } else {
-        document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
-        document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-correcto');
-        document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add('formulario__input-error-activo');
+        document.getElementById(`grupo__${campo}`).classList.add('formularioPanel__grupo-incorrecto');
+        document.getElementById(`grupo__${campo}`).classList.remove('formularioPanel__grupo-correcto');
+        document.querySelector(`#grupo__${campo} .formularioPanel__input-error`).classList.add('formularioPanel__input-error-activo');
         campos[campo] = false;
     }
 };
@@ -465,14 +469,14 @@ const validarCampo = (expresion, input, campo, campos) => {
 
 const validarEmail = (expresion, expresion2, input, campo, campos) => {
     if (expresion.test(input.value) || expresion2.test(input.value)) {
-        document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
-        document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
-        document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove('formulario__input-error-activo');
+        document.getElementById(`grupo__${campo}`).classList.remove('formularioPanel__grupo-incorrecto');
+        document.getElementById(`grupo__${campo}`).classList.add('formularioPanel__grupo-correcto');
+        document.querySelector(`#grupo__${campo} .formularioPanel__input-error`).classList.remove('formularioPanel__input-error-activo');
         campos[campo] = true;
     } else {
-        document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
-        document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-correcto');
-        document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add('formulario__input-error-activo');
+        document.getElementById(`grupo__${campo}`).classList.add('formularioPanel__grupo-incorrecto');
+        document.getElementById(`grupo__${campo}`).classList.remove('formularioPanel__grupo-correcto');
+        document.querySelector(`#grupo__${campo} .formularioPanel__input-error`).classList.add('formularioPanel__input-error-activo');
         campos[campo] = false;
     }
 };
@@ -489,7 +493,7 @@ if (formulariov) {
             camposMaquina.manual && camposMaquina.descripcion && camposMaquina.serial) {
             formulariov.submit();
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
         }
     });
 }
@@ -525,7 +529,7 @@ if (actualizarMaquina) {
             });
 
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
         }
     });
 }
@@ -538,7 +542,7 @@ if (formularioArticulo) {
         if (camposArticulo.descripcionArticulo && camposArticulo.nombreArticulo && camposArticulo.tipoArticulo && camposArticulo.tipoMedida && camposArticulo.medida && camposArticulo.imagenArticulo) {
             formularioArticulo.submit();
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
         }
     });
 }
@@ -572,7 +576,7 @@ if (actualizarArticulo) {
                 }
             });
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
         }
     });
 }
@@ -585,7 +589,7 @@ if (formularioHerramienta) {
         if (camposHerramienta.descripcionHerramienta && camposHerramienta.imagenHerramienta && camposHerramienta.nombreHerramienta && camposHerramienta.tipoHerramienta) {
             formularioHerramienta.submit();
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
         }
     });
 }
@@ -619,7 +623,7 @@ if (actualizarHerramienta) {
             });
 
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
         }
     });
 }
@@ -634,7 +638,7 @@ if (formularioEmpresa) {
             camposEmpresa.segundoNumeroContacto && camposEmpresa.tipoDocumentoContacto) {
             formularioEmpresa.submit();
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
         }
     });
 }
@@ -670,7 +674,7 @@ if (actualizarEmpresa) {
             });
 
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
         }
     });
 }
@@ -692,7 +696,7 @@ if (formularioUsuario) {
             camposUsuario.areaUsuario) {
             formularioUsuario.submit();
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
             console.log(camposUsuario);
         }
     });
@@ -736,7 +740,7 @@ if (actualizarUsuario) {
             });
 
         } else {
-            document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
         }
     });
 }
@@ -745,7 +749,6 @@ if (actualizarUsuario) {
 
 textarea.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -755,7 +758,6 @@ select.forEach((e) => {
 
 inputsv.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });
 
@@ -763,7 +765,6 @@ inputsv.forEach((input) => {
 
 textareaActualizarMaquina.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -773,7 +774,6 @@ selectActualizarMaquina.forEach((e) => {
 
 inputsActualizarMaquina.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });
 
@@ -781,7 +781,6 @@ inputsActualizarMaquina.forEach((input) => {
 
 textareaArticulo.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -791,7 +790,6 @@ selectArticulo.forEach((e) => {
 
 inputsArticulo.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });
 
@@ -799,7 +797,6 @@ inputsArticulo.forEach((input) => {
 
 textareaActualizarArticulo.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -809,7 +806,6 @@ selectActualizarArticulo.forEach((e) => {
 
 inputsActualizarArticulo.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });
 
@@ -817,7 +813,6 @@ inputsActualizarArticulo.forEach((input) => {
 
 textareaHerramienta.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -827,7 +822,6 @@ selectHerramienta.forEach((e) => {
 
 inputsHerramienta.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });
 
@@ -835,7 +829,6 @@ inputsHerramienta.forEach((input) => {
 
 textareaActualizarHerramienta.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -845,7 +838,6 @@ selectActualizarHerramienta.forEach((e) => {
 
 inputsActualizarHerramienta.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });
 
@@ -853,7 +845,6 @@ inputsActualizarHerramienta.forEach((input) => {
 
 textareaEmpresa.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -863,7 +854,6 @@ selectEmpresa.forEach((e) => {
 
 inputsEmpresa.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });
 
@@ -871,7 +861,6 @@ inputsEmpresa.forEach((input) => {
 
 textareaActualizarEmpresa.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -881,7 +870,6 @@ selectActualizarEmpresa.forEach((e) => {
 
 inputsActualizarEmpresa.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });
 
@@ -889,7 +877,6 @@ inputsActualizarEmpresa.forEach((input) => {
 
 textareaUsuario.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -899,7 +886,6 @@ selectUsuario.forEach((e) => {
 
 inputsUsuario.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });
 
@@ -907,7 +893,6 @@ inputsUsuario.forEach((input) => {
 
 textareaActualizarUsuario.forEach((text) => {
     text.addEventListener('keyup', validarFormulariov);
-    text.addEventListener('blur', validarFormulariov);
 
 });
 
@@ -917,6 +902,5 @@ selectActualizarUsuario.forEach((e) => {
 
 inputsActualizarUsuario.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
-    input.addEventListener('blur', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
 });

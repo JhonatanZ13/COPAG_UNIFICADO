@@ -15,6 +15,24 @@ foreach ($usuarios as $user) {
 
 					<h1 class="">Perfil</h1>
 					<br />
+
+					<?php 
+					if(isset($_SESSION['mensaje'])){ ?>
+					<div class="col-md-12">
+						<div class="alert alert-<?=$_SESSION['tipo']?> alert-dismissible " role="alert" id="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+							</button>
+							<strong>
+							<?php 
+								echo $_SESSION['mensaje'];
+								unset($_SESSION['mensaje']);
+								unset($_SESSION['tipo']);
+							?>
+							</strong>
+						</div>
+					</div>
+					<?php }?>
+
 					<form action="<?php echo getUrl("PanelDeControl", "User", "postProfile"); ?>" method="post" data-parsley-validate class="form-horizontal form-label-left">
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback">
@@ -35,7 +53,7 @@ foreach ($usuarios as $user) {
 						</div>
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Primer Nombre <b style="color:red;">*</b></label>
+							<label for="fullname">Primer Nombre</label>
 							<input type="text" id="Usu_primerNombre" class="form-control" name="Usu_primerNombre" value="<?= $user['Usu_primerNombre']; ?>" />
 						</div>
 
@@ -45,7 +63,7 @@ foreach ($usuarios as $user) {
 						</div>
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Primer Apellido <b style="color:red;">*</b></label>
+							<label for="fullname">Primer Apellido</label>
 							<input type="text" id="Usu_primerApellido" class="form-control" name="Usu_primerApellido" value="<?= $user['Usu_primerApellido']; ?>" />
 						</div>
 
@@ -54,23 +72,23 @@ foreach ($usuarios as $user) {
 							<input type="text" id="Usu_segundoApellido" class="form-control" name="Usu_segundoApellido" value="<?= $user['Usu_segundoApellido']; ?>" />
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Tipo de Documento</label>
-							<input type="" id="" class="form-control" name="" value="<?= $user['Stg_nombre']; ?>" />
+						<div data-rol="<?= $_SESSION['rolUser'] ?>" class="readAndDisable col-md-6 col-sm-6 form-group has-feedback">
+							<label for="fullname">Tipo de Documento <b style="color:red;">*</b></label>
+							<input id="" class="na form-control" name="" value="<?= $user['Stg_nombre']; ?>" disabled readonly />
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
+						<div data-rol="<?= $_SESSION['rolUser'] ?>" class="readAndDisable col-md-6 col-sm-6 form-group has-feedback">
 							<label for="fullname">Numero de Documento <b style="color:red;">*</b></label>
-							<input type="number" id="Usu_numeroDocumento" class="form-control" name="Usu_numeroDocumento" value="<?= $user['Usu_numeroDocumento']; ?>" />
+							<input type="number" id="Usu_numeroDocumento" class="na form-control" name="Usu_numeroDocumento" value="<?= $user['Usu_numeroDocumento']; ?>" disabled readonly />
 						</div>
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Numero de Telefono <b style="color:red;">*</b></label>
+							<label for="fullname">Numero de Telefono</label>
 							<input type="number" id="Usu_telefono" class="form-control" name="Usu_telefono" value="<?= $user['Usu_telefono']; ?>" />
 						</div>
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Genero <b style="color:red;">*</b></label>
+							<label for="fullname">Genero</label>
 							<select name="Gen_id" class="form-control">
 								<?php
 								foreach ($genero as $gen) {
@@ -90,81 +108,39 @@ foreach ($usuarios as $user) {
 							</select>
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
+						<div data-rol="<?= $_SESSION['rolUser'] ?>" class="readAndDisable col-md-6 col-sm-6 form-group has-feedback">
 							<label for="fullname">Correo Electronico <b style="color:red;">*</b></label>
-							<input type="email" id="Usu_email" class="form-control" name="Usu_email" value="<?= $user['Usu_email']; ?>" />
+							<input type="email" id="Usu_email" class="na form-control" name="Usu_email" value="<?= $user['Usu_email']; ?>" disabled readonly />
 						</div>
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Rol de Usuario <b style="color:red;">*</b></label>
-							<select name="Rol_id" class="form-control">
-								<option value="">Seleccione...</option>
-								<?php
-								foreach ($roles as $rol) {
-									foreach ($usuarios as $user) {
-										if ($rol['Rol_id'] == $user['rol_id']) {
-								?>
-											<option value="<?= $rol['Rol_id']; ?>" selected><?= $rol['Rol_nombre']; ?></option>
-										<?php
-										} else {
-										?>
-											<option value="<?= $rol['Rol_id']; ?>"><?= $rol['Rol_nombre']; ?></option>
-								<?php
-										}
-									}
-								}
-								?>
-							</select>
+							<label for="fullname">Contraseña Anterior</label>
+							<input type="" id="" class="form-control" name="Usu_passwordOld" />
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Area del Usuario <b style="color:red;">*</b></label>
-							<select name="Area_id" class="form-control">
-								<option value="">Seleccione...</option>
-								<?php
-								foreach ($areas as $area) {
-									foreach ($usuarios as $user) {
-										if ($area['Area_id'] == $user['Area_id']) {
-								?>
-											<option value='<?= $area['Area_id']; ?>' selected><?= $area['Area_nombre']; ?></option>
-										<?php
-										} else {
-										?>
-											<option value="<?= $area['Area_id']; ?>"><?= $area['Area_nombre']; ?></option>
-								<?php
-										}
-									}
-								} ?>
-							</select>
-						</div>
+						<div id="validarPrueba">
+							<div class="col-md-6 col-sm-6 form-group has-feedback">
+								<label for="fullname">Contraseña Nueva</label>
+								<input type="" id="Usu_passwordNew" class="form-control" name="Usu_passwordNew" />
+							</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Contraseña Anterior<b style="color:red;">*</b></label>
-							<input type="" id="" class="form-control" name="Usu_passwordOld"/>
-						</div>
-
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Contraseña Nueva<b style="color:red;">*</b></label>
-							<input type="" id="" class="form-control" name="Usu_passwordNew"/>
-						</div>
-						
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
-							<label for="fullname">Confirmar Contraseña <b style="color:red;">*</b></label>
-							<input type="" id="Usu_password" class="form-control" name="Usu_password"" />
+							<div class="col-md-6 col-sm-6 form-group has-feedback">
+								<label for="fullname">Confirmar Contraseña </label>
+								<input type="" id="Usu_password" class="form-control" name="Usu_password"/>
+							</div>
 						</div>
 
 						<br><br>
-						<div class="row col-md-12 justify-content-end mt-5">
+						<div class=" row col-md-12 justify-content-end mt-5">
 							<button type="submit" class="btn btn-success">Actualizar</button>
-							<a href='<?php echo getUrl("PanelDeControl", "User", "consultUsers"); ?>'>
+							<a href='<?php echo getUrl("PanelDeControl", "User", "getIndex", ); ?>'>
 								<button class="btn btn-danger" type="button">Cancelar</button>
 							</a>
 						</div>
+					</form>
 				</div>
-				</form>
 			</div>
 		</div>
-	</div>
 	</div>
 
 <?php

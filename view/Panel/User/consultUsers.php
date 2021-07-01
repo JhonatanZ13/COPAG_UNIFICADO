@@ -9,7 +9,7 @@ if (($_SESSION['rolUser'] != 'Aprendiz')) {
                     <button class="btn btn-success">Registrar</button>
                 </a>
             </div>
-
+ 
             <div class="x_content">
                 <h1>Usuarios</h1>
                 <div class="table-responsive">

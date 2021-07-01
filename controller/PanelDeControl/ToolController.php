@@ -38,9 +38,9 @@
             move_uploaded_file($_FILES['Her_foto']['tmp_name'],$ruta);
 
             // esta condicion es para que coloque una imagen por defecto en caso de no tenerla en el momento
-//             if (empty($$Her_foto)) {
-//                 $ruta="../web/images/pictureDefault.png";
-//             }
+            if (empty($$Her_foto)) {
+                $ruta="../web/images/toolDefault.jpg";
+            }
 
             $sql_insert_tools = "INSERT TblHerramienta VALUE($Her_id,'".$Her_nombre."','".$Her_descripcion."',$Her_cantidad,'".$ruta."', $Stg_id, $Est_id)";
 
@@ -83,7 +83,7 @@
 
             if($Her_foto){
                 $sql_update_tools = "UPDATE TblHerramienta SET Her_nombre='$Her_nombre', Her_descripcion='$Her_descripcion', Stg_id='$Stg_id', Her_foto='$ruta' WHERE Her_id='$Her_id'";
-                unlink($oldImage);  
+                @unlink($oldImage);  
             }else {
                 $sql_update_tools = "UPDATE TblHerramienta SET Her_nombre='$Her_nombre', Her_descripcion='$Her_descripcion', Stg_id='$Stg_id' WHERE Her_id='$Her_id'";
             }

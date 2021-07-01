@@ -10,7 +10,7 @@
                 include_once '../view/partials/sidebar.php';
                 include_once '../view/partials/navbar.php';
                 //$fondo="background-image:url(images/bg-sena.png)";
-                echo "<div class='right_col' role='main' >";
+                echo "<div class=' right_col' role='main' >";
                 
                     echo "<div class='clearfix'></div>";
                     echo "<div class='row'>";

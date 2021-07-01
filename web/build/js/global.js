@@ -196,6 +196,50 @@ $(document).ready(function() {
         });
 
     });
+
+    // VALIDACIOM DE PERFIL campos desabilitados
+    $(document).on('click', '.readAndDisable', function() {
+        // la funcion attr() nos permite colocar o leer atributos del elemento
+        var rolUser = $(this).attr('data-rol');
+
+
+        if (rolUser == 'Aprendiz') {
+            $('.na').attr('readonly', true);
+            $('.na').attr('disable', true);
+        }
+
+    });
+
+    // validar contraseñas iguales
+    $(document).on('keyup', '#Usu_password', function() {
+        var pass1 = $('#Usu_passwordNew').val();
+        var pass2 = $('#Usu_password').val();
+
+        if (pass2 == pass1 && pass1 != '') {
+            $('#Usu_password').removeClass('is-invalid');
+            $('#Usu_password').addClass('is-valid');
+        } else {
+            $('#Usu_password').removeClass('is-valid');
+            $('#Usu_password').addClass('is-invalid');
+        }
+
+    });
+
+    $(document).on('keyup', '#Usu_passwordNew', function() {
+        var pass1 = $('#Usu_passwordNew').val();
+        var pass2 = $('#Usu_password').val();
+
+        if (pass2 == pass1 && pass1 != '') {
+            $('#Usu_password').removeClass('is-invalid');
+            $('#Usu_password').addClass('is-valid');
+        } else {
+            $('#Usu_password').removeClass('is-valid');
+            $('#Usu_password').addClass('is-invalid');
+        }
+
+    });
+    //fin validar
+
     /* =====================================================
                     FIN PANEL
     =====================================================*/

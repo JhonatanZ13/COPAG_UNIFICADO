@@ -1,9 +1,9 @@
 <?php
     if(($_SESSION['rolUser'] != 'Aprendiz')){
 ?>
- 
+
 <div class="col-md-12 col-sm-12  "> 
-    <div class="">
+    <div class="x_panel">
         <div class="x_title">
             <a href="<?php echo getUrl("PanelDeControl", "Tool", "getInsert"); ?>">
                 <button class="btn btn-success">Registrar</button>
@@ -11,7 +11,7 @@
         </div>
  
         <div class="x_content">
-            <h1 class="jambo">Herramientas</h1>
+            <h1>Herramientas</h1>
             <div class="table-responsive">
                 <table class="table table-striped jambo_table" id="table">
                     <thead>

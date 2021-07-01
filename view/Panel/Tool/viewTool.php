@@ -1,5 +1,5 @@
 <?php
-    foreach ($tools as $tool){
+        foreach ($tools as $tool){
 ?>
 
 <div class="row">
@@ -53,6 +53,6 @@
     </div>
 </div>
 
-<?php
-    }
+<?php   }
+    
 ?>

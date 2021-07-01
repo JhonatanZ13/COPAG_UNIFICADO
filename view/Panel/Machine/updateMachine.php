@@ -1,5 +1,6 @@
 <?php
-foreach ($maquina as $maq) {
+if(($_SESSION['rolUser'] != 'Aprendiz')){
+    foreach ($maquina as $maq) {
 ?>
     <div class="row">
         <div class="col-md-12 col-sm-12 ">
@@ -22,13 +23,13 @@ foreach ($maquina as $maq) {
                         <div class="col-md-6">
                             <div class="form-group has-feedback" id="grupo__nombreMaquina">
                                 <label for="fullname">Nombre Maquina <b style="color: red;">*</b> </label>
-                                <input type="text" class="form-control formulario__input" value="<?php echo $maq['Maq_nombre'] ?>" name="Maq_nombre" />
-                                <p class="formulario__input-error">El nombre tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
+                                <input type="text" class="form-control formularioPanel__input" value="<?php echo $maq['Maq_nombre'] ?>" name="Maq_nombre" />
+                                <p class="formularioPanel__input-error">Solo se permiten letras (a-z), números (0-9) y guion bajo (_).</p>
                             </div>
 
                             <div class="form-group has-feedback" id="grupo__tipoMaquina">
                                 <label for="fullname">Tipo de maquina <b style="color: red;">*</b> </label>
-                                <select name="Stg_id" class="form-control formulario__input" required>
+                                <select name="Stg_id" class="form-control formularioPanel__input" required>
                                     <option value="<?php echo $maq['Stg_id'] ?>"><?php echo $maq['Stg_nombre'] ?></option>
                                     <?php
                                     foreach ($tmaquina as $tmaq) {
@@ -39,27 +40,27 @@ foreach ($maquina as $maq) {
                                     <?php }
                                     } ?>
                                 </select>
-                                <p class="formulario__input-error">Tiene que seleccionar un tipo de maquina.</p>
+                                <p class="formularioPanel__input-error">Tiene que seleccionar un tipo de maquina.</p>
                             </div>
 
                             <div class="form-group has-feedback" id="grupo__serial">
                                 <label for="fullname">Serial <b style="color: red;">*</b> </label>
-                                <input type="text" class="form-control formulario__input" value="<?php echo $maq['Maq_serial'] ?>" placeholder="Serial" name="Maq_serial" />
-                                <p class="formulario__input-error">El nombre tiene que ser de 4 a 40 caracteres y solo puede contener numeros, letras y guion bajo.</p>
+                                <input type="text" class="form-control formularioPanel__input" value="<?php echo $maq['Maq_serial'] ?>" placeholder="Serial" name="Maq_serial" />
+                                <p class="formularioPanel__input-error">Solo se permiten letras (a-z), números (0-9) y guion bajo (_).</p>
                             </div>
 
                             <div class="form-group has-feedback" id="grupo__descripcion">
                                 <label for="fullname">Descripcion <b style="color: red;">* </b><small>(Maximo 50 caracteres)</small> </label>
-                                <textarea style="max-height: 100px; min-height: 100px;" class="form-control formulario__input" name="Maq_descripcion"><?php echo $maq['Maq_descripcion'] ?></textarea>
-                                <p class="formulario__input-error">La descripcion tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
+                                <textarea style="max-height: 100px; min-height: 100px;" class="form-control formularioPanel__input" name="Maq_descripcion"><?php echo $maq['Maq_descripcion'] ?></textarea>
+                                <p class="formularioPanel__input-error">Solo se permiten letras (a-z), números (0-9) , punto (.), coma(,) y guion bajo (_).</p>
                             </div>
 
                         </div>
                         
                         <div class="col-md-6 form-group has-feedback" id="grupo__ficha">
                             <label for="fullname">Ficha Tecnica</label><br>
-                            <input class="formulario__input" type="file" name="Maq_fichaTecnica" />
-                            <p class="formulario__input-error">El archivo tiene que ser un PDF.</p>
+                            <input class="formularioPanel__input" type="file" name="Maq_fichaTecnica" />
+                            <p class="formularioPanel__input-error">El archivo tiene que ser un PDF.</p>
                             <br><br>
 
                         <?php if ($maq['Maq_fichaTecnica'] != "../web/images/Maquina/Ficha/") { ?>
@@ -76,8 +77,8 @@ foreach ($maquina as $maq) {
 
                         <div class="col-md-6 form-group has-feedback" id="grupo__ficha">
                             <label for="fullname">Manual Maquina</label><br>
-                            <input class="formulario__input" type="file" name="Maq_manual" />
-                            <p class="formulario__input-error">El archivo tiene que ser un PDF.</p>
+                            <input class="formularioPanel__input" type="file" name="Maq_manual" />
+                            <p class="formularioPanel__input-error">El archivo tiene que ser un PDF.</p>
                             <br><br>
                         
                         <?php if ($maq['Maq_manual'] != "../web/images/Maquina/Manual/") { ?>
@@ -94,13 +95,13 @@ foreach ($maquina as $maq) {
                         
                         <div class="col-md-6 form-group has-feedback" id="grupo__imagenMaquina">
                             <label for="fullname">Imagen</label><br>
-                            <input class="formulario__input" type="file" id="seleccionArchivos" placeholder="Imagen" name="Maq_imagen" /><br><br>
-                            <p class="formulario__input-error">El archivo tiene que ser un JPG o PNG.</p>
+                            <input class="formularioPanel__input" type="file" id="seleccionArchivos" placeholder="Imagen" name="Maq_imagen" /><br><br>
+                            <p class="formularioPanel__input-error">El archivo tiene que ser un JPG o PNG.</p>
                             <img src="<?php echo $maq['Maq_imagen']; ?>" id="imagenPrevisualizacion" style="width: 200px; height: 200px;">
-                            <p class="formulario__input-error">El archivo tiene que ser un PDF.</p>
+                            <p class="formularioPanel__input-error">El archivo tiene que ser un PDF.</p>
                         </div>
 
-                        <div class="formulario__mensaj" id="formulario__mensaje">
+                        <div class="formularioPanel__mensaj" id="formularioPanel__mensaje">
                             <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
                         </div>
 
@@ -108,12 +109,15 @@ foreach ($maquina as $maq) {
                             <button type="submit" class="btn btn-success">Actualizar</button>
                             <a href="<?php echo getUrl("PanelDeControl", "Machine", "consultMachines") ?>"><button class="btn btn-danger" type="button">Cancelar</button></a>
                         </div>
-                </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
     </div>
-<?php
-}
+
+<?php }
+    }else{
+        include_once '../view/partials/page404.php';
+    }
 ?>

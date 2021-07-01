@@ -18,13 +18,13 @@
                     <div class="col-md-6">
                         <div class=" form-group has-feedback" id="grupo__nombreHerramienta">
                             <label for="fullname">Nombre Herramienta <b style="color:red;">*</b></label>
-                            <input type="text" id="Her_nombre" class="form-control formulario__input" name="Her_nombre" />
-                            <p class="formulario__input-error">El nombre tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
+                            <input type="text" id="Her_nombre" class="form-control formularioPanel__input" name="Her_nombre" />
+                            <p class="formularioPanel__input-error">Solo se permiten letras (a-z), números (0-9) y guion bajo (_).</p>
                         </div>
 
                         <div class="form-group has-feedback" id="grupo__tipoHerramienta">
                             <label for="fullname">Tipo de Herramienta <b style="color:red;">*</b></label>
-                            <select name="Stg_id" class="form-control formulario__input" >
+                            <select name="Stg_id" class="form-control formularioPanel__input" >
                                 <option value="">Seleccione...</option>
                                 <?php
                                 foreach ($tipoherramienta as $her) {
@@ -33,27 +33,27 @@
 
                                 <?php } ?>
                             </select>
-                            <p class="formulario__input-error">Tiene que seleccionar un tipo de herramienta.</p>
+                            <p class="formularioPanel__input-error">Tiene que seleccionar un tipo de herramienta.</p>
                         </div>
 
                         <div class="form-group has-feedback" id="grupo__descripcionHerramienta">
                             <label for="fullname">Descripcion <b style="color:red;">*</b>&nbsp;<small>(Maximo 50 caracteres)</small>
                             </label>
-                            <textarea style="max-height: 100px; min-height: 100px;" id="Her_descripcion" class="form-control formulario__input" name="Her_descripcion"></textarea>
-                            <p class="formulario__input-error">La descripcion tiene que ser de 4 a 45 caracteres y solo puede contener numeros, letras y guion bajo.</p>
+                            <textarea style="max-height: 100px; min-height: 100px;" id="Her_descripcion" class="form-control formularioPanel__input" name="Her_descripcion"></textarea>
+                            <p class="formularioPanel__input-error">Solo se permiten letras (a-z), números (0-9) , punto (.), coma(,) y guion bajo (_).</p>
                         </div> 
                     </div>
 
                     <div class="col-md-6 form-group has-feedback" style="margin-bottom: 75px;" id="grupo__imagenHerramienta">
                         <div>
                             <label for="fullname">Foto Herramienta</label><br>
-                            <input class="formulario__input" type="file" id="seleccionArchivos" name="Her_foto" />
-                            <p class="formulario__input-error">El archivo tiene que ser un JPG o PNG.</p>
+                            <input class="formularioPanel__input" type="file" id="seleccionArchivos" name="Her_foto" />
+                            <p class="formularioPanel__input-error">El archivo tiene que ser un JPG o PNG.</p>
                         </div><br>
                         <img src="images/pictureDefault.png" id="imagenPrevisualizacion" style="width: 200px; height: 200px;">
                     </div>
 
-                    <div class="formulario__mensaj" id="formulario__mensaje">
+                    <div class="formularioPanel__mensaj" id="formularioPanel__mensaje">
                          <p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
                     </div>
 
@@ -65,7 +65,6 @@
                             </a> 
                         </div>
                     </div>
-                    
                 </form>
             </div> 
         </div>
