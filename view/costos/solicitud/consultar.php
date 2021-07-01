@@ -33,8 +33,10 @@ if (isset($_SESSION['error'])){
                 <ul class="nav navbar-right panel_toolbox">
                     <li><button class="btn btn-success btn-sm collapse-link">Solicitudes pendientes<i
                                 class="fa fa-chevron-up pl-3"></i></button></li> 
+                               <?php if($this->esDiferenteAprendiz()){?>
                          <a href="<?php echo getUrl("costos","solicitud","consultarSolicitudAprobacion");?>"><button class="btn btn-success btn-sm ">Administrar Solicitudes<i
                                     class="fas fa-plus-square pl-3 "></i></button></a>
+                                    <?php }?>
                         <li><button class="btn btn-success btn-sm botonModal2" title="Tipo de solicitud." data-url= "<?php echo getUrl("costos","solicitud","modalTipoS",false,"ajax")?>">Crear Solicitud<i
                                     class="fas fa-plus-square pl-3"></i></button></li>
                         
@@ -46,7 +48,7 @@ if (isset($_SESSION['error'])){
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box table-responsive">
-                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed" style="width:100%">
+                        <table id="table" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed" style="width:100%">
                  
                  <thead style="background-color:#17A481; color:#fff;">
                      <tr>

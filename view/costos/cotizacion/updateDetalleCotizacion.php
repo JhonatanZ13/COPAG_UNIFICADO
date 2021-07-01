@@ -274,10 +274,11 @@
                 </div>
                 <div class="form-group mt-3">
                     <div class="col-md-3 offset-md-9">
-                        <button type='submit' class="btn btn-primary">Guardar</button>
+                        
                         <a href="<?php echo getUrl("costos","cotizacion","updateOrden",array("Ped_id"=>$Ped_id));?>">
-                            <button type="button" class="btn btn-success">Cancelar</button>
+                            <button type="button" class="btn btn-danger">Cancelar</button>
                         </a>
+                        <button type='submit' class="btn btn-success">Guardar</button>
                     </div>
                 </div>
             </div>

@@ -50,8 +50,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" class="btn btn-danger">Si</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-success">Aceptar</button>
     </div>
 
 
@@ -65,8 +65,8 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-danger"  disabled = "disabled" >Si</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success"  disabled = "disabled" >Aceptar</button>
     </div>
 
 

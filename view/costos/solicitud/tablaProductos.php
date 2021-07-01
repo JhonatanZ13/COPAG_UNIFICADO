@@ -4,10 +4,12 @@ if(isset($funcion)){
   if($funcion=="aprobarSolicitudConsult" || $funcion=="getconsultSolicitud"){
     $disabled="disabled";
     $none="d-none";
+    $resize="style='resize: none '";
     // echo ' <script>alert("ok");</script>';
 }else {
     $disabled=""; 
     $none="";
+    $resize="";
 }
 }
 
@@ -59,7 +61,7 @@ if(isset($funcion)){
                               </td>';
                               echo '<td>
                               <textarea class="form-control validar" id="desc0'.$cont.'" rows="2" cols="50" name="desc[]" 
-                              placeholder="Descripcion producto.."'.$disabled.'>'.$tp['Dep_descripcion'].'</textarea>
+                              placeholder="Descripcion producto.."'.$resize.$disabled.'>'.$tp['Dep_descripcion'].'</textarea>
                               </td>';
                               echo '<td class="'.$none.'">';
                               if($funcion!="aprobarSolicitudConsult"){

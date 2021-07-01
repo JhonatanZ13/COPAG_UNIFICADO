@@ -26,7 +26,7 @@
         foreach($detalleCotizacion AS $d){
             if($d['Dpe_valorTotal']== NULL){
                 $contError++;
-                $mensajeError .="La cotizacion cuenta con productos no cotizados.<br>";
+                $mensajeError ="La cotizacion cuenta con productos no cotizados.<br>";
             }
         }
 
@@ -39,8 +39,8 @@
     <p style="font-size: 20px"></p> -->
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-danger" disabled="disabled">Si</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success" disabled="disabled">Aprobar</button>
     </div>
     <?php
         }else{
@@ -84,8 +84,8 @@
     </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="submit" class="btn btn-danger">Si</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-success">Aceptar</button>
     </div>
 
 

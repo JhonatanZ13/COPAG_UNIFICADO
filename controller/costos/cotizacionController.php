@@ -10,13 +10,6 @@ class CotizacionController {
 
         $obj=new CotizacionModel();
 
-        // codigoPedido  = Ped_id
-        // EstadoDescripcion = Est_id = Est_nombre
-        // Nombre = 
-        // Centro/empresa -> 
-        // fechaPedido = Ped_fecha
-        // CostoPedido = Dep_valorTotal = sum(Dep_valorTotal) WHERE Ped_id = Ped_id
-
         $sql="SELECT
         ped.Ped_id,
         est.Est_nombre,
@@ -38,8 +31,6 @@ class CotizacionController {
         ORDER BY est.Est_nombre DESC
         ";
 
-    
-
         $consultPedido = $obj->consult($sql);
         include_once '../view/costos/cotizacion/consultar.php';
     }
@@ -48,7 +39,7 @@ class CotizacionController {
         $obj=new CotizacionModel();
 
         $Ped_id = $obj->autoIncrement('tblpedido','Ped_id');
-
+        
         $sql = "INSERT INTO `tblpedido` 
         (`Ped_id`, `Ped_fecha`,  `Ped_objetivo`, `Est_id`) 
         VALUES 
@@ -70,178 +61,189 @@ class CotizacionController {
         $obj=new CotizacionModel();
 
         //Aqui se pone la variable de sesion del usuario
-        $Usu_id = 2;
+        $Usu_id = $_SESSION['idUser'];
 
         $Ped_id = $_GET['Ped_id'];
 
-        
-        $sql="SELECT * FROM tblpedido WHERE Ped_id = $Ped_id";
-        $pedido = $obj->consult($sql);
 
-        foreach ($pedido as $pedi) {
-            //Tipo de cliente
-            if(!($pedi['Tempr_id'] == NULL || $pedi['Tempr_id'] == '') ){
-                $Tempr_id = $pedi['Tempr_id'];
-                $sql="SELECT Tempr_id, Tempr_descripcion FROM `tbltipoempresa` WHERE Tempr_id = $Tempr_id";
+        $sql="SELECT tblpedido.Est_id FROM tblpedido WHERE Ped_id=$Ped_id";
+        $estado=$obj->consult($sql);
+        $estado=mysqli_fetch_row($estado);
+        $estado=$estado[0];
+    
+        if($estado==6){
+
+            $sql="SELECT * FROM tblpedido WHERE Ped_id = $Ped_id";
+            $pedido = $obj->consult($sql);
+
+            foreach ($pedido as $pedi) {
+                //Tipo de cliente
+                if(!($pedi['Tempr_id'] == NULL || $pedi['Tempr_id'] == '') ){
+                    $Tempr_id = $pedi['Tempr_id'];
+                    $sql="SELECT Tempr_id, Tempr_descripcion FROM `tbltipoempresa` WHERE Tempr_id = $Tempr_id";
+                    
+                    $respuestaTipoCliente = $obj->consult($sql);
+                }
+
+                //Destinatario
+                if(!($pedi['destinatario'] == NULL || $pedi['destinatario'] == '') ){
+
+                    //Destinitario
+                    $usu_destinatario = $pedi['destinatario'];
+                    $sql="SELECT
+                    Usu_id,
+                    CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
+                    FROM
+                    tblusuario AS usu
+                    WHERE
+                    Usu_id = $usu_destinatario";
+                    $respuestaDestinitario = $obj->consult($sql);
+
+                }
+
+                //Cliente
+                if(!($pedi['Emp_id'] == NULL || $pedi['Emp_id'] == '') ){
+                    $Emp_id=$pedi['Emp_id'];
+                    $sql="SELECT
+                    emp.Emp_id, 
+                    emp.Emp_razonSocial,
+                    CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
+                    emp.Emp_NIT,
+                    emp.Emp_direccion,
+                    mun.Mun_nombre,
+                    emp.Emp_primerNumeroContacto 
+                    FROM
+                    tblempresa AS emp,
+                    tblmunicipio AS mun
+                    WHERE 
+                    emp.Mun_id = mun.Mun_id AND
+                    emp.Emp_id = $Emp_id";
+
+                    $cliente = $obj->consult($sql);
+                }
+
+                //Responsable
+                //Id Cotizacion
+                if($pedi['Cot_id'] == NULL || $pedi['Cot_id'] == ''){
+                    $sql = $this->insertResponsable("INSERT", $Usu_id);
+
+                    $ejecutar = $obj->insert($sql);
+                    $Cot_id = ($obj->autoIncrement("tblcotizacion","Cot_id")) -1 ;
+                    $sql="UPDATE `tblpedido` SET `Cot_id` = $Cot_id WHERE `tblpedido`.`Ped_id` = $Ped_id";
+                    $ejecutar= $obj->update($sql);
+                }else{
+                    $Cot_id = $pedi['Cot_id'];
+                }
+
+            }
+
+            // FechaPedido -> Si o si
+            // TipoCliente    SELECT * FROM `tbltiposolicitud`
+            // Cliente --- Quitar
+            // Nombre - Automaticamente por cliente_id
+            // Nit/CC - Automaticamente por cliente_id
+            // Direccion - Automaticamente por cliente_id
+            // Ciudad - Automaticamente por cliente_id
+            // Telefono - Automaticamente por cliente_id
+            // Solicitado por 
+            // Responsable - Nombre de usuario
+
                 
-                $respuestaTipoCliente = $obj->consult($sql);
-            }
+    
+            // $sql="SELECT
+            // ped.Ped_fecha,
+            // tiposolic.tiposolic_desc,
+            // emp.Emp_razonSocial,
+            // CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
+            // emp.Emp_NIT,
+            // emp.Emp_direccion,
+            // mun.Mun_nombre,
+            // emp.Emp_primerNumeroContacto,        
+            // CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
+            // FROM
+            // tblpedido AS ped,
+            // tbltiposolicitud AS tiposolic,
+            // tblcotizacion AS coti,
+            // tblusuario AS usu,
+            // tblempresa AS emp,
+            // tblmunicipio AS mun
+            // WHERE
+            // tiposolic.tiposolic_id = ped.tiposolic_id AND
+            // coti.Usu_id = usu.Usu_id AND
+            // ped.Cot_id = coti.Cot_id AND
+            // emp.Emp_id = ped.Emp_id AND
+            // emp.Mun_id = mun.Mun_id AND
+            // ped.Ped_id = $Ped_id 
+            // ";
 
-            //Destinatario
-            if(!($pedi['destinatario'] == NULL || $pedi['destinatario'] == '') ){
+            
+            // $pedido = $obj->consult($sql);
 
-                //Destinitario
-                $usu_destinatario = $pedi['destinatario'];
-                $sql="SELECT
-                Usu_id,
-                CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
-                FROM
-                tblusuario AS usu
-                WHERE
-                Usu_id = $usu_destinatario";
-                $respuestaDestinitario = $obj->consult($sql);
-
-            }
+            //Tipo Cliente
+            $sql = "SELECT Tempr_id, Tempr_descripcion FROM `tbltipoempresa` WHERE Tempr_id = 3 OR Tempr_id = 4 OR Tempr_id = 5 ";
+            $tipoCliente = $obj->consult($sql);
 
             //Cliente
-            if(!($pedi['Emp_id'] == NULL || $pedi['Emp_id'] == '') ){
-                $Emp_id=$pedi['Emp_id'];
-                $sql="SELECT
-                emp.Emp_id, 
-                emp.Emp_razonSocial,
-                CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
-                emp.Emp_NIT,
-                emp.Emp_direccion,
-                mun.Mun_nombre,
-                emp.Emp_primerNumeroContacto 
-                FROM
-                tblempresa AS emp,
-                tblmunicipio AS mun
-                WHERE 
-                emp.Mun_id = mun.Mun_id AND
-                emp.Emp_id = $Emp_id";
+            $sql = "SELECT
+            emp.Emp_id, 
+            emp.Emp_razonSocial,
+            CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
+            emp.Emp_NIT,
+            emp.Emp_direccion,
+            mun.Mun_nombre,
+            emp.Emp_primerNumeroContacto 
+            FROM
+            tblempresa AS emp,
+            tblmunicipio AS mun
+            WHERE 
+            emp.Mun_id = mun.Mun_id";
+            $clientes=$obj->consult($sql);
 
-                $cliente = $obj->consult($sql);
-            }
 
             //Responsable
-            //Id Cotizacion
-            if($pedi['Cot_id'] == NULL || $pedi['Cot_id'] == ''){
-                $sql = $this->insertResponsable("INSERT", $Usu_id);
+            $sql="SELECT
+            CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
+            FROM
+            tblcotizacion AS coti,
+            tblusuario AS usu
+            WHERE
+            usu.Usu_id = coti.Usu_id AND
+            coti.Cot_id = $Cot_id";
+            $responsable = $obj->consult($sql);
 
-                $ejecutar = $obj->insert($sql);
-                $Cot_id = ($obj->autoIncrement("tblcotizacion","Cot_id")) -1 ;
-                $sql="UPDATE `tblpedido` SET `Cot_id` = $Cot_id WHERE `tblpedido`.`Ped_id` = $Ped_id";
-                $ejecutar= $obj->update($sql);
-            }else{
-                $Cot_id = $pedi['Cot_id'];
-            }
+            //Destinitario
+            $sql="SELECT
+            Usu_id,
+            CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
+            FROM
+            tblusuario AS usu
+            WHERE
+            Rol_id = 1 OR Rol_id = 2";
+            $destinitario = $obj->consult($sql);
 
+
+            //Detalle Cotizacion
+            $sql="SELECT 
+            dp.Dpe_id,
+            pb.Pba_descripcion, 
+            dp.Dpe_cantidad, 
+            dp.Dep_descripcion, 
+            dp.Dpe_valorUnitario, 
+            dp.Dpe_valorTotal 
+            FROM 
+            tbldetallepedido as dp, 
+            tblproductobase as pb 
+            WHERE 
+            dp.Ped_id=$Ped_id AND 
+            pb.Pba_id = dp.Pba_id";
+            $detalleCotizacion = $obj->consult($sql);
+
+            // dd($detalleCotizacion);
+            include_once '../view/costos/cotizacion/insertar.php';
+        }else{
+            $_SESSION['error']["update"]="Solo se puede modificar una cotizacion pendiente por envio!";
+            redirect(getUrl("costos","cotizacion","consult"));
         }
-
-        // FechaPedido -> Si o si
-        // TipoCliente    SELECT * FROM `tbltiposolicitud`
-        // Cliente --- Quitar
-        // Nombre - Automaticamente por cliente_id
-        // Nit/CC - Automaticamente por cliente_id
-        // Direccion - Automaticamente por cliente_id
-        // Ciudad - Automaticamente por cliente_id
-        // Telefono - Automaticamente por cliente_id
-        // Solicitado por 
-        // Responsable - Nombre de usuario
-
-               
- 
-        // $sql="SELECT
-        // ped.Ped_fecha,
-        // tiposolic.tiposolic_desc,
-        // emp.Emp_razonSocial,
-        // CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
-        // emp.Emp_NIT,
-        // emp.Emp_direccion,
-        // mun.Mun_nombre,
-        // emp.Emp_primerNumeroContacto,        
-        // CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
-        // FROM
-        // tblpedido AS ped,
-        // tbltiposolicitud AS tiposolic,
-        // tblcotizacion AS coti,
-        // tblusuario AS usu,
-        // tblempresa AS emp,
-        // tblmunicipio AS mun
-        // WHERE
-        // tiposolic.tiposolic_id = ped.tiposolic_id AND
-        // coti.Usu_id = usu.Usu_id AND
-        // ped.Cot_id = coti.Cot_id AND
-        // emp.Emp_id = ped.Emp_id AND
-        // emp.Mun_id = mun.Mun_id AND
-        // ped.Ped_id = $Ped_id 
-        // ";
-
-        
-        // $pedido = $obj->consult($sql);
-
-        //Tipo Cliente
-        $sql = "SELECT Tempr_id, Tempr_descripcion FROM `tbltipoempresa` WHERE Tempr_id = 3 OR Tempr_id = 4 OR Tempr_id = 5 ";
-        $tipoCliente = $obj->consult($sql);
-
-        //Cliente
-        $sql = "SELECT
-        emp.Emp_id, 
-        emp.Emp_razonSocial,
-        CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
-        emp.Emp_NIT,
-        emp.Emp_direccion,
-        mun.Mun_nombre,
-        emp.Emp_primerNumeroContacto 
-        FROM
-        tblempresa AS emp,
-        tblmunicipio AS mun
-        WHERE 
-        emp.Mun_id = mun.Mun_id";
-        $clientes=$obj->consult($sql);
-
-
-        //Responsable
-        $sql="SELECT
-        CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
-        FROM
-        tblcotizacion AS coti,
-        tblusuario AS usu
-        WHERE
-        usu.Usu_id = coti.Usu_id AND
-        coti.Cot_id = $Cot_id";
-        $responsable = $obj->consult($sql);
-
-        //Destinitario
-        $sql="SELECT
-        Usu_id,
-        CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
-        FROM
-        tblusuario AS usu
-        WHERE
-        Rol_id = 1 OR Rol_id = 2";
-        $destinitario = $obj->consult($sql);
-
-
-        //Detalle Cotizacion
-        $sql="SELECT 
-        dp.Dpe_id,
-        pb.Pba_descripcion, 
-        dp.Dpe_cantidad, 
-        dp.Dep_descripcion, 
-        dp.Dpe_valorUnitario, 
-        dp.Dpe_valorTotal 
-        FROM 
-        tbldetallepedido as dp, 
-        tblproductobase as pb 
-        WHERE 
-        dp.Ped_id=$Ped_id AND 
-        pb.Pba_id = dp.Pba_id";
-        $detalleCotizacion = $obj->consult($sql);
-
-        // dd($detalleCotizacion);
-        include_once '../view/costos/cotizacion/insertar.php';
     }
 
     public function insertDetalleCotizacion(){
@@ -1488,26 +1490,39 @@ class CotizacionController {
     }
 
     public function consultarCotizacionAprobacion(){
-        $obj=new CotizacionModel();
-        $sql="SELECT
-        ped.Ped_id,
-        est.Est_nombre,
-        CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
-        emp.Emp_razonSocial,
-        ped.Ped_fecha
-        FROM
-        tblpedido AS ped,
-        tblestado AS est,
-        tblempresa AS emp
-        WHERE
-        est.Est_id = ped.Est_id AND
-        ped.Emp_id = emp.Emp_id AND
-        ( ped.Est_id = 8 )
-        ORDER BY est.Est_nombre DESC
-        ";
 
-        $consultPedido = $obj->consult($sql);
-        include_once '../view/costos/cotizacion/consultarAprobacionCotizacion.php';
+        //Solo tiene acceso el administrador y funcionario
+        // funcion validar rol diferente a aprendiz
+
+        if($this->esDiferenteAprendiz()){
+
+            $obj=new CotizacionModel();
+            $sql="SELECT
+            ped.Ped_id,
+            est.Est_nombre,
+            CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
+            emp.Emp_razonSocial,
+            ped.Ped_fecha
+            FROM
+            tblpedido AS ped,
+            tblestado AS est,
+            tblempresa AS emp
+            WHERE
+            est.Est_id = ped.Est_id AND
+            ped.Emp_id = emp.Emp_id AND
+            ( ped.Est_id = 8 )
+            ORDER BY est.Est_nombre DESC
+            ";
+
+            $consultPedido = $obj->consult($sql);
+            include_once '../view/costos/cotizacion/consultarAprobacionCotizacion.php';
+        
+        }else{
+            // No tiene Acceso
+            include_once '../view/partials/page404.php';
+        }
+
+
     }
 
 
@@ -1516,115 +1531,118 @@ class CotizacionController {
     public function consultAprobacionOrden(){
         $obj=new CotizacionModel();
         
-        //Aqui se pone la variable de sesion del usuario
-        $Usu_id = 2;
+        if($this->esDiferenteAprendiz()){
+            //Aqui se pone la variable de sesion del usuario
+            $Usu_id = $_SESSION['idUser'];
+            $Ped_id = $_GET['Ped_id'];
 
-        $Ped_id = $_GET['Ped_id'];
+            $sql="SELECT * FROM tblpedido WHERE Ped_id = $Ped_id";
+            $pedido = $obj->consult($sql);
 
-        
-        $sql="SELECT * FROM tblpedido WHERE Ped_id = $Ped_id";
-        $pedido = $obj->consult($sql);
+            foreach ($pedido as $pedi) {
+                //Tipo de cliente
+                if(!($pedi['Tempr_id'] == NULL || $pedi['Tempr_id'] == '') ){
+                    $Tempr_id = $pedi['Tempr_id'];
+                    $sql="SELECT Tempr_id, Tempr_descripcion FROM `tbltipoempresa` WHERE Tempr_id = $Tempr_id";
+                    
+                    $respuestaTipoCliente = $obj->consult($sql);
+                }
 
-        foreach ($pedido as $pedi) {
-            //Tipo de cliente
-            if(!($pedi['Tempr_id'] == NULL || $pedi['Tempr_id'] == '') ){
-                $Tempr_id = $pedi['Tempr_id'];
-                $sql="SELECT Tempr_id, Tempr_descripcion FROM `tbltipoempresa` WHERE Tempr_id = $Tempr_id";
-                
-                $respuestaTipoCliente = $obj->consult($sql);
+                //Destinatario
+                if(!($pedi['destinatario'] == NULL || $pedi['destinatario'] == '') ){
+
+                    //Destinitario
+                    $usu_destinatario = $pedi['destinatario'];
+                    $sql="SELECT
+                    Usu_id,
+                    CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
+                    FROM
+                    tblusuario AS usu
+                    WHERE
+                    Usu_id = $usu_destinatario";
+                    $respuestaDestinitario = $obj->consult($sql);
+
+                }
+
+                //Cliente
+                if(!($pedi['Emp_id'] == NULL || $pedi['Emp_id'] == '') ){
+                    $Emp_id=$pedi['Emp_id'];
+                    $sql="SELECT
+                    emp.Emp_id, 
+                    emp.Emp_razonSocial,
+                    CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
+                    emp.Emp_NIT,
+                    emp.Emp_direccion,
+                    mun.Mun_nombre,
+                    emp.Emp_primerNumeroContacto 
+                    FROM
+                    tblempresa AS emp,
+                    tblmunicipio AS mun
+                    WHERE 
+                    emp.Mun_id = mun.Mun_id AND
+                    emp.Emp_id = $Emp_id";
+
+                    $cliente = $obj->consult($sql);
+                }
+
+                //Responsable
+                //Id Cotizacion
+                if($pedi['Cot_id'] == NULL || $pedi['Cot_id'] == ''){
+                    $sql = $this->insertResponsable("INSERT", $Usu_id);
+
+                    $ejecutar = $obj->insert($sql);
+                    $Cot_id = ($obj->autoIncrement("tblcotizacion","Cot_id")) -1 ;
+                    $sql="UPDATE `tblpedido` SET `Cot_id` = $Cot_id WHERE `tblpedido`.`Ped_id` = $Ped_id";
+                    $ejecutar= $obj->update($sql);
+                }else{
+                    $Cot_id = $pedi['Cot_id'];
+                }
+
+                $fechaPedido = $pedi['Ped_fecha'];
+
             }
 
-            //Destinatario
-            if(!($pedi['destinatario'] == NULL || $pedi['destinatario'] == '') ){
-
-                //Destinitario
-                $usu_destinatario = $pedi['destinatario'];
-                $sql="SELECT
-                Usu_id,
-                CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
-                FROM
-                tblusuario AS usu
-                WHERE
-                Usu_id = $usu_destinatario";
-                $respuestaDestinitario = $obj->consult($sql);
-
-            }
+            //Tipo Cliente
+            $sql = "SELECT Tempr_id, Tempr_descripcion FROM `tbltipoempresa` WHERE Tempr_id = 3 OR Tempr_id = 4 OR Tempr_id = 5 ";
+            $tipoCliente = $obj->consult($sql);
 
             //Cliente
-            if(!($pedi['Emp_id'] == NULL || $pedi['Emp_id'] == '') ){
-                $Emp_id=$pedi['Emp_id'];
-                $sql="SELECT
-                emp.Emp_id, 
-                emp.Emp_razonSocial,
-                CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
-                emp.Emp_NIT,
-                emp.Emp_direccion,
-                mun.Mun_nombre,
-                emp.Emp_primerNumeroContacto 
-                FROM
-                tblempresa AS emp,
-                tblmunicipio AS mun
-                WHERE 
-                emp.Mun_id = mun.Mun_id AND
-                emp.Emp_id = $Emp_id";
-
-                $cliente = $obj->consult($sql);
-            }
+            $sql = "SELECT
+            emp.Emp_id, 
+            emp.Emp_razonSocial,
+            CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
+            emp.Emp_NIT,
+            emp.Emp_direccion,
+            mun.Mun_nombre,
+            emp.Emp_primerNumeroContacto 
+            FROM
+            tblempresa AS emp,
+            tblmunicipio AS mun
+            WHERE 
+            emp.Mun_id = mun.Mun_id";
+            $clientes=$obj->consult($sql);
 
             //Responsable
-            //Id Cotizacion
-            if($pedi['Cot_id'] == NULL || $pedi['Cot_id'] == ''){
-                $sql = $this->insertResponsable("INSERT", $Usu_id);
+            $sql="SELECT
+            CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
+            FROM
+            tblcotizacion AS coti,
+            tblusuario AS usu
+            WHERE
+            usu.Usu_id = coti.Usu_id AND
+            coti.Cot_id = $Cot_id";
+            $responsable = $obj->consult($sql);
 
-                $ejecutar = $obj->insert($sql);
-                $Cot_id = ($obj->autoIncrement("tblcotizacion","Cot_id")) -1 ;
-                $sql="UPDATE `tblpedido` SET `Cot_id` = $Cot_id WHERE `tblpedido`.`Ped_id` = $Ped_id";
-                $ejecutar= $obj->update($sql);
-            }else{
-                $Cot_id = $pedi['Cot_id'];
-            }
+            //Detalle Cotizacion
+            $sql="SELECT dp.Dpe_id,pb.Pba_descripcion, dp.Dpe_cantidad, dp.Dep_descripcion, dp.Dpe_valorUnitario, dp.Dpe_valorTotal FROM tbldetallepedido as dp, tblproductobase as pb WHERE dp.Ped_id=$Ped_id AND pb.Pba_id = dp.Pba_id";
+            $detalleCotizacion = $obj->consult($sql);
 
-            $fechaPedido = $pedi['Ped_fecha'];
-
+            // dd($detalleCotizacion);
+            include_once '../view/costos/cotizacion/consultAprobacionPedido.php';
+        }else{
+            // No tiene Acceso
+            include_once '../view/partials/page404.php';
         }
-
-        //Tipo Cliente
-        $sql = "SELECT Tempr_id, Tempr_descripcion FROM `tbltipoempresa` WHERE Tempr_id = 3 OR Tempr_id = 4 OR Tempr_id = 5 ";
-        $tipoCliente = $obj->consult($sql);
-
-        //Cliente
-        $sql = "SELECT
-        emp.Emp_id, 
-        emp.Emp_razonSocial,
-        CONCAT(emp.Emp_nombreContacto,' ',emp.Emp_apellidoContacto) AS Emp_nombre,
-        emp.Emp_NIT,
-        emp.Emp_direccion,
-        mun.Mun_nombre,
-        emp.Emp_primerNumeroContacto 
-        FROM
-        tblempresa AS emp,
-        tblmunicipio AS mun
-        WHERE 
-        emp.Mun_id = mun.Mun_id";
-        $clientes=$obj->consult($sql);
-
-        //Responsable
-        $sql="SELECT
-        CONCAT(usu.Usu_primerNombre,' ',usu.Usu_segundoNombre,' ',usu.Usu_primerApellido,' ',usu.Usu_segundoApellido) AS Usu_nombre
-        FROM
-        tblcotizacion AS coti,
-        tblusuario AS usu
-        WHERE
-        usu.Usu_id = coti.Usu_id AND
-        coti.Cot_id = $Cot_id";
-        $responsable = $obj->consult($sql);
-
-        //Detalle Cotizacion
-        $sql="SELECT dp.Dpe_id,pb.Pba_descripcion, dp.Dpe_cantidad, dp.Dep_descripcion, dp.Dpe_valorUnitario, dp.Dpe_valorTotal FROM tbldetallepedido as dp, tblproductobase as pb WHERE dp.Ped_id=$Ped_id AND pb.Pba_id = dp.Pba_id";
-        $detalleCotizacion = $obj->consult($sql);
-
-        // dd($detalleCotizacion);
-        include_once '../view/costos/cotizacion/consultAprobacionPedido.php';
     }
 
 
@@ -1633,112 +1651,131 @@ class CotizacionController {
     
     public function consultAprobacionDetalleCotizacion(){
         $obj=new CotizacionModel();
+        if($this->esDiferenteAprendiz()){
+            $Dpe_id=$_GET['Dpe_id'];
+            //Recibir el ID del pedido
+                $sql="SELECT Ped_id FROM tbldetallepedido WHERE Dpe_id = $Dpe_id";
+                $resultado=$obj->consult($sql);
+                foreach ($resultado as $r) {
+                    $Ped_id=$r['Ped_id'];
+                }
 
-        $Dpe_id=$_GET['Dpe_id'];
+            $sql="SELECT
+            dp.Dep_descripcion,
+            dp.Pba_id,
+            dp.Dpe_cantidad,
+            dp.Dpe_paginasProducto,
+            dp.Dpe_tamanoAbierto,
+            dp.Dpe_tamanoCerrado,
+            dp.Dpe_valorDiseño,
+            dp.Dpe_encargadoDiseno,
+            dp.Maq_id,
+            dp.Dpe_cantidadPlancha,
+            dp.Dpe_valorUnidadPlancha,
+            dp.Dpe_totalPlancha,
+            dp.Dpe_insumos,
+            dp.Dpe_procesos,
+            dp.Dpe_valorTotal
+            FROM
+            tbldetallepedido AS dp
+            WHERE
+            dp.Dpe_id=$Dpe_id
+            ";
 
-        //Recibir el ID del pedido
-            $sql="SELECT Ped_id FROM tbldetallepedido WHERE Dpe_id = $Dpe_id";
-            $resultado=$obj->consult($sql);
-            foreach ($resultado as $r) {
-                $Ped_id=$r['Ped_id'];
+            $capturarDetalleCotizacion = $obj->consult($sql);
+
+            //Tinta capturar valor
+            $sql="SELECT
+            dpti.Dpti_id,
+            dpti.Dpti_colorTinta,
+            dpti.Dpti_unidadCantidad,
+            dpti.Dpti_cantidadTinta,
+            dpti.Dpti_costoUnitario,
+            dpti.Dpti_subTotal,
+            dpti.Dpti_tipoTinta,
+            dpti.Dpe_id
+            FROM
+            tbldetallepedidotinta AS dpti
+            WHERE
+            dpti.Dpe_id=$Dpe_id 
+            ";
+            $capturarDetalleTinta = $obj->consult($sql);
+
+            //Material capturar valor
+            $sql="SELECT
+            dpm.Arti_id,
+            dpm.Dpm_cantidad,
+            med.Med_descripcion,
+            dpm.Dpm_precioUnitario,
+            dpm.Dpm_valorTotal
+            FROM
+            tbldetallepedidomateriaprima AS dpm,
+            tblarticulo AS arti,
+            tblmedida AS med
+            WHERE
+            dpm.Arti_id = arti.Arti_id AND
+            arti.Med_id = med.Med_id AND
+            dpm.Dpe_id=$Dpe_id
+            ";
+            $capturarDetalleMaterial = $obj->consult($sql);
+
+
+            //Terminados capturar valor
+            $sql="SELECT
+            Ter_id,
+            Maq_id,
+            Dpt_cantidadHorasTerminado,
+            Dpt_costoUnitarioTerminado,
+            Dpt_subtotalTerminado
+            FROM
+            tbldetallepedidoterminado
+            WHERE
+            Dpe_id=$Dpe_id
+            ";
+            $capturaDetalleTerminado = $obj->consult($sql);
+
+            //Select Producto Base
+            $sql = "SELECT * FROM tblproductobase";
+            $productoBase = $obj->consult($sql);
+
+            //Maquina
+            $sql="SELECT Maq_id, Maq_nombre FROM `tblmaquina` WHERE Est_id = 1";
+            $maquina = $obj->consult($sql);
+
+            //Tinta Tipo de articulo = 2 -> Tinta
+            // $sql="SELECT Arti_id, Arti_nombre FROM `tblarticulo` WHERE Tart_id = 3";
+            // $tinta = $obj->consult($sql);
+
+            //Material Tipo de articulo = 1 -> Material
+            $sql="SELECT Arti_id, Arti_nombre FROM `tblarticulo` WHERE Tart_id = 1";
+            $material = $obj->consult($sql);
+
+            //Material Tipo de articulo = 1 -> Material
+            $sql="SELECT Ter_id, Ter_descripcion FROM `tblterminado`";
+            $terminado = $obj->consult($sql);
+            
+            include_once '../view/costos/cotizacion/consultAprobacionDetalleCotizacion.php';
+        }else{
+            // No tiene Acceso
+            include_once '../view/partials/page404.php';
+        }
+    }
+
+
+    public function esDiferenteAprendiz(){
+        //La funcion retorna Verdadero o falso segunsus
+        $respuesta=false;
+        if(isset($_SESSION['rolUser'])){
+            if($_SESSION['rolUser'] != 'Aprendiz'){
+                $respuesta=true;
+            }else{
+                $respuesta=false;
             }
+        }else{
+            $respuesta=false;
+        }
 
-        $sql="SELECT
-        dp.Dep_descripcion,
-        dp.Pba_id,
-        dp.Dpe_cantidad,
-        dp.Dpe_paginasProducto,
-        dp.Dpe_tamanoAbierto,
-        dp.Dpe_tamanoCerrado,
-        dp.Dpe_valorDiseño,
-        dp.Dpe_encargadoDiseno,
-        dp.Maq_id,
-        dp.Dpe_cantidadPlancha,
-        dp.Dpe_valorUnidadPlancha,
-        dp.Dpe_totalPlancha,
-        dp.Dpe_insumos,
-        dp.Dpe_procesos,
-        dp.Dpe_valorTotal
-        FROM
-        tbldetallepedido AS dp
-        WHERE
-        dp.Dpe_id=$Dpe_id
-        ";
-
-        $capturarDetalleCotizacion = $obj->consult($sql);
-
-        //Tinta capturar valor
-        $sql="SELECT
-        dpti.Dpti_id,
-        dpti.Dpti_colorTinta,
-        dpti.Dpti_unidadCantidad,
-        dpti.Dpti_cantidadTinta,
-        dpti.Dpti_costoUnitario,
-        dpti.Dpti_subTotal,
-        dpti.Dpti_tipoTinta,
-        dpti.Dpe_id
-        FROM
-        tbldetallepedidotinta AS dpti
-        WHERE
-        dpti.Dpe_id=$Dpe_id 
-        ";
-        $capturarDetalleTinta = $obj->consult($sql);
-
-        //Material capturar valor
-        $sql="SELECT
-        dpm.Arti_id,
-        dpm.Dpm_cantidad,
-        med.Med_descripcion,
-        dpm.Dpm_precioUnitario,
-        dpm.Dpm_valorTotal
-        FROM
-        tbldetallepedidomateriaprima AS dpm,
-        tblarticulo AS arti,
-        tblmedida AS med
-        WHERE
-        dpm.Arti_id = arti.Arti_id AND
-        arti.Med_id = med.Med_id AND
-        dpm.Dpe_id=$Dpe_id
-        ";
-        $capturarDetalleMaterial = $obj->consult($sql);
-
-
-        //Terminados capturar valor
-        $sql="SELECT
-        Ter_id,
-        Maq_id,
-        Dpt_cantidadHorasTerminado,
-        Dpt_costoUnitarioTerminado,
-        Dpt_subtotalTerminado
-        FROM
-        tbldetallepedidoterminado
-        WHERE
-        Dpe_id=$Dpe_id
-        ";
-        $capturaDetalleTerminado = $obj->consult($sql);
-
-        //Select Producto Base
-        $sql = "SELECT * FROM tblproductobase";
-        $productoBase = $obj->consult($sql);
-
-        //Maquina
-        $sql="SELECT Maq_id, Maq_nombre FROM `tblmaquina` WHERE Est_id = 1";
-        $maquina = $obj->consult($sql);
-
-        //Tinta Tipo de articulo = 2 -> Tinta
-        // $sql="SELECT Arti_id, Arti_nombre FROM `tblarticulo` WHERE Tart_id = 3";
-        // $tinta = $obj->consult($sql);
-
-        //Material Tipo de articulo = 1 -> Material
-        $sql="SELECT Arti_id, Arti_nombre FROM `tblarticulo` WHERE Tart_id = 1";
-        $material = $obj->consult($sql);
-
-        //Material Tipo de articulo = 1 -> Material
-        $sql="SELECT Ter_id, Ter_descripcion FROM `tblterminado`";
-        $terminado = $obj->consult($sql);
-        
-        include_once '../view/costos/cotizacion/consultAprobacionDetalleCotizacion.php';
-
+        return $respuesta;
     }
 
 

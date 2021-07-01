@@ -329,7 +329,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box table-responsive">
-                            <table id="datatable-responsive-costos-cotizacion-pendiente"
+                            <table id="table"
                                 class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
                                 width="100%">
                                 <thead style="background-color:#17A481; color:#fff;">
@@ -405,8 +405,11 @@
 
     <div class="form-group mt-3">
         <div class="col-md-3 offset-md-9">
-        
-            <button  class="btn btn-primary botonModal2"
+            <a href="<?php echo getUrl("costos","cotizacion","consult");?>">
+                <button type='button' class="btn btn-danger">Volver</button>
+            </a>
+
+            <button  class="btn btn-success botonModal2"
             type="button"
             id="enviarPedidoCotizacion"
             title="Solicitud de Aprobacion - Cotización"
@@ -414,9 +417,7 @@
             data-url="<?php echo getUrl('costos','cotizacion','solicitarAprobarCotizacionModal',false,'ajax');?>"
             >Enviar</button>
 
-            <a href="<?php echo getUrl("costos","cotizacion","consult");?>">
-                <button type='button' class="btn btn-success">Volver</button>
-            </a>
+            
         </div>
     </div>
 

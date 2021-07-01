@@ -58,8 +58,7 @@ class SolicitudController {
             $sql="SELECT tblusuario.Usu_id,tblusuario.Usu_primerNombre,tblusuario.Usu_segundoNombre,tblusuario.Usu_primerApellido,tblusuario.Usu_segundoApellido,tblusuario.Usu_email FROM tblusuario";
             $usuario=$obj->consult($sql);
 
-            $sql="SELECT * FROM tbltiposolicitud";
-         $tipoS=$obj->consult($sql);
+           
 
             date_default_timezone_set ("America/Bogota") ;
 
@@ -72,12 +71,19 @@ class SolicitudController {
     }
 
     public function postInsert(){
-
+        $obj=new SolicitudModel();
       //  dd($_POST);
      extract($_POST);
         //desision que asigna las variables de sena proveedor sena
         if($tipoS==4){
-            $centro=1;
+            $sql="SELECT tblempresa.Emp_id FROM tblempresa WHERE tblempresa.Tempr_id=4";
+            $empresaSena=$obj->consult($sql);
+
+            $empresaSena=mysqli_fetch_row($empresaSena);
+            $centro=$empresaSena[0];
+           
+            //    echo " <script>alert(".$centro.")</script>";
+            // $centro=1;
             
             $centron=",`Cen_id`";
             
@@ -96,7 +102,7 @@ class SolicitudController {
         }
       
         $cont=0;
-        $obj=new SolicitudModel();
+        
 
         // if (empty($subdirector)==true){
         //     $cont++;
@@ -203,12 +209,18 @@ class SolicitudController {
 
     public function postUpdate(){
     // dd($_POST);
-   
+    $obj=new SolicitudModel();
     extract($_POST);
 
     if($tipoS==4){
-        
-        $centro=1;
+        $sql="SELECT tblempresa.Emp_id FROM tblempresa WHERE tblempresa.Tempr_id=4";
+        $empresaSena=$obj->consult($sql);
+
+        $empresaSena=mysqli_fetch_row($empresaSena);
+        $centro=$empresaSena[0];
+       
+        //    echo " <script>alert(".$centro.")</script>";
+        // $centro=1;
         $centron=" ,`Cen_id`=".$centro;
         $cliente=2;  
         $dep=1;
@@ -219,9 +231,17 @@ class SolicitudController {
     }else {       
         $centron=" ,`Cen_id`=".$centro;
     }
-    $obj=new SolicitudModel();
 
-    $sql="UPDATE `tblpedido` SET `Ped_fecha`='".$ped_fecha."',`destinatario` ='".$destinatario."'".$centron.",`Dep_id`='".$dep."',`Mun_id`='".$municipio."',
+
+    
+
+    $sql="SELECT tblpedido.Est_id FROM tblpedido WHERE Ped_id=$Ped_id";
+    $estado=$obj->consult($sql);
+    $estado=mysqli_fetch_row($estado);
+    $estado=$estado[0];
+   
+    if($estado==12){
+    $sql="UPDATE `tblpedido` SET `Ped_fecha`='".$ped_fecha."',`destinatario` ='".$destinatario."'".$centron.",`Dep_id`='".$dep."',`Mun_id`='".$municipio."',`Emp_id`='".$cliente."',
     `Ped_objetivo`='".$objeto."',`Ped_plazoEjecucionDias`='".$pjd."',`Ped_plazoEjecucionMeses`='".$pjm."',`Ped_lugarEjecucionCiu`='".$ljciu."',`Ped_lugarEjecucionCen`='".$ljcen."'
     WHERE `tblpedido`.`Ped_id` = $Ped_id";
     $ejecutar= $obj->update($sql);
@@ -246,6 +266,11 @@ class SolicitudController {
         }else{echo "eliminar".$sql;}
    
     }else{echo "editar".$centron;}
+
+}else{
+    $_SESSION['error']["update"]="Solo se puede modificar una solicitud pendiente por envio!";
+    redirect(getUrl("costos","solicitud","consult"));
+}
 }
     public function modalCancelar(){
         extract($_GET);
@@ -352,6 +377,7 @@ class SolicitudController {
 
 
     public function consultarSolicitudAprobacion(){
+        if($this->esDiferenteAprendiz()){
         $obj=new SolicitudModel();
         $sql="SELECT
         ped.Ped_id,
@@ -373,9 +399,14 @@ class SolicitudController {
 
         $consultPedido = $obj->consult($sql);
         include_once '../view/costos/solicitud/consultarAprobacionSolicitud.php';
+    }else{
+        // No tiene Acceso
+        include_once '../view/partials/page404.php';
+    }
     }
 
     public function aprobarSolicitudConsult(){
+        if($this->esDiferenteAprendiz()){
         extract($_GET);     
         $obj=new SolicitudModel();
       
@@ -413,6 +444,10 @@ class SolicitudController {
        
          
     include_once '../view/costos/solicitud/aprobarConsult.php';
+}else{
+    // No tiene Acceso
+    include_once '../view/partials/page404.php';
+}
     }
 
     public function getconsultSolicitud(){
@@ -453,6 +488,37 @@ class SolicitudController {
        
          
     include_once '../view/costos/solicitud/consultSolicitud.php';
+    }
+
+    public function consultaPd(){
+        $obj=new SolicitudModel();
+        $sql="SELECT tblproductobase.Pba_descripcion
+         FROM tblproductobase";
+         $pbase=$obj->consult($sql);
+       $cont=0;
+       foreach ($pbase as $pb){
+         $cont++;
+       $productos[$cont]=trim($pb['Pba_descripcion']);
+       }
+       echo json_encode($productos);
+  
+
+    }
+
+    public function esDiferenteAprendiz(){
+        //La funcion retorna Verdadero o falso segunsus
+        $respuesta=false;
+        if(isset($_SESSION['rolUser'])){
+            if($_SESSION['rolUser'] != 'Aprendiz'){
+                $respuesta=true;
+            }else{
+                $respuesta=false;
+            }
+        }else{
+            $respuesta=false;
+        }
+
+        return $respuesta;
     }
    
 }

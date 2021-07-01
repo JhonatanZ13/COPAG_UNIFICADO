@@ -23,7 +23,7 @@ echo getUrl("costos","compras","getInsert");?>">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box table-responsive">
-                            <table id="datatable-responsive-costos-cotizacion-pendiente"
+                            <table id="table"
                                 class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
                                 width="100%">
                                 <thead style="background-color:#17A481; color:#fff;">

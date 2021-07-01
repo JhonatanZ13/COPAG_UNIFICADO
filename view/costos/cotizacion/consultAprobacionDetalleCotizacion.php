@@ -276,7 +276,7 @@
                 <div class="form-group mt-3">
                     <div class="col-md-3 offset-md-9">
                         <a href="<?php echo getUrl("costos","cotizacion","consultAprobacionOrden",array("Ped_id"=>$Ped_id));?>">
-                            <button type="button" class="btn btn-success">Volver</button>
+                            <button type="button" class="btn btn-danger">Volver</button>
                         </a>
                     </div>
                 </div>

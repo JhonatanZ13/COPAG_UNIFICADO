@@ -196,11 +196,12 @@
     
         <div class="form-group mt-3">
             <div class="col-md-3 offset-md-9">
-                <button type='submit' class="btn btn-primary">Guardar</button>
+                
 
                 <a href="<?php echo getUrl("costos","cotizacion","consult");?>">
-                <button type='button' class="btn btn-success">Cancelar</button>
+                <button type='button' class="btn btn-danger">Cancelar</button>
                 </a>
+                <button type='submit' class="btn btn-success">Guardar</button>
             </div>
         </div>
                             
