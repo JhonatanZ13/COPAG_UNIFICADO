@@ -2518,7 +2518,7 @@ table.jambo_table thead {
 }
 
 table.jambo_table tbody tr:hover td {
-    background: #ffaf59af;
+    background: #cce5ff;
     border-top: 1px solid rgba(38, 185, 154, 0.11);
     border-bottom: 1px solid rgba(38, 185, 154, 0.11);
 }

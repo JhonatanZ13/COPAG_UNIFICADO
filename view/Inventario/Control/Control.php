@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
-                        <table id="table" class="table table-striped table-bordered" style="width:100%">
+                        <table id="table" class="table table-striped jambo_table" style="width:100%">
                             <thead style="background-color: #17A481;; color:#fff;">
                                 <tr>
                                 <th class="column-title">ID</th>

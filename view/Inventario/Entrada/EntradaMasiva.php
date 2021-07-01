@@ -29,17 +29,15 @@
     </div>
 
     <div class="d-flex justify-content-end x_panel">
-        <button id="agregarDiv" type="button" class="btn btn-success justify-content-end">
-            <i class="fa fa-chevron-circle-down"></i>
-            MAS
+        <button id="agregarDiv" type="button" class="btn btn-primary justify-content-end">
+            <i class="fa fa-plus"></i>
         </button>
     </div>
 
     <div class="x_title"></div>
     
-    <div class="x_panel">
-        <button type="submit" disabled name="enviar" id="send" class="btn btn-primary btn-lg btn-block">
-            <i class="fa fa-plus-circle fa-lg mr-1"></i>
+    <div class="x_panel" style="z-index: 100;">
+        <button type="submit" disabled name="enviar" id="send" class="btn btn-success btn-lg btn-block">
             AGREGAR
         </button>
     </div>

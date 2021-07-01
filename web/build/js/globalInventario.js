@@ -16,7 +16,7 @@ $(document).ready(function() {
     });
 
     /**Modal */
-    $(document).on("click", "#ModalInventario", function() {
+    $(document).on("click", "#modalInventario", function() {
         var url = $(this).attr("data-url");
         var dato = $(this).attr("data-id");
         var title = $(this).attr("value");
@@ -36,32 +36,8 @@ $(document).ready(function() {
             },
         });
     });
+
     // /Modal/
-    /*Tablas en español/
-    $("#table-inventario").DataTable({
-      responsive: true,
-      language: {
-        decimal: "",
-        emptyTable: "No hay datos",
-        info: "Mostrando START a END de TOTAL registros",
-        infoEmpty: "Mostrando 0 a 0 de 0 registros",
-        infoFiltered: "(Filtro de MAX registros Totales)",
-        infoPostFix: "",
-        thousands: ",",
-        lengthMenu: "Numero de filas MENU",
-        loadingRecords: "Cargando...",
-        processing: "Procesando...",
-        search: "Buscar:",
-        zeroRecords: "No se encontraron resultados",
-        paginate: {
-          first: "Primero",
-          last: "Ultimo",
-          next: "Proximo",
-          previous: "Anterior",
-        },
-      },
-    });
-    /Tablas en español/
     /*¨*Clonador del div entrada masiva */
     function Clonador() {
         contenido = $(".shadow:first-child")
@@ -80,7 +56,7 @@ $(document).ready(function() {
     $("#agregarDiv").click(Clonador);
     // /¨Clonador del div entrada masiva/
     /*¨*Validar Campos */
-    $(document).on("change", function() {
+    $(document).on("change", function(e) {
         seleccion = $("select");
         entrada = $("input");
 
@@ -97,12 +73,22 @@ $(document).ready(function() {
 
             if (inputValor > 0) {
                 habilitarEnvio++;
+                $("#send").prop("disabled", false);
+                $("#send").off("click");
+            } else {
+                $("#send").prop("disabled", true);
+                $("#send").click(function(e) {
+                    e.preventDefault();
+                });
             }
         });
         if (habilitarEnvio == campos) {
             $("#send").prop("disabled", false);
         } else {
             $("#send").prop("disabled", true);
+            $("#send").click(function(e) {
+                e.preventDefault();
+            });
         }
     });
     var fechaInicial = "";
@@ -136,8 +122,21 @@ $(document).ready(function() {
     });
 
     $("#reporteActividades").click(function(e) {
-        if (fechaInicial && fechaFinal) {
-            $("#registros").addClass("was-validated");
+        if (fechaInicial > fechaFinal) {
+            $("#generarPdfInventario").click(function(e) {
+                e.preventDefault();
+            });
+        } else if (fechaInicial == fechaFinal) {
+            $("#generarPdfInventario").click(function(e) {
+                e.preventDefault();
+            });
+
+            $("#alertaFechasIguales")
+                .removeClass("d-none")
+                .html("Por favor seleccione fechas diferentes.");
+        } else {
+            $("#generarPdfInventario").off("click");
+            $("#alertaFechasIguales").addClass("d-none"); //aleta roja
         }
     });
 
@@ -146,10 +145,6 @@ $(document).ready(function() {
         $(this).parent().parent().remove();
     });
     // /¨Eliminar el div agreagado/
-
-    $("select").focusin(function() {
-        $(this).addClass("border border-info");
-    });
 
     /**Envio el valor del selector tipo materia */
     $(document).on("change", "#tipo", function() {
@@ -193,11 +188,12 @@ $(document).ready(function() {
                         cantidad +
                         '">'
                     );
+                $("#send").prop("disabled", true);
             },
         });
     });
 
-    $(document).on("keyup", "#Arti_cantidad", function() {
+    $(document).on("change", "#Arti_cantidad", function() {
         let padre = $(this).parent().parent();
         let can = padre.find("#nomeven").val();
         let esteinput = parseInt($(this).val());
