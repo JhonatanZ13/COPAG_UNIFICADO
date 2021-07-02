@@ -201,7 +201,7 @@ $(document).ready(function(){
 
   var item = document.getElementById('item');            
   var agrega=
-  "<button type='button' id='agrega' class='col-md-8 form-control btn-success'><i class='fa fa-plus-square-o pl-1' ></i></button>";
+  "<button type='button' id='agrega' class='col-8 form-control btn-success'><i class='fa fa-plus-square-o pl-1' ></i></button>";
 
        function contadorD(){
           var $divs = $(".delete").toArray().length;
@@ -225,7 +225,7 @@ $(document).ready(function(){
 
           $("#contenedor").append(
 
-          "<div class='form col-md-12 row ml-5'>"+clon
+          "<div class='form col-md-10 row ml-4'>"+clon
           + "<div class='col-2'><button type='button' class='delete ml-3 btn btn-danger btn-sm'><i class='fa fa-trash pl-1' ></i></button></div>"
           +agrega
           +"</div> "
@@ -367,6 +367,48 @@ $("#solicompras").submit(function (event) {
   var mensaje = "";
   var errores = 0;
 
+  if (!validarRegCompras()) {
+    mensaje = mensaje + "<br>*Por favor seleccione el regional.";
+    errores++;
+  }
+
+  if (!validarCenCompras()) {
+    mensaje = mensaje + "<br>*Por favor seleccione el centro.";
+    errores++;
+  }
+
+  
+  if (!validarArea()) {
+    mensaje = mensaje + "<br>*Por favor escriba el area.";
+    errores++;
+  }
+
+  if (!validarJefeO()) {
+    mensaje = mensaje + "<br>*Por favor escriba el nombre del coridnador de area .";
+    errores++;
+  }
+
+
+
+  if (!validarServidorp()) {
+    mensaje = mensaje + "<br>*Por favor escriba el nombre del servidor publico .";
+    errores++;
+  }
+
+
+  if (!validardocjefeO()) {
+    mensaje = mensaje + "<br>*Por favor escriba el  documento del cordinador de area.";
+    errores++;
+  }
+
+  
+
+  
+  if (!validardocServidorp()) {
+    mensaje = mensaje + "<br>*Por favor escriba el  documento del servidor publico.";
+    errores++;
+  }
+
    
   if (!validardescripB()) {
     mensaje = mensaje + "<br>*Por favor seleccione la descripcion del bien.";
@@ -424,6 +466,79 @@ function alertCompras(tipo, title, text) {
 
   $("#contentAlertCompras").html(alerta);
 }
+
+function validarRegCompras() {
+  var value = $("#selectRegio").val();
+  if (value == 0) {
+    return false;
+  } else {
+    return true;
+  } 
+
+}
+
+function validarCenCompras() {
+  var value = $("#selectCentro").val();
+  if (value == 0) {
+    return false;
+  } else {
+    return true;
+  } 
+
+}
+
+function validarArea() {
+  var value = $("#Soc_area").val();
+  value = value.trim();
+  if (value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
+function validarJefeO() {
+  var value = $("#Soc_nom_je").val();
+  value = value.trim();
+  if (value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function validardocjefeO() {
+  var value = $("#Soc_DNI_jefeOficina").val();
+  value = value.trim();
+  if (value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function validarServidorp() {
+  var value = $("#Soc_servidorp").val();
+  value = value.trim();
+  if (value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function validardocServidorp() {
+  var value = $("#Soc_DNI_servidorPublico").val();
+  value = value.trim();
+  if (value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
 function validardescripB() {
   var value = $("#Pba_id").val();
   if (value == 0) {
@@ -472,350 +587,7 @@ function validarObservacion() {
 
 
 
-
-
-
-
-
-
-//modal compras
 $(document).ready(function () {
-
-
-
-        $(document).on("change", ".producto", function () {
-
-                var val = $(this).val();
-
-                var xyz = $(this).siblings('#items').children().filter(function () {
-                        return this.value == val;
-                }).data('xyz');
-                console.log($(this).siblings('#items').children());
-                var inputHidden = $(this).siblings('input');
-                inputHidden.val(xyz);
-        });
-
-
-        $(document).on("change", "#depId", function () {
-                var id = $(this).val();
-                var url = $(this).attr("data-url");
-
-
-                $.ajax({
-                        url: url,
-                        data: "id=" + id,
-                        type: "POST",
-                        success: function (datos) {
-                                $("#munId").removeClass('is-valid');
-                                $("#munId").removeAttr("disabled");
-                                $("#munId").removeAttr("disabled");
-                                $("#munId").html(datos);
-                        }
-                });
-        });
-
-
-        //modal compras
-
-        $(document).on("click", ".botonModal", function () {
-                var url = $(this).attr("data-url");
-                var datos = $(this).attr("data-id");
-
-                swal({
-                        title: '¿Desea eliminar la solicitud de compras?',
-                        icon: 'warning',
-                        buttons: {
-                                confirm: {
-                                        text: "Eliminar",
-                                        className: "btn btn-danger"
-                                },
-
-                                cancel: {
-                                        text: "Cancelar",
-                                        className: "btn btn-success",
-                                        visible: true
-                                }
-                        },
-
-                }).then((Delete) => {
-                        if (Delete) {
-
-                                $.ajax({
-                                        url: url,
-                                        data: "Soc_id=" + datos,
-                                        type: "POST",
-                                        success: function () {
-                                                swal("Se eliminado a exitosamente", "", "success");
-                                        }
-                                });
-
-                                setTimeout('document.location.reload()', 1000);
-
-                        }
-                });
-
-
-        });
-        // modal fin
-
-        $("#solicompras").submit(function (event) {
-                var mensaje = "";
-                var errores = 0;
-
-
-                // if ($("#tablap tr").length - 2 == 0) {
-                //   mensaje = mensaje + "<br>*Debe tener por lo menos un producto agregado.";
-                //   errores++;
-                // }
-
-                if (!validarRegCompras()) {
-                        mensaje = mensaje + "<br>*Por favor seleccione el regional.";
-                        errores++;
-                }
-
-                if (!validarCenCompras()) {
-                        mensaje = mensaje + "<br>*Por favor seleccione el centro.";
-                        errores++;
-                }
-
-
-                if (!validarArea()) {
-                        mensaje = mensaje + "<br>*Por favor escriba el area.";
-                        errores++;
-                }
-
-                if (!validarJefeO()) {
-                        mensaje = mensaje + "<br>*Por favor escriba el nombre del coridnador de area .";
-                        errores++;
-                }
-
-
-
-                if (!validarServidorp()) {
-                        mensaje = mensaje + "<br>*Por favor escriba el nombre del servidor publico .";
-                        errores++;
-                }
-
-
-                if (!validardocjefeO()) {
-                        mensaje = mensaje + "<br>*Por favor escriba el  documento del cordinador de area.";
-                        errores++;
-                }
-
-
-
-
-                if (!validardocServidorp()) {
-                        mensaje = mensaje + "<br>*Por favor escriba el  documento del servidor publico.";
-                        errores++;
-                }
-
-
-                if (!validardescripB()) {
-                        mensaje = mensaje + "<br>*Por favor seleccione la descripcion del bien.";
-                        errores++;
-                }
-
-
-                if (!validaruMedida()) {
-                        mensaje = mensaje + "<br>*Por favor seleccione unidad de medida.";
-                        errores++;
-                }
-
-
-                if (!validarCantidad()) {
-                        mensaje = mensaje + "<br>*Por favor escriba la cantidad.";
-                        errores++;
-                }
-
-
-                if (!validarObservacion()) {
-                        mensaje = mensaje + "<br>*Por favor escriba las observaciones.";
-                        errores++;
-                }
-
-
-
-
-                //Resultado final
-                if (errores > 0) {
-                        alertCompras("danger", "Error!", mensaje);
-
-                        swal("Error!", "Por favor verifica los datos.", "error");
-                        event.preventDefault();
-                } else {
-                        // swal("Exito!", "Mensaje!", "success");
-                        return;
-                }
-        });
-
-
-        function alertCompras(tipo, title, text) {
-                var alerta =
-                        "<div class='alert alert-" +
-                        tipo +
-                        " alert-dismissible fade show' role='alert'>" +
-                        "<strong>" +
-                        title +
-                        "!</strong><br> " +
-                        text +
-                        "" +
-                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-                        "<span aria-hidden='true'>&times;</span>" +
-                        "</button>" +
-                        "</div>";
-
-                $("#contentAlertCompras").html(alerta);
-        }
-
-        function validarRegCompras() {
-                var value = $("#selectRegio").val();
-                if (value == 0) {
-                        return false;
-                } else {
-                        return true;
-                }
-
-        }
-
-        function validarCenCompras() {
-                var value = $("#selectCentro").val();
-                if (value == 0) {
-                        return false;
-                } else {
-                        return true;
-                }
-
-        }
-
-        function validarArea() {
-                var value = $("#Soc_area").val();
-                value = value.trim();
-                if (value == "") {
-                        return false;
-                } else {
-                        return true;
-                }
-        }
-
-
-        function validarJefeO() {
-                var value = $("#Soc_nom_je").val();
-                value = value.trim();
-                if (value == "") {
-                        return false;
-                } else {
-                        return true;
-                }
-        }
-
-        function validardocjefeO() {
-                var value = $("#Soc_DNI_jefeOficina").val();
-                value = value.trim();
-                if (value == "") {
-                        return false;
-                } else {
-                        return true;
-                }
-        }
-
-        function validarServidorp() {
-                var value = $("#Soc_servidorp").val();
-                value = value.trim();
-                if (value == "") {
-                        return false;
-                } else {
-                        return true;
-                }
-        }
-
-        function validardocServidorp() {
-                var value = $("#Soc_DNI_servidorPublico").val();
-                value = value.trim();
-                if (value == "") {
-                        return false;
-                } else {
-                        return true;
-                }
-        }
-
-
-        function validardescripB() {
-                var value = $("#Pba_id").val();
-                if (value == 0) {
-                        return false;
-                } else {
-                        return true;
-                }
-
-        }
-
-        function validaruMedida() {
-                var value = $("#Med_id").val();
-                if (value == 0) {
-                        return false;
-                } else {
-                        return true;
-                }
-
-        }
-
-        function validarCantidad() {
-                var value = $("#com_Cantidad").val();
-                value = value.trim();
-                if (value == "") {
-                        return false;
-                } else {
-                        return true;
-                }
-        }
-
-        function validarObservacion() {
-                var value = $("#com_Observaciones").val();
-                value = value.trim();
-                if (value == "") {
-                        return false;
-                } else {
-                        return true;
-                }
-        }
-// modal fin compras
-        $(document).on("click", ".botonModalC", function () {
-          var url = $(this).attr("data-url");
-          var datos = $(this).attr("data-id");
-
-          swal({
-            title: "¿Desea eliminar la solicitud de compras?",
-            icon: "warning",
-            buttons: {
-              confirm: {
-                text: "Eliminar",
-                className: "btn btn-danger",
-              },
-
-              cancel: {
-                text: "Cancelar",
-                className: "btn btn-success",
-                visible: true,
-              },
-            },
-          }).then((Delete) => {
-            if (Delete) {
-              $.ajax({
-                url: url,
-                data: "Soc_id=" + datos,
-                type: "POST",
-                success: function () {
-                  swal("Se eliminado a exitosamente", "", "success");
-                },
-              });
-
-              setTimeout("document.location.reload()", 1000);
-            }
-          });
-        });
-        // modal fin
-//fin compras
 
 //Solicitud inicio
   $("#solicitudC").submit(function (event) {
