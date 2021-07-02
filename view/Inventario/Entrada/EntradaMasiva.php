@@ -1,5 +1,5 @@
 <div class="x_panel text-center">
-    <h2 class="display-4">AGREGAR ARTÍCULOS</h2>
+    <h2 class="display-4">Agregar Articulos</h2>
 </div>
 <form action="<?php echo getUrl("Entrada", "Entrada", "postentradaMasiva"); ?>" method="post">
     <!-- div cartas entrada artículos -->

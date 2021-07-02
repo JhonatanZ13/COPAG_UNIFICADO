@@ -179,7 +179,7 @@
                     </div>
                 <?php $contador++;
                 }  ?>
-                <div class="form col-md-12 row ml-5">
+                <div class="form col-12 row ml-5">
                     <button type='button' id='agrega' class='col-md-8 form-control btn-success'><i class='fa fa-plus-square-o pl-1'></i></button>
                 </div>
             </div>

@@ -48,147 +48,255 @@ include_once '../controller/Access/AccessController.php';
                         </a>
                     </li>
 
-                    <li>
-                        <a>
-                            <i class="fa fa-money"></i> Costos
-                            <span class="fa fa-chevron-down"></span>
-                        </a>
-
-                        <ul class="nav child_menu">
-                            <li>
-                                <a href="<?php echo getUrl("costos", "compras", "consult"); ?>">Compra</a>
-                            </li>
-
-                            <li>
-                                <a href="<?php echo getUrl("costos", "cotizacion", "consult"); ?>">Cotizacion</a>
-                            </li>
-
-                            <li>
-                                <a href="<?php echo getUrl("costos", "solicitud", "consult"); ?>">Solicitud</a>
-                            </li>
-
-                            <li>
-                                <a href="<?php echo getUrl("costos","reporte","consult");?>">Reporte</a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-                    <li>
-                        <a>
-                            <i class="fa fa-folder-open"></i>Inventario
-                            <span class="fa fa-chevron-down"></span>
-                        </a>
-
-                        <ul class="nav child_menu">
-
-                            <li>
-                                <a href="<?php echo getUrl("Entrada", "Entrada", "getEntrada"); ?>">Entrada de Bodega</a>
-                            </li>
-
-                            <li>
-                                <a href="<?php echo getUrl("Salida", "Salida", "getSalidaMasiva"); ?>">Salida de Bodega</a>
-                            </li>
-
-                       
-                            <li>
-                                <a href="<?php echo getUrl("Control", "Control", "getControl"); ?>">Control Stock</a>
-                            </li>
-
-                            <li>
-                                <a href="<?php echo getUrl("Reportes", "Reportes", "getReporte"); ?>">Reporte</a>
-                            </li>
-
+                    <?php
+                        if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Aprendiz' ) && ($_SESSION['areaUser'] == 'Costos' || $_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Control') || ($_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Costos')) {
+                    ?>
+                        <li>
+                            <a>
+                                <i class="fa fa-money"></i> Costos
+                                <span class="fa fa-chevron-down"></span>
+                            </a>
                         
-                        </ul>
-                    </li>
+                            <ul class="nav child_menu">
+                            <?php
+                                if ( (($_SESSION['rolUser'] == 'Administrador') && ($_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Costos' || $_SESSION['areaUser'] == 'Produccion' )) || (($_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Costos')) ) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("costos", "compras", "consult"); ?>">Compra</a>
+                                </li>
+                            <?php   
+                                }
 
-                
+                                if (($_SESSION['rolUser'] == 'Aprendiz' &&  $_SESSION['areaUser'] == 'Costos') || ($_SESSION['rolUser'] == 'Aprendiz' &&  $_SESSION['areaUser'] == 'Produccion') || $_SESSION['rolUser'] == 'Funcionario' || $_SESSION['rolUser'] == 'Administrador') {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("costos", "cotizacion", "consult"); ?>">Cotizacion</a>
+                                </li>
+                            <?php   
+                                }
 
-                    <li>
-                        <a>
-                            <i class="fa fa-wrench"></i>
-                            Mantenimiento <span class="fa fa-chevron-down"></span>
-                        </a>
+                                if (($_SESSION['rolUser'] == 'Aprendiz' &&  $_SESSION['areaUser'] == 'Costos') || ($_SESSION['rolUser'] == 'Aprendiz' &&  $_SESSION['areaUser'] == 'Produccion') || $_SESSION['rolUser'] == 'Funcionario' || $_SESSION['rolUser'] == 'Administrador') {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("costos", "solicitud", "consult"); ?>">Solicitud</a>
+                                </li>
+                            <?php   
+                                }
 
-                        <ul class="nav child_menu">
-                            <li>
-                                <a href="<?php echo getUrl("Mantenimiento", "Gestion", "consult"); ?>">Gestionar Maquina</a>
-                            </li>
+                                if (($_SESSION['rolUser'] == 'Aprendiz' &&  $_SESSION['areaUser'] == 'Costos') || ($_SESSION['rolUser'] == 'Aprendiz' &&  $_SESSION['areaUser'] == 'Produccion') || $_SESSION['rolUser'] == 'Funcionario' || $_SESSION['rolUser'] == 'Administrador') {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("costos", "reporte", "consult"); ?>">Reporte</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+                            </ul>
+                        </li>
 
-                            <li>
-                                <a href="<?php echo getUrl("Mantenimiento", "Orden", "consult"); ?>">Gestionar Orden</a>
-                            </li>
+                    <?php
+                        }
+                    ?>
 
-                            <li>
-                                <a href="<?php echo getUrl("Mantenimiento", "Procesos", "consult"); ?>">Procesos</a>
-                            </li>
+                    <?php
+                        if (($_SESSION['rolUser'] == 'Administrador') && ($_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Mantenimiento' || $_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Produccion') || ($_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Mantenimiento' || $_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Produccion') || ($_SESSION['rolUser'] == 'Aprendiz') && ($_SESSION['areaUser'] == 'Mantenimiento' || $_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Produccion')) {
+                    ?>
 
-                            <li>
-                                <a href="<?php echo getUrl("Mantenimiento", "Tareas", "consult"); ?>">Tareas</a>
-                            </li>
+                        <li>
+                            <a>
+                                <i class="fa fa-folder-open"></i>Inventario
+                                <span class="fa fa-chevron-down"></span>
+                            </a>
 
-                            <li>
-                                <a href="<?php echo getUrl("Mantenimiento", "Reporte", "consult"); ?>">Reporte</a>
-                            </li>
-                        </ul>
-                    </li>
+                            <ul class="nav child_menu">
+                            <?php
+                                if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Control') || ($_SESSION['rolUser'] == 'Aprendiz' &&  $_SESSION['areaUser'] == 'Inventario')) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("Entrada", "Entrada", "getEntrada"); ?>">Entrada de Bodega</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Control') ) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("Salida", "Salida", "getSalidaMasiva"); ?>">Salida de Bodega</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if ((($_SESSION['rolUser'] == 'Aprendiz') && ($_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Produccion')) || ($_SESSION['rolUser'] == 'Funcionario' && $_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Inventario') || ($_SESSION['rolUser'] == 'Aministrador' && $_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Mantenimiento') ) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("Control", "Control", "getControl"); ?>">Control Stock</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario' || ($_SESSION['rolUser'] == 'Aprendiz') && ($_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Costos' || $_SESSION['areaUser'] == 'Inventario' ))) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("Reportes", "Reportes", "getReporte"); ?>">Reporte</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
 
-                
+                            </ul>
+                        </li>
+                    <?php } ?>
 
-                    <li>
-                        <a>
-                            <i class="fa fa-gears"></i> Panel de Control
-                            <span class="fa fa-chevron-down"></span>
-                        </a>
+                    <?php
+                        if (($_SESSION['rolUser'] == 'Aprendiz' || $_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Mantenimiento' || $_SESSION['areaUser'] == 'Control')) {
+                    ?>
+                        <li>
+                            <a>
+                                <i class="fa fa-wrench"></i>
+                                Mantenimiento <span class="fa fa-chevron-down"></span>
+                            </a>
 
-                        <ul class="nav child_menu">
+                            <ul class="nav child_menu">
+                            <?php
+                                if (($_SESSION['rolUser'] == 'Aprendiz' || $_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Mantenimiento' || $_SESSION['areaUser'] == 'Control')) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("Mantenimiento", "Gestion", "consult"); ?>">Gestionar Maquina</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Mantenimiento' || $_SESSION['areaUser'] == 'Control')) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("Mantenimiento", "Orden", "consult"); ?>">Gestionar Orden</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if (($_SESSION['rolUser'] == 'Aprendiz' || $_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Mantenimiento' || $_SESSION['areaUser'] == 'Control')) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("Mantenimiento", "Procesos", "consult"); ?>">Procesos</a>
+                                </li>
 
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "Article", "consultArticles"); ?>">Gestionar Articulo</a>
-                            </li>
+                                <li>
+                                    <a href="<?php echo getUrl("Mantenimiento", "Tareas", "consult"); ?>">Tareas</a>
+                                </li>
 
+                                <li>
+                                    <a href="<?php echo getUrl("Mantenimiento", "Reporte", "consult"); ?>">Reporte</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+                            </ul>
+                        </li>
+
+                    <?php } ?>
+
+                    <?php
+                        if ($_SESSION['areaUser'] == 'Control' || $_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') {
+                    ?>
+
+                        <li>
+                            <a>
+                                <i class="fa fa-gears"></i> Panel de Control
+                                <span class="fa fa-chevron-down"></span>
+                            </a>
+
+                            <ul class="nav child_menu">
+                            <?php 
+                                if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Control' )) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("PanelDeControl", "Article", "consultArticles"); ?>">Gestionar Articulo</a>
+                                </li>
+                            <?php 
+                                }
+                            ?>
+
+                            <?php 
+                                if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Costos' || $_SESSION['areaUser'] == 'Produccion')) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("PanelDeControl", "Company", "consultCompanies"); ?>">Gestionar Empresa</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+
+                            <?php 
+                                if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Inventario')) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("PanelDeControl", "Tool", "consultTools"); ?>">Gestionar Herramienta</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+
+                            <?php 
+                                if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Mantenimiento')) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("PanelDeControl", "Machine", "consultMachines"); ?>">Gestionar Maquina</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+
+                            <?php 
+                                if (($_SESSION['rolUser'] == 'Administrador' || $_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Costos' || $_SESSION['areaUser'] == 'Inventario' || $_SESSION['areaUser'] == 'Mantenimiento' || $_SESSION['areaUser'] == 'Produccion') || ($_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Costos')) {
+                            ?>
+                                <li>
+                                    <a href="<?php echo getUrl("PanelDeControl", "User", "consultUsers"); ?>">Gestionar Usuario</a>
+                                </li>
+                            <?php
+                                }
+                            ?>
+
+                            </ul>
+                        </li>
+
+                    <?php } ?>
+
+
+                    <?php
+                        if ($_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Costos') {
+                    ?>
+                        <li>
+                            <a>
+                                <i class="fa fa-line-chart"></i> Produccion
+                                <span class="fa fa-chevron-down"></span>
+                            </a>
                             
-
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "Company", "consultCompanies"); ?>">Gestionar Empresa</a>
-                            </li>
-
-                            
-
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "Tool", "consultTools"); ?>">Gestionar Herramienta</a>
-                            </li>
-                            
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "Machine", "consultMachines");?>">Gestionar Maquina</a>
-                            </li>
-
-                            
-
-                            <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "User", "consultUsers"); ?>">Gestionar Usuario</a>
-                            </li>
-
-                            
-                        </ul>
-                    </li>
-
-                
-
-                    <li>
-                        <a>
-                            <i class="fa fa-line-chart"></i> Produccion
-                            <span class="fa fa-chevron-down"></span>
-                        </a>
-
-                        <ul class="nav child_menu">
-                            <li><a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>">Orden Produccion</a></li>
-                            <li><a href="<?php echo getUrl("Produccion", "Reporte", "getMainReporte"); ?>">Reporte produccion</a></li>
-                        </ul>
-                    </li>
-
-                
+                            <ul class="nav child_menu">
+                            <?php
+                                if (($_SESSION['rolUser'] == 'Administrador') && ($_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Costos') || ($_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Costos') || ($_SESSION['rolUser'] == 'Aprendiz') && ($_SESSION['areaUser'] == 'Produccion')){ 
+                            ?>
+                                <li><a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>">Orden Produccion</a></li>
+                            <?php
+                                }
+                            ?>
+                            <?php   
+                                if (($_SESSION['rolUser'] == 'Aprendiz') && ($_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Costos') || ($_SESSION['rolUser'] == 'Funcionario') && ($_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Costos') || ($_SESSION['rolUser'] == 'Administrador') && ($_SESSION['areaUser'] == 'Produccion' || $_SESSION['areaUser'] == 'Control' || $_SESSION['areaUser'] == 'Costos' )
+                                ) {  
+                            ?>
+                                <li><a href="<?php echo getUrl("Produccion", "Reporte", "getMainReporte"); ?>">Reporte produccion</a></li>
+                            <?php
+                                }
+                            ?>
+                            </ul>
+                        </li>
+                    <?php
+                        }
+                    ?>
                 </ul>
             </div>
         </div>

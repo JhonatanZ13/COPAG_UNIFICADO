@@ -147,7 +147,7 @@
                                 </select>
                                 <input type="number" id="com_Cantidad" name="com_Cantidad[]" class="form-control col-2">
                                 <textarea id="com_Observaciones" name="com_Observaciones[]"
-                                    class="form-control col-2 validar producto" rows="1" cols="50"
+                                    class="form-control col-2 validar" rows="1" cols="50"
                                     placeholder="Observacion..." style="resize:none;"></textarea>
 
                             </div>

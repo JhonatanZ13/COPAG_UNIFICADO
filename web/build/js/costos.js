@@ -210,7 +210,7 @@ $(document).ready(function() {
 
         $("#contenedor").append(
 
-            "<div class='form col-md-10 row ml-4'>" + clon +
+            "<div class='form col-md-12 row ml-5'>" + clon +
             "<div class='col-2'><button type='button' class='delete ml-3 btn btn-danger btn-sm'><i class='fa fa-trash pl-1' ></i></button></div>" +
             agrega +
             "</div> "

@@ -28,9 +28,10 @@ if (isset($_SESSION['auth']) && ($_SESSION['auth'] == 'ok')) {
                     <div class="form-group has-feedbackmt-4">
                         <label class="text-light">Ingresa tu usuario</label>
                         <input class="col-md-12 form-control" name="Usu_email" type="text" class="form-control" placeholder="Email" />
+                
                     </div>
 
-                    <div class="form-group has-feedback">
+                    <div class="form-group has-feedback " >
                         <label class="text-light">Ingresa tu contrase&nacute;a</label>
                         <input class="col-md-12 form-control mb-3" name="Usu_password" type="password" class="form-control" placeholder="Contrase&nacute;a" />
                     </div>

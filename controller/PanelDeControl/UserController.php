@@ -161,7 +161,7 @@ class UserController
         $execution = $obj->delete($sql);
 
         if ($execution) {
-            echo '<div class="alert alert-success alert-dismissible" role="alert">registrado <a href="#" class="alert-link">registrado
+            echo '<div class="alert alert-success alert-dismissible" role="alert">registrado <a href="#" class="alert-link">Eliminado
               </div>';
             redirect(getUrl("PanelDeControl", "User", "consultUsers"));
         } else {
@@ -200,7 +200,8 @@ class UserController
 
         $sql = "SELECT * FROM TblArea";
         $areas = $obj->consult($sql);
-
+        
+        
         $Usu_id = $_GET['Usu_id'];
 
         $sql = "SELECT Usu_id, Usu_primerNombre, Usu_segundoNombre, Usu_primerApellido, Usu_segundoApellido, Usu_numeroDocumento, Usu_telefono, rol_id, Est_id, Stg_id, Stg_nombre, Gen_id, Usu_email, Usu_password, Area_id FROM tblusuario natural join tblarea natural join tblrol natural join tblestado natural join TblSubTipoGeneral

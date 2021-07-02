@@ -1,5 +1,9 @@
-<div class="jumbotron text-center mb-0">
-    <h1>RESTAR ARTÍCULOS</h1>
+<?php
+if ($_SESSION['rolUser'] != 'Aprendiz') {
+?>
+
+<div class="x_panel text-center">
+    <h2 class="display-4">Restar Articulos</h2>
 </div>
 <form action="<?php echo getUrl("Salida", "Salida", "postSalidaMasiva"); ?>" method="post">
     <!-- el siguiente div es el que le quiero agrega al agreagar -->
@@ -43,3 +47,9 @@
         </button>
     </div>
 </form>
+
+<?php
+} else {
+    include_once '../view/partials/page404.php';
+}
+?>
