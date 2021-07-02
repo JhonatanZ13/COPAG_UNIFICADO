@@ -210,36 +210,6 @@ $(document).ready(function() {
 
     });
 
-    // validar contraseñas iguales
-    $(document).on('keyup', '#Usu_password', function() {
-        var pass1 = $('#Usu_passwordNew').val();
-        var pass2 = $('#Usu_password').val();
-
-        if (pass2 == pass1 && pass1 != '') {
-            $('#Usu_password').removeClass('is-invalid');
-            $('#Usu_password').addClass('is-valid');
-        } else {
-            $('#Usu_password').removeClass('is-valid');
-            $('#Usu_password').addClass('is-invalid');
-        }
-
-    });
-
-    $(document).on('keyup', '#Usu_passwordNew', function() {
-        var pass1 = $('#Usu_passwordNew').val();
-        var pass2 = $('#Usu_password').val();
-
-        if (pass2 == pass1 && pass1 != '') {
-            $('#Usu_password').removeClass('is-invalid');
-            $('#Usu_password').addClass('is-valid');
-        } else {
-            $('#Usu_password').removeClass('is-valid');
-            $('#Usu_password').addClass('is-invalid');
-        }
-
-    });
-    //fin validar
-
     /* =====================================================
                     FIN PANEL
     =====================================================*/
@@ -339,7 +309,7 @@ $(document).ready(function() {
                 cancel: {
                     visible: true,
                     text: "Cancelar",
-                    className: 'btn btn-primary'
+                    className: 'btn btn-danger'
                 }
 
             }
@@ -352,6 +322,7 @@ $(document).ready(function() {
                 td.find("#AlertDeleteReporte").show();
                 td.find("#habilitar").hide();
                 td.find("#inhabilitar").show();
+                td.find("#ReportePdf").show();
             }
 
         });
@@ -376,7 +347,7 @@ $(document).ready(function() {
                 cancel: {
                     visible: true,
                     text: "Cancelar",
-                    className: 'btn btn-primary'
+                    className: 'btn btn-danger'
                 }
 
             }
@@ -389,6 +360,7 @@ $(document).ready(function() {
             td.find("#AlertDeleteReporte").hide();
             td.find("#habilitar").show();
             td.find("#inhabilitar").hide();
+            td.find("#ReportePdf").hide();
         });
 
     });
@@ -412,7 +384,7 @@ $(document).ready(function() {
                 cancel: {
                     visible: true,
                     text: "Cancelar",
-                    className: 'btn btn-primary'
+                    className: 'btn btn-danger'
                 }
 
             }
@@ -448,7 +420,7 @@ $(document).ready(function() {
                 cancel: {
                     visible: true,
                     text: "Cancelar",
-                    className: 'btn btn-primary'
+                    className: 'btn btn-danger'
                 }
 
             }
@@ -481,7 +453,7 @@ $(document).ready(function() {
                 cancel: {
                     visible: true,
                     text: "Cancelar",
-                    className: 'btn btn-primary'
+                    className: 'btn btn-danger'
                 }
 
             }
@@ -514,7 +486,7 @@ $(document).ready(function() {
                     cancel: {
                         visible: true,
                         text: "Cancelar",
-                        className: 'btn btn-primary'
+                        className: 'btn btn-danger'
                     }
 
                 }
@@ -523,7 +495,7 @@ $(document).ready(function() {
                     $(this).submit();
 
                 }
-                setTimeout('document.location.reload()', 100);
+
             });
 
         }
@@ -548,7 +520,7 @@ $(document).ready(function() {
                     cancel: {
                         visible: true,
                         text: "Cancelar",
-                        className: 'btn btn-primary'
+                        className: 'btn btn-danger'
                     }
 
                 }
@@ -567,33 +539,33 @@ $(document).ready(function() {
 
     ////ALERTA DE CONFIRMACION EDICION EN LA TABLA PROCESO
     $(document).on("submit", "#AlertModalUpdateProceso", function() {
-        event.preventDefault();
-        swal({
-            title: '¿Desea Editar este proceso?',
-            text: 'Se editaran todos los datos que lleno.',
-            type: 'info',
-            icon: 'info',
-            buttons: {
-                confirm: {
-                    text: 'Editar Proceso',
-                    className: 'btn btn-success'
-                },
+        if (campos.Pro_nombre == true && campos.Pro_descripcion == true) {
+            event.preventDefault();
+            swal({
+                title: '¿Desea Editar este proceso?',
+                text: 'Se editaran todos los datos que lleno.',
+                type: 'info',
+                icon: 'info',
+                buttons: {
+                    confirm: {
+                        text: 'Editar Proceso',
+                        className: 'btn btn-success'
+                    },
 
-                cancel: {
-                    visible: true,
-                    text: "Cancelar",
-                    className: 'btn btn-primary'
+                    cancel: {
+                        visible: true,
+                        text: "Cancelar",
+                        className: 'btn btn-danger'
+                    }
+
+                }
+            }).then((Delete) => {
+                if (Delete) {
+                    $(this).submit();
                 }
 
-            }
-        }).then((Delete) => {
-            if (Delete) {
-                $(this).submit();
-
-            }
-
-        });
-
+            });
+        }
     });
 
     ////ALERTA DE CONFIRMACION ELIMINACION EN LA TABLA PROCESO
@@ -610,13 +582,13 @@ $(document).ready(function() {
             buttons: {
                 confirm: {
                     text: 'Eliminar',
-                    className: 'btn btn-danger'
+                    className: 'btn btn-success'
                 },
 
                 cancel: {
                     visible: true,
                     text: "Cancelar",
-                    className: 'btn btn-primary'
+                    className: 'btn btn-danger'
                 }
 
             }
@@ -648,13 +620,13 @@ $(document).ready(function() {
             buttons: {
                 confirm: {
                     text: 'Eliminar',
-                    className: 'btn btn-danger'
+                    className: 'btn btn-success'
                 },
 
                 cancel: {
                     visible: true,
                     text: "Cancelar",
-                    className: 'btn btn-primary'
+                    className: 'btn btn-danger'
                 }
 
             }
@@ -692,13 +664,13 @@ $(document).ready(function() {
             buttons: {
                 confirm: {
                     text: 'Eliminar',
-                    className: 'btn btn-danger'
+                    className: 'btn btn-success'
                 },
 
                 cancel: {
                     visible: true,
                     text: "Cancelar",
-                    className: 'btn btn-primary'
+                    className: 'btn btn-danger'
                 }
 
             }
@@ -721,26 +693,26 @@ $(document).ready(function() {
 
     });
 
-    ////ALERTA DE CONFIRMACION INSERCION EN LA TABLA TAREA
-    $(document).on("submit", "#FormConfirmacion", function() {
-        if (validarCamposVaciosMantoTI() == true) {
+    //ALERTA DE CONFIRMACION INSERCION EN LA TABLA ORDENMANTENIMIENTO
+    $(document).on("submit", "#AlertInsertOrden", function() {
 
+        if (validarCamposVaciosMantoOI() == true) {
             event.preventDefault();
             swal({
-                title: '¿Desea insertar esta Tarea?',
+                title: '¿Desea Generar esta Orden de mantenimieto?',
                 text: 'Se insertaran todos los datos que lleno.',
                 type: 'info',
                 icon: 'info',
                 buttons: {
                     confirm: {
-                        text: 'Registrar Tarea',
+                        text: 'Registrar Orden',
                         className: 'btn btn-success'
                     },
 
                     cancel: {
                         visible: true,
                         text: "Cancelar",
-                        className: 'btn btn-primary'
+                        className: 'btn btn-danger'
                     }
 
                 }
@@ -749,43 +721,40 @@ $(document).ready(function() {
                     $(this).submit();
 
                 }
-                FormConfirmacion.reset();
 
             });
-
-        } else {
-
         }
-
     });
 
     ////ALERTA DE CONFIRMACION EDITAR EN LA TABLA TAREA
     $(document).on("submit", "#FormConfirmacionUpdate", function() {
-        event.preventDefault();
-        swal({
-            title: '¿Desea Editar esta Tarea?',
-            text: 'Se Editaran todos los datos que modifique.',
-            type: 'info',
-            icon: 'info',
-            buttons: {
-                confirm: {
-                    text: 'Editar Tarea',
-                    className: 'btn btn-success'
-                },
+        if (validarCamposVaciosMantoTU() == true) {
+            event.preventDefault();
+            swal({
+                title: '¿Desea Editar esta Tarea?',
+                text: 'Se Editaran todos los datos que modifique.',
+                type: 'info',
+                icon: 'info',
+                buttons: {
+                    confirm: {
+                        text: 'Editar Tarea',
+                        className: 'btn btn-success'
+                    },
 
-                cancel: {
-                    visible: true,
-                    text: "Cancelar",
-                    className: 'btn btn-primary'
+                    cancel: {
+                        visible: true,
+                        text: "Cancelar",
+                        className: 'btn btn-danger'
+                    }
+
                 }
-
-            }
-        }).then((Delete) => {
-            if (Delete) {
-                $(this).submit();
-            }
-        });
-    });
+            }).then((Delete) => {
+                if (Delete) {
+                    $(this).submit();
+                }
+            });
+        }
+    })
 
 
     /* =====================================================

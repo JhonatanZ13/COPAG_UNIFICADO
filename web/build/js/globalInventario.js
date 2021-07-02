@@ -64,7 +64,9 @@ $(document).ready(function() {
         var habilitarEnvio = 0;
 
         $.each(seleccion, function(indice, valor) {
-            if ($(valor).val() > 0) {
+            if ($(valor).val() == 0) {
+
+            } else {
                 habilitarEnvio++;
             }
         });

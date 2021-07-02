@@ -31,7 +31,7 @@ class SalidaController{
         $sql2 = "SELECT * FROM tbltipoarticulo";
         $tipos = $obj->consult($sql);
         include_once '../view/Inventario/Salida/SalidaMasiva.php';
-    }
+    } 
     public function postSalidaMasiva(){
         $obj = new SalidaModel();
         $id = $_POST['Arti_id'];

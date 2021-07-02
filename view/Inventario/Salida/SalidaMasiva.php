@@ -13,7 +13,7 @@
                     <?php foreach ($tipos as $tp) {
                         echo "<option value='" . $tp["Tart_id"] . "'>" . $tp["Tart_descripcion"] . "</option>";
                     } ?>
-                </select>
+                </select> 
             </div>
 
             <div class="form-group col-sm-12">

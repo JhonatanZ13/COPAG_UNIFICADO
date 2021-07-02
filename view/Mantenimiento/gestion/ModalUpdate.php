@@ -31,9 +31,8 @@ foreach ($maquina as $maq) {
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">cerrar</button>
-
                 <input type="submit" class="btn btn-success float-right" value="Editar Estado">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">cerrar</button>
             </div>
 
         </form>

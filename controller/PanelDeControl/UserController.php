@@ -109,28 +109,34 @@ class UserController
         $Rol_id = $_POST['Rol_id'];
         $Area_id = $_POST['Area_id'];
 
-        // esta session cambia las variables de sesion cuando se modifica algo de ellas
-        $_SESSION['nameUser'] = $Usu_primerNombre = $_POST['Usu_primerNombre'];
-        $_SESSION['surnameUser'] = $Usu_primerApellido = $_POST['Usu_primerApellido'];
+        if ($_SESSION['idUser'] != $Usu_id) {
 
-        $sql_rol = "SELECT * FROM TblRol WHERE Rol_id=$Rol_id";
-        $roles = $obj->consult($sql_rol);
+            $sql = "UPDATE TblUsuario SET Usu_id=$Usu_id, Usu_primerNombre='$Usu_primerNombre', Usu_segundoNombre='$Usu_segundoNombre', Usu_primerApellido='$Usu_primerApellido', Usu_segundoApellido='$Usu_segundoApellido', Usu_numeroDocumento='$Usu_numeroDocumento', Usu_telefono='$Usu_telefono', Gen_id=$Gen_id, Usu_email='$Usu_email', Rol_id=$Rol_id, Area_id='$Area_id' WHERE Usu_id=$Usu_id";
 
-        foreach ($roles as $rol) {
-            $_SESSION['rolUser'] = $rol['Rol_nombre'];
+            $execution = $obj->update($sql);
+        } else {
+            // esta session cambia las variables de sesion cuando se modifica algo de ellas
+            $_SESSION['nameUser'] = $Usu_primerNombre = $_POST['Usu_primerNombre'];
+            $_SESSION['surnameUser'] = $Usu_primerApellido = $_POST['Usu_primerApellido'];
+
+            $sql_rol = "SELECT * FROM TblRol WHERE Rol_id=$Rol_id";
+            $roles = $obj->consult($sql_rol);
+
+            foreach ($roles as $rol) {
+                $_SESSION['rolUser'] = $rol['Rol_nombre'];
+            }
+
+            $sql_rol = "SELECT * FROM TblArea WHERE Area_id=$Area_id";
+            $areas = $obj->consult($sql_rol);
+
+            foreach ($areas as $area) {
+                $_SESSION['areaUser'] = $area['Area_nombre'];
+            }
+            // fin de la parte variables de sesion
+
+            $sql = "UPDATE TblUsuario SET Usu_id=$Usu_id, Usu_primerNombre='$Usu_primerNombre', Usu_segundoNombre='$Usu_segundoNombre', Usu_primerApellido='$Usu_primerApellido', Usu_segundoApellido='$Usu_segundoApellido', Usu_numeroDocumento='$Usu_numeroDocumento', Usu_telefono='$Usu_telefono', Gen_id=$Gen_id, Usu_email='$Usu_email', Rol_id=$Rol_id, Area_id='$Area_id' WHERE Usu_id=$Usu_id";
+            $execution = $obj->update($sql);
         }
-
-        $sql_rol = "SELECT * FROM TblArea WHERE Area_id=$Area_id";
-        $areas = $obj->consult($sql_rol);
-
-        foreach ($areas as $area) {
-            $_SESSION['areaUser'] = $area['Area_nombre'];
-        }
-        // fin de la parte variables de sesion
-
-        $sql = "UPDATE TblUsuario SET Usu_id=$Usu_id, Usu_primerNombre='$Usu_primerNombre', Usu_segundoNombre='$Usu_segundoNombre', Usu_primerApellido='$Usu_primerApellido', Usu_segundoApellido='$Usu_segundoApellido', Usu_numeroDocumento='$Usu_numeroDocumento', Usu_telefono='$Usu_telefono', Gen_id=$Gen_id, Usu_email='$Usu_email', Rol_id=$Rol_id, Area_id='$Area_id' WHERE Usu_id=$Usu_id";
-
-        $execution = $obj->update($sql);
 
         if ($execution) {
             redirect(getUrl("PanelDeControl", "User", "consultUsers"));
@@ -221,65 +227,34 @@ class UserController
         $Usu_primerApellido = $_POST['Usu_primerApellido'];
         $Usu_segundoApellido = $_POST['Usu_segundoApellido'];
         $Usu_password = $_POST['Usu_password'];
-        $Usu_passwordOld = $_POST['Usu_passwordOld'];
         $Usu_telefono = $_POST['Usu_telefono'];
         $Gen_id = $_POST['Gen_id'];
 
-        $sql = "SELECT Usu_password FROM TblUsuario WHERE Usu_id=$Usu_id";
-        $usuarios = $obj->consult($sql);
-
-        // si la variable Usu_password llega vacia no actualizar el campo
         if (!empty($Usu_password)) {
-            $sql = "UPDATE TblUsuario SET Usu_password=$Usu_password WHERE Usu_id=$Usu_id";
-
-            $execution = $obj->update($sql);
-
-            foreach ($usuarios as $user) {
-                if ($Usu_passwordOld != $user['Usu_password']) {
-
-                    $_SESSION['mensaje'] = "Ups!! Ocurrio un error.<br/> La contraseña anterior !No¡ es la correcta<br> o Recuerde que si va cambiar la contraseña debe diligenciar de manera correcta el campo contraseña anterior <br/>";
-                    $_SESSION['tipo'] = "danger";
-    
-    
-                    redirect(getUrl("PanelDeControl", "User", "getProfile", array('Usu_id' => $_SESSION['idUser'])));
-    
-                } else {
-    
-                    // esta session cambia las variables de sesion cuando se modifica algo de ellas
-                    $_SESSION['nameUser'] = $Usu_primerNombre = $_POST['Usu_primerNombre'];
-                    $_SESSION['surnameUser'] = $Usu_primerApellido = $_POST['Usu_primerApellido'];
-    
-                    $sql = "UPDATE TblUsuario SET Usu_id=$Usu_id, Usu_primerNombre='$Usu_primerNombre', Usu_segundoNombre='$Usu_segundoNombre', Usu_primerApellido='$Usu_primerApellido', Usu_segundoApellido='$Usu_segundoApellido', Usu_telefono='$Usu_telefono', Gen_id=$Gen_id WHERE Usu_id=$Usu_id";
-    
-                    $execution = $obj->update($sql);
-    
-                    if ($execution) {
-                        redirect('index.php');
-                    } else {
-                        echo "Ups ocurrio un error";
-                    }
-                }
-            }
-        }else{
             $_SESSION['nameUser'] = $Usu_primerNombre = $_POST['Usu_primerNombre'];
             $_SESSION['surnameUser'] = $Usu_primerApellido = $_POST['Usu_primerApellido'];
-    
-            $sql = "UPDATE TblUsuario SET Usu_id=$Usu_id, Usu_primerNombre='$Usu_primerNombre', Usu_segundoNombre='$Usu_segundoNombre', Usu_primerApellido='$Usu_primerApellido', Usu_segundoApellido='$Usu_segundoApellido', Usu_telefono='$Usu_telefono', Gen_id=$Gen_id WHERE Usu_id=$Usu_id";
-    
+
+            $sql = "UPDATE TblUsuario SET Usu_id=$Usu_id, Usu_primerNombre='$Usu_primerNombre', Usu_segundoNombre='$Usu_segundoNombre', Usu_primerApellido='$Usu_primerApellido', Usu_segundoApellido='$Usu_segundoApellido', Usu_telefono='$Usu_telefono', Gen_id=$Gen_id, Usu_password='$Usu_password' WHERE Usu_id=$Usu_id";
+
             $execution = $obj->update($sql);
-    
-            if ($execution) {
-                redirect('index.php');
-            } else {
-                echo "Ups ocurrio un error";
-            }
+        }else {
+            $_SESSION['nameUser'] = $Usu_primerNombre = $_POST['Usu_primerNombre'];
+            $_SESSION['surnameUser'] = $Usu_primerApellido = $_POST['Usu_primerApellido'];
+
+            $sql = "UPDATE TblUsuario SET Usu_id=$Usu_id, Usu_primerNombre='$Usu_primerNombre', Usu_segundoNombre='$Usu_segundoNombre', Usu_primerApellido='$Usu_primerApellido', Usu_segundoApellido='$Usu_segundoApellido', Usu_telefono='$Usu_telefono', Gen_id=$Gen_id WHERE Usu_id=$Usu_id";
+
+            $execution = $obj->update($sql);
         }
-        
-        
-        
+
+        if ($execution) {
+            redirect('index.php');
+        } else {
+            echo "Ups ocurrio un error";
+        }
     }
 
-    public function getIndex(){
+    public function getIndex()
+    {
         redirect('index.php');
     }
 }

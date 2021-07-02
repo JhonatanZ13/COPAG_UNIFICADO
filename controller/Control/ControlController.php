@@ -25,6 +25,13 @@ class ControlController
                 WHERE tblarticulo.Tart_id = tbltipoarticulo.Tart_id 
                 AND tblarticulo.Tart_id=tblmedida.Med_id";
         $Control = $obj->consult($sql);
+
+        $sql = "SELECT TblMaquina.Maq_id, TblMaquina.Maq_nombre, TblMaquina.Maq_descripcion, TblMaquina.Maq_cantidad, TblSubTipoGeneral.Stg_nombre FROM TblMaquina natural join TblSubTipoGeneral";
+        $maquina = $obj->consult($sql);
+
+        $sql = "SELECT TblHerramienta.Her_id, TblHerramienta.Her_nombre, TblHerramienta.Her_descripcion, TblHerramienta.Her_cantidad, TblSubTipoGeneral.Stg_nombre FROM TblHerramienta natural join TblSubTipoGeneral";
+        $herramienta = $obj->consult($sql);
+
         include_once '../view/Inventario/Control/Control.php';
     }
 }

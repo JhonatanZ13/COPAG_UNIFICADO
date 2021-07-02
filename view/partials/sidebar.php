@@ -47,7 +47,7 @@ include_once '../controller/Access/AccessController.php';
                             <i class="fa fa-home"></i>Inicio
                         </a>
                     </li>
-                    
+
                     <li>
                         <a>
                             <i class="fa fa-money"></i> Costos
@@ -73,6 +73,7 @@ include_once '../controller/Access/AccessController.php';
                         </ul>
                     </li>
 
+
                     <li>
                         <a>
                             <i class="fa fa-folder-open"></i>Inventario
@@ -80,7 +81,7 @@ include_once '../controller/Access/AccessController.php';
                         </a>
 
                         <ul class="nav child_menu">
-                        
+
                             <li>
                                 <a href="<?php echo getUrl("Entrada", "Entrada", "getEntrada"); ?>">Entrada de Bodega</a>
                             </li>
@@ -89,6 +90,7 @@ include_once '../controller/Access/AccessController.php';
                                 <a href="<?php echo getUrl("Salida", "Salida", "getSalidaMasiva"); ?>">Salida de Bodega</a>
                             </li>
 
+                       
                             <li>
                                 <a href="<?php echo getUrl("Control", "Control", "getControl"); ?>">Control Stock</a>
                             </li>
@@ -96,8 +98,12 @@ include_once '../controller/Access/AccessController.php';
                             <li>
                                 <a href="<?php echo getUrl("Reportes", "Reportes", "getReporte"); ?>">Reporte</a>
                             </li>
+
+                        
                         </ul>
                     </li>
+
+                
 
                     <li>
                         <a>
@@ -128,6 +134,8 @@ include_once '../controller/Access/AccessController.php';
                         </ul>
                     </li>
 
+                
+
                     <li>
                         <a>
                             <i class="fa fa-gears"></i> Panel de Control
@@ -136,30 +144,37 @@ include_once '../controller/Access/AccessController.php';
 
                         <ul class="nav child_menu">
 
-                                <li>
-                                    <a href="<?php echo getUrl("PanelDeControl", "Article", "consultArticles"); ?>">Gestionar Articulo</a>
-                                </li>
+                            <li>
+                                <a href="<?php echo getUrl("PanelDeControl", "Article", "consultArticles"); ?>">Gestionar Articulo</a>
+                            </li>
 
+                            
 
                             <li>
                                 <a href="<?php echo getUrl("PanelDeControl", "Company", "consultCompanies"); ?>">Gestionar Empresa</a>
                             </li>
+
+                            
 
                             <li>
                                 <a href="<?php echo getUrl("PanelDeControl", "Tool", "consultTools"); ?>">Gestionar Herramienta</a>
                             </li>
                             
                             <li>
-                                <a href="<?php echo getUrl("PanelDeControl", "Machine", "consultMachines"); ?>">Gestionar Maquina</a>
+                                <a href="<?php echo getUrl("PanelDeControl", "Machine", "consultMachines");?>">Gestionar Maquina</a>
                             </li>
 
-                        
+                            
+
                             <li>
                                 <a href="<?php echo getUrl("PanelDeControl", "User", "consultUsers"); ?>">Gestionar Usuario</a>
                             </li>
+
                             
                         </ul>
                     </li>
+
+                
 
                     <li>
                         <a>
@@ -172,7 +187,8 @@ include_once '../controller/Access/AccessController.php';
                             <li><a href="<?php echo getUrl("Produccion", "Reporte", "getMainReporte"); ?>">Reporte produccion</a></li>
                         </ul>
                     </li>
-                    
+
+                
                 </ul>
             </div>
         </div>

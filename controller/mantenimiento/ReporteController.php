@@ -32,24 +32,29 @@ public function ModalDelete()
 
 public function DeleteModal()
 {
-    $obj = new ReporteModel();
-    $odm_id = $_POST['Odm_id'];
-    $idodmde= $_POST['Odmde_id'];
-    $sqlodm = "DELETE FROM tblordenmantodetalle WHERE Odm_id=$odm_id ";
-    $ejecutarodmde = $obj->delete($sqlodm);
-
-    if ($ejecutarodmde==true) {
-
-        $sql = "DELETE FROM tblordenmanto WHERE Odm_id=$odm_id";
-        $ejecutar = $obj->delete($sql);
-   }   
-    if($ejecutar==true){
-        redirect(getUrl("Mantenimiento", "Reporte", "consult"));
-    } else {
-        echo "Error al eliminar";
-        
-        
+    if ($_SESSION['rolUser'] == 'Funcionario' || $_SESSION['rolUser'] =='Administrador') {
+        $obj = new ReporteModel();
+        $odm_id = $_POST['Odm_id'];
+        $idodmde= $_POST['Odmde_id'];
+        $sqlodm = "DELETE FROM tblordenmantodetalle WHERE Odm_id=$odm_id ";
+        $ejecutarodmde = $obj->delete($sqlodm);
+    
+        if ($ejecutarodmde==true) {
+    
+            $sql = "DELETE FROM tblordenmanto WHERE Odm_id=$odm_id";
+            $ejecutar = $obj->delete($sql);
+       }   
+        if($ejecutar==true){
+            redirect(getUrl("Mantenimiento", "Reporte", "consult"));
+        } else {
+            echo "Error al eliminar";
+            
+            
+        }
+    }else {
+        echo "Usted no tiene permisos para realizar esta accion";
     }
+
 
    
 }
@@ -63,6 +68,8 @@ public function DeleteModal()
         header("Content-Disposition: inline; filename=Reporte.pdf");
         readfile("$Odm_pdf");
     }
+
+    
 
 }
 ?>

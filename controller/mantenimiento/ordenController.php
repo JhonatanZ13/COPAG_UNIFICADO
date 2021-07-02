@@ -121,6 +121,7 @@ public function herramientasdinamicas(){
      $tar_id=$_POST['Tar_id'];
 
      $herr=$_POST['Her_id'];
+
      $Arti_id=$_POST['Arti_id'];
 
      $sql="INSERT INTO tblordenmanto(Odm_id,Odm_fechaInicio,Odm_fechaFin,Odm_horainicio,Odm_horaFin,Odm_tecnico,Odm_Observaciones,Odm_ObservacionesFin,Stg_id,Maq_id,Emp_id,Usu_id,Odm_pdf) 
@@ -157,7 +158,7 @@ public function herramientasdinamicas(){
          //echo $sqlfk."<br>";
        }
        
-      redirect(getUrl("Mantenimiento", "orden", "consult"));
+      redirect(getUrl("Mantenimiento", "Reporte", "consult"));
    
   
       } 

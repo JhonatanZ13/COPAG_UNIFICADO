@@ -58,6 +58,9 @@ const inputsActualizarUsuario = document.querySelectorAll('#actualizarUsuario in
 const selectActualizarUsuario = document.querySelectorAll('#actualizarUsuario select');
 const textareaActualizarUsuario = document.querySelectorAll('#actualizarUsuario textarea');
 
+const perfilUsuario = document.getElementById('perfilUsuario');
+const inputPerfilUsuario = document.querySelectorAll('#perfilUsuario input');
+
 //Elementos Formulario Login
 
 const formularioLogin = document.getElementById('formularioLogin');
@@ -75,6 +78,7 @@ let camposEmpresa = [];
 let camposMaquina = [];
 let camposHerramienta = [];
 let camposUsuario = [];
+let contraseñaValida = [];
 
 //expresiones validas
 
@@ -83,13 +87,15 @@ const expresioness = {
     descripcion: /^[a-zA-ZÀ-ÿ0-9\_\-\()\.\:\,\s]{3,200}$/,
     razonSocial: /^[a-zA-ZÀ-ÿ0-9\_\-\.\s]{4,40}$/,
     serial: /^[a-zA-Z0-9\_\-]{4,40}$/, // Letras, numeros, guion y guion_bajo
-    nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
+    nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/,
+    nombreOpcional: /^[a-zA-ZÀ-ÿ\s]{0,40}$/, // Letras y espacios, pueden llevar acentos.
     direccion: /^[a-zA-Z0-9\s\#\-]{1,45}$/,
     password: /^.{4,12}$/, // 4 a 12 digitos.
     correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     correosena: /^[a-zA-Z0-9_.+-]+@+sena+\.[a-zA-Z0-9-.]+$/,
     correosena2: /^[a-zA-Z0-9_.+-]+@+misena+\.[a-zA-Z0-9-.]+$/,
     telefono: /^[0-9]{7,14}$/, // 7 a 14 numeros.
+    telefonoOpcional: /^[0-9]{0,14}$/,
     pdf: /pdf/,
     imagen: /[png-jpg][jpeg]/,
     estado: /true/,
@@ -223,6 +229,23 @@ if (formularioUsuario) {
         emailUsuario: true,
         rolUsuario: true,
         areaUsuario: true,
+    };
+}else if(perfilUsuario){
+    camposUsuario = {
+        primerNombreUsuario: true,
+        segundoNombreUsuario: true,
+        primerApellidoUsuario: true,
+        segundoApellidoUsuario: true,
+        tipoDocumentoUsuario: true,
+        numeroDocumentoUsuario: true,
+        telefonoUsuario: true,
+        generoUsuario: true,
+        emailUsuario: true,
+        rolUsuario: true,
+        areaUsuario: true,
+        contraseñaNueva: true,
+        contraseñaConfirmar: true,
+        contraseñaVieja: true,
     };
 }
 
@@ -378,7 +401,7 @@ const validarFormulariov = (e) => {
                 validarCampo(expresioness.telefono, e.target, 'primerNumeroContacto', camposEmpresa);
                 break;
             case "Emp_segundoNumeroContacto":
-                validarCampo(expresioness.telefono, e.target, 'segundoNumeroContacto', camposEmpresa);
+                validarCampo(expresioness.telefonoOpcional, e.target, 'segundoNumeroContacto', camposEmpresa);
                 break;
             case "Tempr_id":
                 if (e.target.value == "") {
@@ -390,19 +413,19 @@ const validarFormulariov = (e) => {
                 break;
         }
     }
-    if (formularioUsuario || actualizarUsuario) {
+    if (formularioUsuario || actualizarUsuario || perfilUsuario) {
         switch (e.target.name) {
             case 'Usu_primerNombre':
                 validarCampo(expresioness.nombre, e.target, 'primerNombreUsuario', camposUsuario);
                 break;
             case 'Usu_segundoNombre':
-                validarCampo(expresioness.nombre, e.target, 'segundoNombreUsuario', camposUsuario);
+                validarCampo(expresioness.nombreOpcional, e.target, 'segundoNombreUsuario', camposUsuario);
                 break;
             case 'Usu_primerApellido':
                 validarCampo(expresioness.nombre, e.target, 'primerApellidoUsuario', camposUsuario);
                 break;
             case 'Usu_segundoApellido':
-                validarCampo(expresioness.nombre, e.target, 'segundoApellidoUsuario', camposUsuario);
+                validarCampo(expresioness.nombreOpcional, e.target, 'segundoApellidoUsuario', camposUsuario);
                 break;
             case 'Stg_id':
                 if (e.target.value == "") {
@@ -445,6 +468,24 @@ const validarFormulariov = (e) => {
                 }
                 validarCampo(expresioness.estado, maquina, 'areaUsuario', camposUsuario);
                 break;
+            case "Usu_passwordNew":
+                contraseñaValida.value=validar_clave(e.target.value);
+                validarCampo(expresioness.estado, contraseñaValida, 'contraseñaNueva', camposUsuario);
+                if(e.target.value==""){
+                    camposUsuario.contraseñaConfirmar=true;
+                }else{
+                    camposUsuario.contraseñaConfirmar=false;
+                }
+                validarPassword2();
+                break;
+            case "Usu_password":
+                validarPassword2();
+                if(e.target.value==""){
+                    camposUsuario.contraseñaConfirmar=true;
+                }else{
+                    camposUsuario.contraseñaConfirmar=false;
+                }
+                break;
         }
     }
 };
@@ -481,7 +522,59 @@ const validarEmail = (expresion, expresion2, input, campo, campos) => {
     }
 };
 
+//Validar Formato de contraseña
 
+        function validar_clave(contrasenna)
+		{
+			if(contrasenna.length >= 8)
+			{		
+				var mayuscula = false;
+				var minuscula = false;
+				var numero = false;
+				var caracter_raro = false;
+				for(var i = 0;i<contrasenna.length;i++)
+				{
+					if(contrasenna.charCodeAt(i) >= 65 && contrasenna.charCodeAt(i) <= 90)
+					{
+						mayuscula = true;
+					}
+					else if(contrasenna.charCodeAt(i) >= 97 && contrasenna.charCodeAt(i) <= 122)
+					{
+						minuscula = true;
+					}
+					else if(contrasenna.charCodeAt(i) >= 48 && contrasenna.charCodeAt(i) <= 57)
+					{
+						numero = true;
+					}
+					else
+					{
+						caracter_raro = true;
+					}
+				}
+				if(mayuscula == true && minuscula == true && caracter_raro == true && numero == true)
+				{
+					return true;
+				}
+			}else if(contrasenna==""){
+                return true;
+            }
+            return false;
+		        }
+
+        const validarPassword2 = () => {
+            const inputPassword1 = document.getElementById('Usu_passwordNew');
+            const inputPassword2 = document.getElementById('Usu_password');
+        
+            if(inputPassword1.value == inputPassword2.value){
+                document.getElementById(`Usu_password`).classList.remove('is-invalid');
+                document.getElementById(`Usu_password`).classList.add('is-valid');
+                camposUsuario['contraseñaConfirmar'] = true;
+            } else {
+                document.getElementById(`Usu_password`).classList.add('is-invalid');
+                document.getElementById(`Usu_password`).classList.remove('is-valid');
+                campos['contraseñaConfirmar'] = false;
+            }
+        }        
 
 //Funcion para validar el formulario de Maquina
 
@@ -745,6 +838,48 @@ if (actualizarUsuario) {
     });
 }
 
+if (perfilUsuario) {
+    perfilUsuario.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const inputContraseña = document.querySelectorAll('#contraseñaConfirmar');
+        const inputContraseña2 = document.querySelectorAll('#contraseñaAnterior');
+        if(camposUsuario.contraseñaConfirmar==false){
+            if(inputContraseña2[0].value==inputContraseña[0].value){
+                camposUsuario.contraseñaConfirmar=true;
+                document.getElementById(`grupo__contraseñaAnterior`).classList.remove('formularioPanel__grupo-incorrecto');
+                document.getElementById(`grupo__contraseñaAnterior`).classList.add('formularioPanel__grupo-correcto');
+                document.querySelector(`#grupo__contraseñaAnterior .formularioPanel__input-error`).classList.remove('formularioPanel__input-error-activo');
+            }else{
+                document.getElementById(`grupo__contraseñaAnterior`).classList.add('formularioPanel__grupo-incorrecto');
+                document.getElementById(`grupo__contraseñaAnterior`).classList.remove('formularioPanel__grupo-correcto');
+                document.querySelector(`#grupo__contraseñaAnterior .formularioPanel__input-error`).classList.add('formularioPanel__input-error-activo');
+                camposUsuario.contraseñaConfirmar=false;
+            }
+        }else{
+            camposUsuario.contraseñaConfirmar=true;
+        }
+        if (camposUsuario.primerNombreUsuario &&
+            camposUsuario.primerApellidoUsuario &&
+            camposUsuario.segundoApellidoUsuario &&
+            camposUsuario.tipoDocumentoUsuario &&
+            camposUsuario.numeroDocumentoUsuario &&
+            camposUsuario.telefonoUsuario &&
+            camposUsuario.generoUsuario &&
+            camposUsuario.emailUsuario &&
+            camposUsuario.rolUsuario &&
+            camposUsuario.areaUsuario &&
+            camposUsuario.contraseñaConfirmar &&
+            camposUsuario.contraseñaVieja &&
+            camposUsuario.contraseñaNueva) {
+
+                perfilUsuario.submit();
+
+        } else {
+            document.getElementById('formularioPanel__mensaje').classList.add('formularioPanel__mensaje-activo');
+        }
+    });
+}
+
 //Escuchadores de los campos del formulario Maquina
 
 textarea.forEach((text) => {
@@ -903,4 +1038,8 @@ selectActualizarUsuario.forEach((e) => {
 inputsActualizarUsuario.forEach((input) => {
     input.addEventListener('keyup', validarFormulariov);
     input.addEventListener('change', validarFormulariov);
+});
+
+inputPerfilUsuario.forEach((input) => {
+    input.addEventListener('keyup', validarFormulariov);
 });

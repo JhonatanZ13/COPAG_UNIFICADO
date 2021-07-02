@@ -414,6 +414,30 @@ body::-webkit-scrollbar-thumb:active {
 }
 
 
+/* /validaciones procesos/ */
+
+.procesobueno {
+    border: 1px solid #1ed12d;
+    opacity: 1;
+}
+
+.procesomalo {
+    border: 1px solid red;
+    opacity: 1;
+}
+
+.error {
+    width: 200px;
+    height: auto;
+    display: none;
+}
+
+.error-activo {
+    color: red;
+    display: block;
+}
+
+
 /* =====================================================
                     FIN MANTENIMIENTO
     =====================================================*/

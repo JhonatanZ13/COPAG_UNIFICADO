@@ -8,7 +8,7 @@
         <div class="login_wrapper">
             <div class="containerLogin">
                 <div class="mt-3">
-                    <img class="" src="images/Logo negro SENA.png" width="40%">
+                    <img class="" src="images/LogonegroSENA.png" width="40%">
                 </div>
 
                 <div class="">

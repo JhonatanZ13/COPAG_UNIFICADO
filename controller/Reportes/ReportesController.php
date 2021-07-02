@@ -23,8 +23,15 @@ class ReportesController
         $mpdf->SetTitle('Reporte_Actividades_Inventario');
 
         $obj = new ReportesModel();
+
         $sql = "SELECT * FROM tblarticulo";
         $pdf = $obj->consult($sql);
+
+        $sql = "SELECT Maq_nombre, Maq_cantidad FROM TblMaquina";
+        $maquina = $obj->consult($sql);
+
+        $sql = "SELECT Her_nombre, Her_cantidad FROM TblHerramienta";
+        $herramienta = $obj->consult($sql);
 
         $css = file_get_contents('build/css/Reportes.css');
         $header = '<table class="border-1 t-center">
@@ -57,6 +64,22 @@ class ReportesController
                 . "<td>" . $j . "</td>"
                 . "<td>" . $pdf['Arti_nombre'] . "</td>"
                 . "<td>" . $pdf['Arti_cantidad'] . "</td>"
+                . "</tr>";
+                $j++;
+            }
+            foreach ($maquina as $maq) {
+                $html .= "<tr>"
+                . "<td>" . $j . "</td>"
+                . "<td>" . $maq['Maq_nombre'] . "</td>"
+                . "<td>" . $maq['Maq_cantidad'] . "</td>"
+                . "</tr>";
+                $j++;
+            }
+            foreach ($herramienta as $her) {
+                $html .= "<tr>"
+                . "<td>" . $j . "</td>"
+                . "<td>" . $her['Her_nombre'] . "</td>"
+                . "<td>" . $her['Her_cantidad'] . "</td>"
                 . "</tr>";
                 $j++;
             }

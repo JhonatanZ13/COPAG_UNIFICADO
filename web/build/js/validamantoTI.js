@@ -69,11 +69,30 @@ inputMTI.forEach((input) => {
 
 function validarCamposVaciosMantoTI() {
 
-    // if (document.getElementById("checkboxP").checked == true && document.getElementById("checkboxH").checked == true) {
-    //     var condicion = "si";
-    // } else {
-    //     condicion = "no";
-    // }
+    var tareaN = $('#tareaN').val();
+    var tareaD = $('#tareaD').val();
+    if (tareaN == "") {
+        $("#tareaN").addClass("parsley-error");
+        setTimeout(function () {
+            $("#tareaN").removeClass("parsley-error");
+        }, 10000);
+
+        $('#tareaNP').addClass('form_input-error-activo');
+        setTimeout(function () {
+            $('#tareaNP').removeClass('form_input-error-activo');
+        }, 10000);
+    }
+    if (tareaD == "") {
+        $("#tareaD").addClass("parsley-error");
+        setTimeout(function () {
+            $("#tareaD").removeClass("parsley-error");
+        }, 10000);
+
+        $('#tareaDP').addClass('form_input-error-activo');
+        setTimeout(function () {
+            $('#tareaDP').removeClass('form_input-error-activo');
+        }, 10000);
+    }
 
     if (camposMTI.Tar_nombre && camposMTI.Tar_descripcion && camposMTI.checkbox && camposMTI.checkbox1) {
         return true;

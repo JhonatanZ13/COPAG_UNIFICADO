@@ -1,6 +1,6 @@
 <?php
 if(($_SESSION['rolUser'] != 'Aprendiz')){
-	foreach ($usuarios as $user) {
+	foreach ($tmaquina as $maq) {
 ?>
 <div class="row">
     <div class="col-md-12 col-sm-12 ">

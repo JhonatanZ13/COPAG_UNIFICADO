@@ -68,7 +68,7 @@
  <script src="build/js/panel.js"></script>
 
   <!-- --- Mantenimiento ------------ -->
- <script src="vendors/jquery/dist/globalMantenimiento.js"></script>
+ <!-- <script src="vendors/jquery/dist/globalMantenimiento.js"></script> -->
 
  <!-- Costos -->
  <script src="build/js/costos.js"></script>
@@ -79,6 +79,7 @@
 
  <!----- Mantenimiento -------------->
 <script src="build/js/validamantoTI.js"></script>
+<script src="build/js/validamantoTU.js"></script>
 <script src="build/js/validamantoOI.js"></script>
 
  <!-- inicio sweetalert -->

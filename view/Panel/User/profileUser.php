@@ -7,7 +7,7 @@ foreach ($usuarios as $user) {
 			<div class="x_panel">
 				<div class="x_title">
 					<h2>En esta seccion puedes editar tu perfil en el sistema COPAG</h2> <br><br>
-					<p style="color:red;">Recuerde que todos los campos con * no se pueden modificar</p>
+					<p style="color:red;">Recuerde que todos los campos con * no se pueden modificar<br/>Si no desea cambiar la contraseña deje los campos (Contraseña anterior - Contraseña nueva - Confirmar contraseña) en blanco.</p>
 					<div class="clearfix"></div>
 				</div>
 
@@ -33,7 +33,7 @@ foreach ($usuarios as $user) {
 					</div>
 					<?php }?>
 
-					<form action="<?php echo getUrl("PanelDeControl", "User", "postProfile"); ?>" method="post" data-parsley-validate class="form-horizontal form-label-left">
+					<form id="perfilUsuario" action="<?php echo getUrl("PanelDeControl", "User", "postProfile"); ?>" method="post" data-parsley-validate class="form-horizontal form-label-left">
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback">
 							<label for=""><?= $_SESSION['rolUser']; ?></label><br>
@@ -50,46 +50,52 @@ foreach ($usuarios as $user) {
 
 						<div class="col-md-6 col-sm-6 form-group has-feedback" hidden>
 							<input type="text" id="Usu_id" class="form-control" name="Usu_id" value="<?= $user['Usu_id']; ?>" />
+							<input type="" id="contraseñaConfirmar" value="<?= $user['Usu_password'];?>" name="Usu_passwordConfirmation" />
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
+						<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__primerNombreUsuario">
 							<label for="fullname">Primer Nombre</label>
-							<input type="text" id="Usu_primerNombre" class="form-control" name="Usu_primerNombre" value="<?= $user['Usu_primerNombre']; ?>" />
+							<input type="text" id="Usu_primerNombre" class="form-control formularioPanel__input" name="Usu_primerNombre" value="<?= $user['Usu_primerNombre']; ?>" />
+							<p class="formularioPanel__input-error">Solo se permiten letras (a-z).</p> 
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
+						<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__segundoNombreUsuario">
 							<label for="fullname">Segundo Nombre</label>
-							<input type="text" id="Usu_segundoNombre" class="form-control" name="Usu_segundoNombre" value="<?= $user['Usu_segundoNombre']; ?>" />
+							<input type="text" id="Usu_segundoNombre" class="form-control formularioPanel__input" name="Usu_segundoNombre" value="<?= $user['Usu_segundoNombre']; ?>" />
+							<p class="formularioPanel__input-error">Solo se permiten letras (a-z).</p> 
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
+						<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__primerApellidoUsuario">
 							<label for="fullname">Primer Apellido</label>
-							<input type="text" id="Usu_primerApellido" class="form-control" name="Usu_primerApellido" value="<?= $user['Usu_primerApellido']; ?>" />
+							<input type="text" id="Usu_primerApellido" class="form-control formularioPanel__input" name="Usu_primerApellido" value="<?= $user['Usu_primerApellido']; ?>" />
+							<p class="formularioPanel__input-error">Solo se permiten letras (a-z).</p> 
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
+						<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__segundoApellidoUsuario">
 							<label for="fullname">Segundo Apellido</label>
-							<input type="text" id="Usu_segundoApellido" class="form-control" name="Usu_segundoApellido" value="<?= $user['Usu_segundoApellido']; ?>" />
+							<input type="text" id="Usu_segundoApellido" class="form-control formularioPanel__input" name="Usu_segundoApellido" value="<?= $user['Usu_segundoApellido']; ?>" />
+							<p class="formularioPanel__input-error">Solo se permiten letras (a-z).</p> 
 						</div>
 
-						<div data-rol="<?= $_SESSION['rolUser'] ?>" class="readAndDisable col-md-6 col-sm-6 form-group has-feedback">
+						<div data-rol="<?= $_SESSION['rolUser'] ?>" class="readAndDisable col-md-6 col-sm-6 form-group has-feedback" id="grupo__tipoDocumentoUsuario">
 							<label for="fullname">Tipo de Documento <b style="color:red;">*</b></label>
-							<input id="" class="na form-control" name="" value="<?= $user['Stg_nombre']; ?>" disabled readonly />
+							<input id="" class="na form-control formularioPanel__input" name="" value="<?= $user['Stg_nombre']; ?>" disabled readonly />
 						</div>
 
-						<div data-rol="<?= $_SESSION['rolUser'] ?>" class="readAndDisable col-md-6 col-sm-6 form-group has-feedback">
+						<div data-rol="<?= $_SESSION['rolUser'] ?>" class="readAndDisable col-md-6 col-sm-6 form-group has-feedback" id="grupo__numeroDocumentoUsuario">
 							<label for="fullname">Numero de Documento <b style="color:red;">*</b></label>
-							<input type="number" id="Usu_numeroDocumento" class="na form-control" name="Usu_numeroDocumento" value="<?= $user['Usu_numeroDocumento']; ?>" disabled readonly />
+							<input type="number" id="Usu_numeroDocumento" class="na form-control formularioPanel__input" name="Usu_numeroDocumento" value="<?= $user['Usu_numeroDocumento']; ?>" disabled readonly />
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
+						<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__telefonoUsuario">
 							<label for="fullname">Numero de Telefono</label>
-							<input type="number" id="Usu_telefono" class="form-control" name="Usu_telefono" value="<?= $user['Usu_telefono']; ?>" />
+							<input type="number" id="Usu_telefono" class="form-control formularioPanel__input" name="Usu_telefono" value="<?= $user['Usu_telefono']; ?>" />
+							<p class="formularioPanel__input-error">Solo se permiten numeros(0-9) y puede tener de 6 a 14 digitos.</p> 
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
+						<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__generoUsuario">
 							<label for="fullname">Genero</label>
-							<select name="Gen_id" class="form-control">
+							<select name="Gen_id" class="form-control formularioPanel__input">
 								<?php
 								foreach ($genero as $gen) {
 									foreach ($usuarios as $user) {
@@ -108,26 +114,32 @@ foreach ($usuarios as $user) {
 							</select>
 						</div>
 
-						<div data-rol="<?= $_SESSION['rolUser'] ?>" class="readAndDisable col-md-6 col-sm-6 form-group has-feedback">
+						<div data-rol="<?= $_SESSION['rolUser'] ?>" class="readAndDisable col-md-6 col-sm-6 form-group has-feedback" id="grupo__emailUsuario">
 							<label for="fullname">Correo Electronico <b style="color:red;">*</b></label>
-							<input type="email" id="Usu_email" class="na form-control" name="Usu_email" value="<?= $user['Usu_email']; ?>" disabled readonly />
+							<input type="email" id="Usu_email" class="na form-control formularioPanel__input" name="Usu_email" value="<?= $user['Usu_email']; ?>" disabled readonly />
 						</div>
 
-						<div class="col-md-6 col-sm-6 form-group has-feedback">
+						<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__contraseñaAnterior">
 							<label for="fullname">Contraseña Anterior</label>
-							<input type="" id="" class="form-control" name="Usu_passwordOld" />
+							<input type="" id="contraseñaAnterior" class="form-control formularioPanel__input" name="Usu_passwordOld" />
+							<p class="formularioPanel__input-error">La contraseña no es igual a la anterior.</p>
 						</div>
 
 						<div id="validarPrueba">
-							<div class="col-md-6 col-sm-6 form-group has-feedback">
+							<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__contraseñaNueva">
 								<label for="fullname">Contraseña Nueva</label>
-								<input type="" id="Usu_passwordNew" class="form-control" name="Usu_passwordNew" />
+								<input type="" id="Usu_passwordNew" class="form-control formularioPanel__input" name="Usu_passwordNew" />
+								<p class="formularioPanel__input-error">8 caracteres minimo, una mayuscula, una minuscula y un caracter especial.</p>
 							</div>
 
-							<div class="col-md-6 col-sm-6 form-group has-feedback">
+							<div class="col-md-6 col-sm-6 form-group has-feedback" id="grupo__contraseñaConfirmar">
 								<label for="fullname">Confirmar Contraseña </label>
-								<input type="" id="Usu_password" class="form-control" name="Usu_password"/>
+								<input type="" id="Usu_password" class="form-control formularioPanel__input" name="Usu_password"/>
 							</div>
+						</div>
+
+						<div class="col-md-12 formularioPanel__mensaj" id="formularioPanel__mensaje">
+							<p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
 						</div>
 
 						<br><br>
