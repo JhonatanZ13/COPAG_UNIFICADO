@@ -2,6 +2,8 @@
 
 require_once '../model/Costos/ComprasModel.php';
 
+
+
 class comprasController {
 
     public function consult(){
@@ -36,8 +38,8 @@ class comprasController {
         $sql ="SELECT * FROM tblcentro";
         $Centros=$obj->consult($sql);
 
-        $sql ="SELECT * FROM tblproductobase";
-        $productoBase=$obj->consult($sql);
+        $sql ="SELECT * FROM tblarticulo";
+        $Articulos=$obj->consult($sql);
 
         $sql ="SELECT * FROM tblmedida";
         $Medidas=$obj->consult($sql);
@@ -63,11 +65,11 @@ class comprasController {
 
             extract($_POST);
 
-        for ($i=0;$i<count($com_Cantidad);$i++) {
+        for ($i=0;$i<count($com_Observaciones);$i++) {
 
             $com_NoItem=$obj->autoIncrement("tblcomprasinsumos","com_NoItem"); 
             
-            $sql="INSERT INTO tblcomprasinsumos VALUES ( '$com_NoItem','".$com_Cantidad[$i]."','".$com_Observaciones[$i]."','".$Soc_id."','".$Pba_id[$i]."','".$Med_id[$i]."')";
+            $sql="INSERT INTO tblcomprasinsumos VALUES ( '$com_NoItem','".$com_Cantidad[$i]."','".$com_Observaciones[$i]."','".$Soc_id."','".$Arti_id[$i]."','".$Med_id[$i]."')";
             $ejecutar2=$obj->insert($sql);
 
 
@@ -76,7 +78,7 @@ class comprasController {
                  
         redirect(getUrl("costos","compras","consult"));
 
-        //echo $sql;
+        echo $sql;
 
         }else{
             echo $sql;
@@ -124,8 +126,8 @@ class comprasController {
             $sql ="SELECT * FROM tblcentro";
             $Centros=$obj->consult($sql);
 
-            $sql ="SELECT * FROM tblproductobase";
-            $productoBase=$obj->consult($sql);
+            $sql ="SELECT * FROM tblarticulo";
+            $Articulos=$obj->consult($sql);
 
              $sql ="SELECT * FROM tblmedida";
             $Medidas=$obj->consult($sql);
@@ -174,7 +176,7 @@ class comprasController {
     
                 $id=$obj->autoIncrement("tblcomprasinsumos","com_NoItem"); 
                 
-                $sql="INSERT INTO tblcomprasinsumos VALUES ( '$id','".$com_Cantidad[$i]."','".$com_Observaciones[$i]."','".$Soc_id."','".$Pba_id[$i]."','".$Med_id[$i]."')";
+                $sql="INSERT INTO tblcomprasinsumos VALUES ( '$id','".$com_Cantidad[$i]."','".$com_Observaciones[$i]."','".$Soc_id."','".$Arti_id[$i]."','".$Med_id[$i]."')";
                 $ejecutar2=$obj->insert($sql);
             }
             }
@@ -194,6 +196,7 @@ class comprasController {
 
 
     }
+
 
 
     public function getDelete(){
@@ -269,18 +272,17 @@ class comprasController {
          $sql = "SELECT * FROM tblsolicitudecompra WHERE Soc_id=$Soc_id";
          $solicitud=$obj->consult($sql);
  
-         $sql= "SELECT * FROM tblregional WHERE Reg_id=$Soc_id";
+         $sql= "SELECT * FROM tblregional";
          $Regionales=$obj->consult($sql); 
 
-         $sql ="SELECT * FROM tblcentro WHERE Cen_id=$Soc_id";
+         $sql ="SELECT * FROM tblcentro";
          $Centros=$obj->consult($sql);
 
-         $sql ="SELECT * FROM tblproductobase";
-         $productoBase=$obj->consult($sql);
+         $sql ="SELECT * FROM tblarticulo";
+         $Articulos=$obj->consult($sql);
 
           $sql ="SELECT * FROM tblmedida";
          $Medidas=$obj->consult($sql);
-     
 
 
         include_once '../view/costos/compras/VisualizeCompras.php';

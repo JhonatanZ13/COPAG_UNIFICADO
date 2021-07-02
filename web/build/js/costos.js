@@ -1,101 +1,472 @@
-$(document).ready(function () {
-  //compras
-  var item = document.getElementById('item');
-        var agrega =
-                "<button type='button' id='agrega' class='col-8 form-control btn-success'><i class='fa fa-plus-square-o pl-1' ></i></button>";
+var v=true;
+$("span.text-danger").hide();
 
-        function contadorD() {
-                var $divs = $(".delete").toArray().length;
-                return $divs;
-        }
-        function contadorItem() {
-                var numItem = $(".item").toArray().length;
-                //var numItem = document.getElementsByClassName("item").length;
-                numItem = numItem + 1;
-                console.log(numItem);
-                return numItem;
-        }
+function verificar(){
 
-        $(document).on('click', '#agrega', function () {
+  var v1=0,v2=0,v3=0,v4=0,v5=0,v6=0;
+  v1=validacion('Soc_area');
+  v2=validacion('birthday');
+  v3=validacion('selectRegio');
+  v4=validacion('Soc_nom_je');
+  v5=validacion('Soc_servidorp');
+  v6=validacion('Soc_DNI_jefeOficina');
+  v7=validacion('Soc_DNI_servidorPublico');
+  v8=validacion('Soc_ficha');
+  
 
-                $("#agrega").remove();
+  if (v1===false || v2===false || v3===false || v4===false || v5===false || v6===false || v7===false  || v8===false ) {
+    $("#exito").hide();
+    $("#error").show();
+}else{
+   $("#error").hide();
+   $("#exito").show();
+}
 
-                var clon = $("#clon").html();
+}
 
-                $("#contenedor").append(
+function validacion(campo){
+  var a=0;
+  
+  if (campo==='Soc_area')
+  {
+      Soc_area = document.getElementById(campo).value;
+      if( Soc_area == null || Soc_area.length == 0 || /^\s+$/.test(Soc_area) ) {
+       
+          $('#'+campo).attr("class", "form-control is-invalid");
+          $('#'+campo).parent().children("span").text("campo vacio").show();
+          return false;
+         
+      }
+      else
+      {  
+              $('#'+campo).attr("class", "form-control is-valid");
+              $('#'+campo).parent().children("span").text("").show();
+              return true;
+          }  
+      
+  }
+  if (campo==='birthday'){
+      birthday = document.getElementById(campo).value;
+      if( birthday == null || birthday.length == 0 || /^\s+$/.test(birthday)  ) {
+          
+          $('#'+campo).attr("class", "date-picker form-control is-invalid");
+          $('#'+campo).parent().children("span").text("campo vacio").show();
+          return false;
+          
+      }
+      else{
+          $('#'+campo).attr("class", "date-picker form-control is-valid");
+          $('#'+campo).parent().children("span").text("").show();
+          return true;
+          
+      } 
+  }
 
-                        "<div class='form col-md-12 row ml-5'>" + clon
-                        + "<div class='col-2'><button type='button' class='delete ml-3 btn btn-danger btn-sm'><i class='fa fa-trash pl-1' ></i></button></div>"
-                        + agrega
-                        + "</div> "
+  
+  if (campo==='birthday'){
+    birthday = document.getElementById(campo).value;
+    if( birthday == null || birthday.length == 0 || /^\s+$/.test(birthday)  ) {
+        
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+        
+    }
+    else{
+        $('#'+campo).attr("class", "date-picker form-control is-valid");
+        $('#'+campo).parent().children("span").text("").show();
+        return true;
+        
+    } 
+}
+
+if (campo==='selectRegio'){
+  indice = document.getElementById(campo).selectedIndex;
+  if( indice == null || indice == 0 ) {
+      $('#selectRegio').attr("class", "form-control is-invalid");
+      $('#selectCentro').attr("class", "form-control is-invalid");
+      return false;
+  }
+  else{
+      $('#selectRegio').attr("class", "form-control is-valid");
+      $('#selectCentro').attr("class", "form-control is-valid");
+      return true;
+
+  }
+}
+
+if (campo==='Soc_nom_je')
+{
+    Soc_nom_je = document.getElementById(campo).value;
+    if( Soc_nom_je == null || Soc_nom_je.length == 0 || /^\s+$/.test(Soc_nom_je) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
 
 
-                );
+if (campo==='Soc_servidorp')
+{
+    Soc_servidorp = document.getElementById(campo).value;
+    if( Soc_servidorp == null || Soc_servidorp.length == 0 || /^\s+$/.test(Soc_servidorp) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
 
-                return false;
+if (campo==='Soc_DNI_jefeOficina')
+{
+    Soc_DNI_jefeOficina = document.getElementById(campo).value;
+    if( Soc_DNI_jefeOficina == null || Soc_DNI_jefeOficina.length == 0 || /^\s+$/.test(Soc_DNI_jefeOficina) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
+
+if (campo==='Soc_DNI_servidorPublico')
+{
+    Soc_DNI_servidorPublico = document.getElementById(campo).value;
+    if( Soc_DNI_servidorPublico == null || Soc_DNI_servidorPublico.length == 0 || /^\s+$/.test(Soc_DNI_servidorPublico) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
+
+if (campo==='Soc_ficha')
+{
+    Soc_ficha = document.getElementById(campo).value;
+    if( Soc_ficha == null || Soc_ficha.length == 0 || /^\s+$/.test(Soc_ficha) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
 
 
-        });
 
-        $(document).on("keyup", ".validar", function () {
-                var campo = $(this).val();
 
-                if (campo.length >= 1) {
-                        if (contadorD() == 0) {
-                                $("#agrega").remove();
-                                $("#clon").append(
-                                        agrega
-                                );
+
+}
+
+
+//compras
+
+
+$(document).ready(function(){
+
+
+  var item = document.getElementById('item');            
+  var agrega=
+  "<button type='button' id='agrega' class='col-md-8 form-control btn-success'><i class='fa fa-plus-square-o pl-1' ></i></button>";
+
+       function contadorD(){
+          var $divs = $(".delete").toArray().length;
+          return $divs;
+       }
+       function contadorItem(){
+          var numItem = $(".item").toArray().length;
+          //var numItem = document.getElementsByClassName("item").length;
+         numItem=numItem+1;
+          console.log(numItem);
+          return numItem;
+       }
+
+
+
+  $(document).on('click','#agrega',function(){
+  
+          $("#agrega").remove();
+
+          var clon = $("#clon").html();
+
+          $("#contenedor").append(
+
+          "<div class='form col-md-12 row ml-5'>"+clon
+          + "<div class='col-2'><button type='button' class='delete ml-3 btn btn-danger btn-sm'><i class='fa fa-trash pl-1' ></i></button></div>"
+          +agrega
+          +"</div> "
+
+
+          );
+
+return false;
+
+
+  });
+
+  $(document).on("keyup",".validar",function(){	
+          var campo=$(this).val();
+
+          if (campo.length >= 1) {
+           if (contadorD()==0 ) {
+                  $("#agrega").remove();
+                  $("#clon").append(
+                          agrega
+                          ); 
+           }
+
+
+                }
+
+
+              
+
+  });
+
+  $(document).on('click','.delete',function(){ 
+        var  finalEliminar=contadorD();
+
+          $(this).parent().parent().remove();
+          var cont=0;
+          if (contadorD()==0 ) {
+                  $("#agrega").remove();
+                  $("#clon").append(
+                          agrega
+                          ); 
+                          cont++;
+          }
+
+                if (cont==0 ) {
+                  if (contadorD()!= finalEliminar) {
+                          $("#agrega").remove();
+                          $("#contenedor").append( 
+                                  "<div class='form col-12 row ml-5'>"
+                                  +agrega
+                                  +"</div> "
+                                  ); 
+
+
                         }
+                } 
 
 
-                }
-        });
-
-        $(document).on('click', '.delete', function () {
-                var finalEliminar = contadorD();
-
-                $(this).parent().parent().remove();
-                var cont = 0;
-                if (contadorD() == 0) {
-                        $("#agrega").remove();
-                        $("#clon").append(
-                                agrega
-                        );
-                        cont++;
-                }
-
-                if (cont == 0) {
-                        if (contadorD() != finalEliminar) {
-                                $("#agrega").remove();
-                                $("#contenedor").append(
-                                        "<div class='form col-12 row ml-5'>"
-                                        + agrega
-                                        + "</div> "
-                                );
 
 
-                        }
-                }
+  });
 
-        });
+
+
 
 });
 
-$(document).on("change", "#selectRegio", function () {
-        var id = $(this).val();
-        console.log(id);
-        var url = $(this).attr("data-url");
-        $.ajax({
-                url: url,
-                data: "id=" + id,
-                type: "POST",
-                success: function (datos) {
-                        $("#selectCentro").html(datos);
-                }
-        })
+$(document).on("change", "#selectRegio", function() {
+  var id = $(this).val();
+  console.log(id);
+  var url = $(this).attr("data-url");
+  $.ajax({
+      url: url,
+      data: "id=" + id,
+      type: "POST",
+      success: function(datos) {
+          $("#selectCentro").html(datos);
+      }
+  })
 
 })
+
+
+
+
+
+
+
+
+//fin compras
+
+
+//modal compras
+$(document).ready(function () {
+
+  $(document).on("click",".botonModal",function(){
+		var url=$(this).attr("data-url");
+		var datos=$(this).attr("data-id");
+
+  swal({
+    title:'¿Desea eliminar la solicitud de compras?',
+    icon:'warning',
+    buttons:{
+      confirm:{
+        text:"Eliminar",
+        className:"btn btn-danger"
+      },
+
+      cancel:{
+        text:"Cancelar",
+        className:"btn btn-success",
+        visible:true
+      }
+    },
+    
+  }).then((Delete)=>{
+      if(Delete){
+
+        $.ajax({
+          url:url,
+          data:"Soc_id="+datos,
+          type:"POST",
+          success:function(){
+            swal("Se eliminado a exitosamente", "", "success");
+          }
+        });
+
+        setTimeout('document.location.reload()',1000);
+
+      }
+  });
+
+		
+	});
+// modal fin
+
+
+$("#solicompras").submit(function (event) {
+  var mensaje = "";
+  var errores = 0;
+
+   
+  if (!validardescripB()) {
+    mensaje = mensaje + "<br>*Por favor seleccione la descripcion del bien.";
+    errores++;
+  }
+
+   
+  if (!validaruMedida()) {
+    mensaje = mensaje + "<br>*Por favor seleccione unidad de medida.";
+    errores++;
+  }
+
+    
+  if (!validarCantidad()) {
+    mensaje = mensaje + "<br>*Por favor escriba la cantidad.";
+    errores++;
+  }
+
+    
+  if (!validarObservacion()) {
+    mensaje = mensaje + "<br>*Por favor escriba las observaciones.";
+    errores++;
+  }
+
+
+ 
+
+  //Resultado final
+  if (errores > 0) {
+    alertCompras("danger", "Error!", mensaje);
+
+    swal("Error!", "Por favor verifica los datos.", "error");
+    event.preventDefault();
+  } else {
+     swal("Exito!", "Mensaje!", "success");
+    return;
+  }
+});
+
+
+function alertCompras(tipo, title, text) {
+  var alerta =
+    "<div class='alert alert-" +
+    tipo +
+    " alert-dismissible fade show' role='alert'>" +
+    "<strong>" +
+    title +
+    "!</strong><br> " +
+    text +
+    "" +
+    "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+    "<span aria-hidden='true'>&times;</span>" +
+    "</button>" +
+    "</div>";
+
+  $("#contentAlertCompras").html(alerta);
+}
+function validardescripB() {
+  var value = $("#Pba_id").val();
+  if (value == 0) {
+    return false;
+  } else {
+    return true;
+  } 
+
+}
+
+function validaruMedida() {
+  var value = $("#Med_id").val();
+  if (value == 0) {
+    return false;
+  } else {
+    return true;
+  } 
+
+}
+
+function validarCantidad() {
+  var value = $("#com_Cantidad").val();
+  value = value.trim();
+  if (value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function validarObservacion() {
+  var value = $("#com_Observaciones").val();
+  value = value.trim();
+  if (value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
+
+});
 
 
 

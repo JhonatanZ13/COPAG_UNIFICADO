@@ -3,8 +3,8 @@
     <div class="clearfix"></div>
 </div>
 
-<div class="x_panel">
-<form action="<?php echo getUrl("costos","compras","postVisualize")?>" method="post">
+
+<form>
 
     <div class="item form-group">
         <label class="col-form-label col-md-2 col-sm-2 label-align">
@@ -34,14 +34,21 @@ foreach ($solicitud as $soli){
         </label>
 
         <div class="col-md-3 col-sm-6 ">
-            <?php
+            <select  disabled   name="Reg_id" class="form-control"  id="selectRegio" data-url="<?php echo 
+                        getUrl("Costos","Compras","selectCompras",false,"ajax")?>">
+                <option value="">Seleccione...</option>
+                <?php
 
                         foreach ($Regionales as $regio){
-                ?>
-            <input class="date-picker form-control" type="text" readonly="readonly" name="Reg_descripcion"
-                value="<?php echo $regio['Reg_descripcion']; ?>" size="15" maxlength="30">
-            <?php      }
+                            if($regio['Reg_id']==$soli['Reg_id']){
+                               $select="selected";
+                            }else{
+                                $select="";
+                            }
+                            echo "<option value='".$regio['Reg_id']."'$select>".$regio['Reg_descripcion']."</option>";
+                        }
                     ?>
+            </select>
 
         </div>
     </div>
@@ -58,16 +65,19 @@ foreach ($solicitud as $soli){
         </label>
 
         <div class="col-md-3 col-sm-6 ">
-            <?php
+        <select disabled name="Cen_id" id="selectCentro"  class="form-control">
+                <?php
 
-                            foreach ($Centros as $cen){ ?>
-
-            <input class="date-picker form-control" type="text" readonly="readonly" name="Cen_nombre"
-                value="<?php echo $cen['Cen_nombre']; ?>" size="15" maxlength="30">
-
-            <?php
+                            foreach ($Centros as $cen){
+                                if($cen['Cen_id']==$comp['Cen_id']){
+                                $select="selected";
+                                }else{
+                                    $select="";
+                                }
+                                echo "<option value='".$cen['Cen_id']."'$select>".$cen['Cen_nombre']."</option>";
                             }
                         ?>
+            </select>
         </div>
 
     </div>
@@ -148,17 +158,17 @@ foreach ($solicitud as $soli){
                     ?>
 
                     <div class="form col-md-12 row ml-5" id="clon">
-                        <select id="disabledSelect" name="Pba_id[]" id="Pba_id" class="form-control col-3">
+                        <select id="disabledSelect" name="Arti_id[]" id="Arti_id" class="form-control col-3">
                             <option value="">Seleccione...</option>
                             <?php
 
-                    foreach ($productoBase as $pro){
-                        if($pro['Pba_id']==$comp['Pba_id']){
+                    foreach ($Articulos as $arti){
+                        if($arti['Arti_id']==$comp['Arti_id']){
                         $select="selected";
                         }else{
                             $select="";
                         }
-                        echo "<option value='".$pro['Pba_id']."'$select>".$pro['Pba_descripcion']."</option>";
+                        echo "<option value='".$arti['Arti_id']."'$select>".$arti['Arti_nombre']."</option>";
                     }
                         ?>
                         </select>
@@ -197,9 +207,6 @@ foreach ($solicitud as $soli){
     <div class="col-md-6 col-sm-6 offset-md-5">
         <a href="<?php echo getUrl("costos","compras","consult");?>"><button type='button'
                 class="btn btn-primary">Cancelar</button></a>
-                <a href="<?php echo getUrl("costos","compras","consult");?>"><button type='button'
-                class="btn btn-success">Guardar</button></a>
     </div>
 
 </form>
-</div>

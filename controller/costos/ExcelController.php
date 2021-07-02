@@ -3,7 +3,7 @@
 include_once '../model/Excel/ExcelModel.php';
 require_once 'vendor/autoload.php';
 
-// include_once '../model/Costos/ExcelModel.php';
+//include_once '../model/Costos/ExcelModel.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -21,26 +21,29 @@ class ExcelController
         $excel = $sheet->getActiveSheet();
         $obj = new ExcelModel();
         extract($_GET);
-        $sql = "SELECT tblcomprasinsumos.com_NoItem, tblProductobase.Pba_descripcion, tblmedida.Med_descripcion, tblcomprasinsumos.com_Cantidad, tblcomprasinsumos.com_Observaciones 
-        FROM tblcomprasinsumos, tblproductobase, tblmedida 
-        WHERE tblcomprasinsumos.Pba_id = tblproductobase.Pba_id 
+        
+        $sql = "SELECT tblcomprasinsumos.com_NoItem, tblarticulo.Arti_nombre, tblmedida.Med_descripcion, tblcomprasinsumos.com_Cantidad, tblcomprasinsumos.com_Observaciones 
+        FROM tblcomprasinsumos, tblarticulo, tblmedida 
+        WHERE tblcomprasinsumos.Arti_id = tblarticulo.Arti_id
         AND tblcomprasinsumos.Med_id = tblmedida.Med_id 
         AND tblcomprasinsumos.Soc_id=$Soc_id";
 
         $compras = $obj->consult($sql);
 
+        
+
         $sql = "SELECT * FROM tblsolicitudecompra WHERE Soc_id=$Soc_id";
         $solicitud = $obj->consult($sql);
 
-        $sql = "SELECT * FROM tblregional WHERE Reg_id=$Soc_id";
+        $sql = "SELECT * FROM tblregional";
         $Regionales = $obj->consult($sql);
 
-        $sql = "SELECT * FROM tblcentro WHERE Cen_id=$Soc_id";
+        $sql = "SELECT * FROM tblcentro";
         $Centros = $obj->consult($sql);
 
 
         //Bordes de los headers de la tabla
-        $excel->getStyle('B18:F18')
+        $excel->getStyle('B20:F20')
 
             ->getBorders()
             ->getAllBorders()
@@ -48,7 +51,7 @@ class ExcelController
             ->setColor(new Color('000000'));
 
 
-        $excel->getStyle('B2:F5')
+        $excel->getStyle('B2:F7')
         ->getBorders()
         ->getOutline()
         ->setBorderStyle(Border::BORDER_THICK)
@@ -57,18 +60,22 @@ class ExcelController
 
         //Centrado de margen
 
-        $excel->getStyle('C2:F2')->getAlignment()->setHorizontal('center');
-        $excel->getStyle('C3:F3')->getAlignment()->setHorizontal('center');
-        $excel->getStyle('C4:F4')->getAlignment()->setHorizontal('center');
-        $excel->getStyle('C5:F5')->getAlignment()->setHorizontal('center');
+        $excel->getStyle('B2:E2')->getAlignment()->setHorizontal('center');
+        $excel->getStyle('B3:E3')->getAlignment()->setHorizontal('center');
+        $excel->getStyle('B4:E4')->getAlignment()->setHorizontal('center');
+        $excel->getStyle('B5:E5')->getAlignment()->setHorizontal('center');
+        $excel->getStyle('B6:E6')->getAlignment()->setHorizontal('center');
+        $excel->getStyle('F3')->getAlignment()->setHorizontal('center');
+        $excel->getStyle('F4')->getAlignment()->setHorizontal('center');
+       $excel-> getStyle('E32')->getAlignment()->setHorizontal('right');
 
         //imagen
         $exce = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         $exce->setName('Paid');
         $exce->setDescription('Paid');
-        $exce->setPath('images/log.png');
-        $exce->setCoordinates('B2');;
-        $exce->setOffsetX(100);
+        $exce->setPath('images/logoSena.png');
+        $exce->setCoordinates('B3');
+        $exce->setOffsetX(2);
         $exce->setRotation(0);
         $exce->getShadow()->setVisible(true);
         $exce->getShadow()->setDirection(45);
@@ -77,34 +84,34 @@ class ExcelController
         $exce = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         $exce->setName('Paid');
         $exce->setDescription('Paid');
-        $exce->setPath('images/siga.png');
-        $exce->setCoordinates('F2');;
+        $exce->setPath('images/siga .png');
+        $exce->setCoordinates('E3');
         $exce->setOffsetX(100);
         $exce->setRotation(0);
         $exce->getShadow()->setVisible(true);
-        $exce->getShadow()->setDirection(45);
+        $exce->getShadow()->setDirection(5);
         $exce->setWorksheet($sheet->getActiveSheet());
 
 
         //Celdas combinadas
         $excel->mergeCells('B7:C7');
         $excel->mergeCells('B9:C9');
-        $excel->mergeCells('B8:E8');
         $excel->mergeCells('B11:E11');
         $excel->mergeCells('B13:E13');
-        $excel->mergeCells('C2:F2');
-        $excel->mergeCells('C3:F3');
-        $excel->mergeCells('C4:F4');
-        $excel->mergeCells('C5:F5');
+        $excel->mergeCells('C3:E3');
+        $excel->mergeCells('C4:E4');
+        $excel->mergeCells('C5:E5');
+        $excel->mergeCells('C6:E6');
+       
         //Activar fuente en negrita
-        $excel->getStyle('B2:F18')->getFont()->setBold(true);
-        $excel->getStyle('B29:F30')->getFont()->setBold(true);
+        $excel->getStyle('B2:F20')->getFont()->setBold(true);
+        $excel->getStyle('B32:F33')->getFont()->setBold(true);
         //Dar tamaño a columnas
-        $excel->getColumnDimension('B')->setWidth(12);
-        $excel->getColumnDimension('C')->setWidth(28);
-        $excel->getColumnDimension('D')->setWidth(23);
+        $excel->getColumnDimension('B')->setWidth(10);
+        $excel->getColumnDimension('C')->setWidth(30);
+        $excel->getColumnDimension('D')->setWidth(24);
         $excel->getColumnDimension('E')->setWidth(20);
-        $excel->getColumnDimension('F')->setWidth(30);
+        $excel->getColumnDimension('F')->setWidth(40);
 
 
 
@@ -115,48 +122,56 @@ class ExcelController
 
 
 
-        $excel->setCellValue("C2", "SERVICIO NACIONAL DE APRENDIZAJE SENA ");
-        $excel->setCellValue("C3", "GESTIÓN DE INFRAESTRUCTURA Y LOGÍSTICA ");
-        $excel->setCellValue("C4", "FORMATO DE SOLICITUD DE SALIDA DE BIENES  PARA EL USO DE LOS ");
-        $excel->setCellValue("C5", "CUENTADANTES QUE  TIENEN VINCULO CON LA ENTIDAD");
+        $excel->setCellValue("C3", "SERVICIO NACIONAL DE APRENDIZAJE SENA ");
+        $excel->setCellValue("C4", "GESTIÓN DE INFRAESTRUCTURA Y LOGÍSTICA ");
+        $excel->setCellValue("C5", "FORMATO DE SOLICITUD DE SALIDA DE BIENES  PARA EL USO DE LOS ");
+        $excel->setCellValue("C6", "CUENTADANTES QUE  TIENEN VINCULO CON LA ENTIDAD");
+        $excel->setCellValue("F3", "Vervión 04");
+        $excel->setCellValue("F4", "Código: GIL-F-014"); 
+
 
 
 
         foreach ($solicitud as $soli) {
 
 
-            $excel->setCellValue("B7", "FECHA SOLICITUD:  " . $soli['Soc_fecha']);
-            $excel->setCellValue("F7", "AREA: " . $soli['Soc_area']);
+            $excel->setCellValue("B9", "FECHA SOLICITUD:  " . $soli['Soc_fecha']);
+            $excel->setCellValue("F9", "AREA: " . $soli['Soc_area']);
 
             foreach ($Regionales as $regio) {
-                $excel->setCellValue("F9", "NOMBRE REGIONAL:  " . $regio['Reg_descripcion']);
+                if($soli['Reg_id']==$regio['Reg_id']){
+                    $excel->setCellValue("F11", "NOMBRE REGIONAL:  " . $regio['Reg_descripcion']);
+                }
+               
             }
             foreach ($Centros as $cen) {
-                $excel->setCellValue("B9", "NOMBRE CENTRO DE COSTO: " . $cen['Cen_nombre']);
+                if($soli['Cen_id']==$cen['Cen_id']){
+                $excel->setCellValue("B11", "NOMBRE CENTRO DE COSTO: " . $cen['Cen_nombre']);
+                }
             }
-            $excel->setCellValue("B11", "NOMBRE DE JEFE DE OFICINA O COORDINADOR DE AREA: " . $soli['Soc_nom_je']);
-            $excel->setCellValue("F11", "CEDULA: " . $soli['Soc_DNI_jefeOficina']);
-            $excel->setCellValue("B13", "NOMBRE DE SERVIDOR PÚBLICO A QUIEN SE LE ASIGNARA EL BIEN: " . $soli['Soc_nom_je']);
-            $excel->setCellValue("F13", "CEDULA: " . $soli['Soc_DNI_servidorPublico']);
-            $excel->setCellValue("B15", "CÓDIGO DE GRUPO O FICHA DE CARACTERIZACIÓN: " . $soli['Soc_ficha']);
+            $excel->setCellValue("B13", "NOMBRE DE JEFE DE OFICINA O COORDINADOR DE AREA: " . $soli['Soc_nom_je']);
+            $excel->setCellValue("F13", "CEDULA: " . $soli['Soc_DNI_jefeOficina']);
+            $excel->setCellValue("B15", "NOMBRE DE SERVIDOR PÚBLICO A QUIEN SE LE ASIGNARA EL BIEN: " . $soli['Soc_nom_je']);
+            $excel->setCellValue("F15", "CEDULA: " . $soli['Soc_DNI_servidorPublico']);
+            $excel->setCellValue("B17", "CÓDIGO DE GRUPO O FICHA DE CARACTERIZACIÓN: " . $soli['Soc_ficha']);
         }
 
 
 
         //Encabezado de la tabla
-        $excel->setCellValue("B18", "ITEM");
-        $excel->setCellValue("C18", "DESCRIPCION DE BIEN");
-        $excel->setCellValue("D18", "UNIDAD DE MEDIDA");
-        $excel->setCellValue("E18", "CANTIDAD");
-        $excel->setCellValue("F18", "OBSERVACIONES");
+        $excel->setCellValue("B20", "ITEM");
+        $excel->setCellValue("C20", "DESCRIPCION DE BIEN");
+        $excel->setCellValue("D20", "UNIDAD DE MEDIDA");
+        $excel->setCellValue("E20", "CANTIDAD");
+        $excel->setCellValue("F20", "OBSERVACIONES");
 
 
-        $n = 19;
+        $n = 21;
         //Cuerpo de la tabla
         foreach ($compras as $comp) {
 
             $excel->setCellValue("B" . $n, "" . $comp['com_NoItem']);
-            $excel->setCellValue("C" . $n, "" . $comp['Pba_descripcion']);
+            $excel->setCellValue("C" . $n, "" . $comp['Arti_nombre']);
             $excel->setCellValue("D" . $n, "" . $comp['Med_descripcion']);
             $excel->setCellValue("E" . $n, "" . $comp['com_Cantidad']);
             $excel->setCellValue("F" . $n, "" . $comp['com_Observaciones']);
@@ -165,37 +180,37 @@ class ExcelController
 
         $n = $n - 1;
 
-        $excel->setCellValue("B29", "NOMBRE: ");
-        $excel->setCellValue("B30", "FIRMA: ");
-        $excel->setCellValue("E29", "CARGO: ");
-        $excel->getStyle('C29')
+        $excel->setCellValue("B32", "NOMBRE: ");
+        $excel->setCellValue("B33", "FIRMA: ");
+        $excel->setCellValue("E32", "CARGO: ");
+        $excel->getStyle('C32')
         ->getBorders()
         ->getBottom()
         ->setBorderStyle(Border::BORDER_THICK)
         ->setColor(new Color('000000'));
-        $excel->getStyle('C30')
+        $excel->getStyle('C33')
         ->getBorders()
         ->getBottom()
         ->setBorderStyle(Border::BORDER_THICK)
         ->setColor(new Color('000000'));
-        $excel->getStyle('F29')
+        $excel->getStyle('F32')
         ->getBorders()
         ->getBottom()
         ->setBorderStyle(Border::BORDER_THICK)
         ->setColor(new Color('000000'));
         //Bordes del cuerpo de la tabla
-        $excel->getStyle('B19:F' . $n)
+        $excel->getStyle('B21:F' . $n)
             ->getBorders()
             ->getAllBorders()
             ->setBorderStyle(Border::BORDER_THIN)
             ->setColor(new Color('000000'));
 
         //Activar Filtros
-        $excel->setAutoFilter('B18:F18');
+        $excel->setAutoFilter('B20:F20');
 
         $writer = new Xlsx($sheet);
 
-        $filename = "Solicitudecompras.xlsx";
+        $filename = "GIL-F-014_Formato_Solicitud_de_Bienes.xlsx";
         $ruta = "Excel/" . $filename;
         try {
             $writer->save($ruta);
@@ -210,6 +225,7 @@ class ExcelController
         $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($sheet, 'Xlsx');
         $objWriter->save('php://output');
     }
+
 
     //Excel Cotizacion
     public function postReporteExcelCotizacion()
