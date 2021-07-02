@@ -43,16 +43,16 @@ echo getUrl("costos","compras","getInsert");?>">
                                 echo "<td>".$comp['continsumos']."</td>";  
                                 echo "<td>
                                 <a href='".getUrl("costos", "compras","getUpdate",array("Soc_id"=>$comp['Soc_id']))."'>
-                                <button class='btn btn-success btn-sm' data-toggle='tooltip' data-placement='bottom' title='Editar'><i class='fa fa-pencil'></i></button></a> 
+                                <button class='btn btn-primary btn-sm' data-toggle='tooltip' data-placement='bottom' title='Editar'><i class='fa fa-pencil'></i></button></a> 
                                 <a href='".getUrl("costos", "compras","getVisualize",array("Soc_id"=>$comp['Soc_id']))."'>
-                                <button class='btn btn-success btn-sm' data-toggle='tooltip' data-placement='bottom' title='Visualizar'><i class='fa fa-eye'></i></button></a>      
+                                <button class='btn btn-info btn-sm' data-toggle='tooltip' data-placement='bottom' title='Visualizar'><i class='fa fa-eye'></i></button></a>      
                                 </a>
                                 <a href='" . getUrl("Costos", "Excel", "postExcel",array("Soc_id"=>$comp['Soc_id']) , 'ajax') . "' target='_blank'><button class='btn btn-sm btn-success' data-toggle='tooltip' data-placement='bottom' title='Descargar'><i class='fa fa-file-excel-o'></i></button>
                                 </a>
                               
                                 <button value='Eliminar solicitud de compras' data-id='".$comp['Soc_id']."' data-toggle='tooltip' data-placement='bottom' title='Eliminar' class='btn btn-danger btn-sm botonModal'
                                  data-url='".getUrl("costos","compras","postDelete",false,"ajax")."' >
-                                 <i class='fa fa-close'></i></button></a>
+                                 <i class='fa fa-trash'></i></button></a>
                                </td>";  
                                 echo "</tr>";
                             }
