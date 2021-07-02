@@ -1,6 +1,6 @@
 <div class="x_content">
     <!-- Header info -->
-    <div>
+    <div class="x_panel">
         <h3>Orden de produccion No. <?= $Odp_id ?></h3>
         <h4>Funcionario que atendio: <?= $usu_name ?></h4>
         <h4>Estado: <strong> <?= $nameestado ?> </strong></h4>
@@ -35,8 +35,7 @@
 
         <input type="hidden" name="Odp_id" value="<?= $Odp_id ?>">
 
-        <div class="x_content">
-            <div class="ln_solid"></div>
+        <div class="">
             <div class="row">
 
                 <!--------- Datos del cliente ---------->
@@ -234,7 +233,7 @@
 
         <!----------- Pre-impresion ------------->
         <?php foreach ($consultpreimpre as $pimpr) { ?>
-            <div class="row">
+            <div class="">
                 <input type="hidden" name="Pim_id" value="<?= $pimpr['Pim_id'] ?>">
                 <div class="x_panel">
                     <div class="x_content">
@@ -413,7 +412,7 @@
 
         <!----------- Datos de impresión -------------->
         <?php foreach ($consultimpresion as $impr) { ?>
-            <div class="row">
+            <div class="">
                 <input type="hidden" name="Imp_id" value="<?= $impr['Imp_id'] ?>">
                 <div class="x_panel">
                     <div class="x_content">
@@ -555,6 +554,10 @@
 
 
             <!-- Terminados -->
+            <div class="x_panel">
+    <h5>Terminados</h5>
+    <h4>Estos son los terminaods elegidos para esta orden:</h4>
+    <div class="ln_solid"></div>
             <div class="x_panel">
                 <div class="col-md-12 col-sm-12">
                     <div class="col-md-12 checkbox-inline x_panel">
@@ -786,6 +789,7 @@
                     </div>
 
                 </div>
+                <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-4">
                         <div class="x_panel">
@@ -1062,6 +1066,7 @@
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
             <!-- Terminados especiales -->
             <div class="col-md-12"><br></div>
@@ -1071,6 +1076,7 @@
             <div class="x_panel col-md-12 col-sm-3">
                 <div class="col-md-12">
                     <div class="col-md-3">
+                    <div class="col-md-12 col-sm-12 ">
                         <div class="checkbox">
                             <label>
                                 <input id="plastificadoBrillante" <?php $done = 0;
@@ -1099,6 +1105,7 @@
                                             } ?> class="flat" name="tipoterminado[]" value="27"> Plastificado Opaco
                             </label>
                         </div>
+                    </div>
                     </div>
 
                     <div class="col-md-3">

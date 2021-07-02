@@ -29,7 +29,7 @@
 
         <input type="hidden" name="Odp_id" value="<?= $Odp_id ?>">
 
-        <div class="x_content">
+        <div class="">
             <div class="row">
 
                 <!--------- Datos del cliente ---------->
@@ -147,7 +147,7 @@
                                 </div>
                             </div>
                             <div class="form-group row" id="grupoCantidad">
-                                <label class="col-form-label col-md-3 col-sm-3">Cantidad</label>
+                                <label class="col-form-label col-md-3 col-sm-3">Cantidad<span class="required">*</span></label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input disabled type="text" id="cantidad" class="form-control" name="Pte_cantidad" value="">
                                     <p id="cantidadP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor numerico</p>
@@ -175,7 +175,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3">Fecha de inicio <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3">Fecha de inicio
                                 </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input disabled class="date-picker form-control" id="fechaInicio" name="Odp_fechaInicio" placeholder="dd-mm-yyyy" type="text" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
@@ -189,7 +189,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 ">Fecha fin <span class="required">*</span>
+                                <label class="col-form-label col-md-3 col-sm-3 ">Fecha fin
                                 </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input disabled class="date-picker form-control" id="fechaFin" name="Odp_fechafin" placeholder="dd-mm-yyyy" type="text" type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
@@ -217,7 +217,7 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-form-label col-md-3 col-sm-3 "><b> Dise&ntilde;ador(a)</b></label>
+                                <label class="col-form-label col-md-3 col-sm-3 "><b> Dise&ntilde;ador(a)</b><span class="required">*</span></label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <input disabled type="text" id="diseñador" class="form-control" name="Pte_diseñador">
                                     <p id="diseñadorP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Solo debe incluir letras </p>
@@ -230,9 +230,9 @@
 
             <!----------- Pre-impresion ------------->
 
-            <div class="row">
+            <div class="">
                 <div class="x_panel">
-                    <div class="x_content">
+                    <div class="">
                         <h5>Datos de pre-impresión</h5>
                         <div class="ln_solid"></div>
                         <div class="x_panel">
@@ -376,12 +376,12 @@
                 <div class="ln_solid"></div>
 
                 <div class="x_panel">
-                    <div class="col-md-8">
-                        <label class=""><b>Encargado en el area de pre-impresion </b> <span class="required">*</span></label><br>
-                        <div class="col-md-6">
-                            <input type="text" id="encargadoPreImpresion" class="form-control" name="Pim_encargado">
-                            <p id="encargadoPreImpresionP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: El nombre solo debe incluir letras. </p>
+                    <div class="col-md-12">
+                        <label class="control-label col-md-12"><b>Encargado en el area de pre-impresion </b> <span class="required">*</span></label><br>
+                        <div class="form-group">
+                            <input type="text" id="encargadoPreImpresion" class="form-control col-md-4" name="Pim_encargado">
                         </div>
+                        <p id="encargadoPreImpresionP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: El nombre solo debe incluir letras. </p>
                     </div>
                     <div class="col-md-12">
                         <label class="control-label col-md-3 col-sm-3">Observaciones</label>
@@ -395,7 +395,7 @@
 
         <!----------- Datos de impresión -------------->
 
-        <div class="row">
+        <div class="">
             <div class="x_panel">
                 <div class="x_content">
                     <h5>Datos de impresión</h5>
@@ -407,7 +407,7 @@
                                 <label class="" for="">Elegir maquina<span class="required">*</span></label><br>
                                 <div class="col-md-9 col-sm-9 ">
                                     <select name="Maq_id" id="elegirMaquina" class="form-control">
-                                        <option selected>Elegir</option>
+                                        <option value="">Elegir</option>
                                         <?php
                                         foreach ($maquina as $res) {
                                         ?>
@@ -659,7 +659,7 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-4">
                         <div class="x_panel">
@@ -804,15 +804,17 @@
                         </div>
                     </div>
                 </div>
+                </div>
             </div>
             <!-- Terminados especiales -->
             <div class="col-md-12"><br></div>
             <div class="col-md-12">
             </div>
             <h4>Terminados especiales</h4>
-            <div class="x_panel col-md-12 col-sm-3">
+            <div class="x_panel col-md-12">
                 <div class="col-md-12">
                     <div class="col-md-3">
+                    <div class="col-md-12 col-sm-12 ">
                         <div class="checkbox">
                             <label>
                                 <input id="plastificadoBrillante" type="checkbox" class="flat" name="tipoterminado[]" value="23"> Plastificado Brillante
@@ -823,6 +825,7 @@
                                 <input id="plastificadoOpaco" type="checkbox" class="flat" name="tipoterminado[]" value="27"> Plastificado Opaco
                             </label>
                         </div>
+                    </div>
                     </div>
 
                     <div class="col-md-3">

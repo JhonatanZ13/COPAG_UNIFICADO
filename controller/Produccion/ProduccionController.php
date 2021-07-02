@@ -10,7 +10,7 @@
 
             $obj = new ProduccionModel();
             //Consultar Ordenes de producción 
-            $sql = "SELECT orden.Odp_id, empresa.Emp_razonSocial, producto.Pba_descripcion, usuario.Usu_primerNombre, usuario.Usu_primerApellido, orden.Odp_fechaCreacion, orden.Odp_fechaEntrega, estado.Est_nombre
+            $sql = "SELECT orden.Odp_id, orden.Odp_Estado, empresa.Emp_razonSocial, producto.Pba_descripcion, usuario.Usu_primerNombre, usuario.Usu_primerApellido, orden.Odp_fechaCreacion, orden.Odp_fechaEntrega, estado.Est_nombre
             FROM tblordenproduccion orden, tblempresa empresa, tblusuario usuario, tblproductobase producto, tblproductoterminado pterminado, tblestado estado
             WHERE empresa.Emp_id = orden.Emp_id 
             AND orden.Usu_id = usuario.Usu_id
@@ -193,21 +193,21 @@
 
     /* =============== Pre-Impresion ==================*/
 
-            $Stg_id = $_POST['Stg_id'];
-            $Pim_encargado = $_POST['Pim_encargado'];
-            $Pim_observacion = $_POST['Pim_observacion'];
+            $Stg_id = isset($_POST['Stg_id']) ? $_POST['Stg_id'] : "";
+            $Pim_encargado = isset($_POST['Pim_encargado']) ? $_POST['Pim_encargado'] : "";
+            $Pim_observacion = isset($_POST['Pim_observacion']) ? $_POST['Pim_observacion'] : "";
             $sql = "INSERT INTO tblpreimpreion VALUES($Pim_id, $Stg_id, '$Pim_encargado', '$Pim_observacion')";
             $insertPim = $obj->insert($sql);
 
     /* ================= Sustratos ====================*/
 
-            $Arti_id = $_POST['Arti_id'];
-            $Sus_cantidadSustrato = $_POST['Sus_cantidadSustrato'];
-            $Sus_tamañoPliego = $_POST['Sus_tamañoPliego'];
-            $Sus_tamañoCorte = $_POST['Sus_tamañoCorte'];
-            $Sus_tirajePedido = $_POST['Sus_tirajePedido'];
-            $Sus_porcentajeDesperdicio = $_POST['Sus_porcentajeDesperdicio'];
-            $Sus_tirajeTotal = $_POST['Sus_tirajeTotal'];
+            $Arti_id = isset($_POST['Arti_id']) ? $_POST['Arti_id'] : "";
+            $Sus_cantidadSustrato = isset($_POST['Sus_cantidadSustrato']) ? $_POST['Sus_cantidadSustrato'] : "";
+            $Sus_tamañoPliego = isset($_POST['Sus_tamañoPliego']) ? $_POST['Sus_tamañoPliego'] : "";
+            $Sus_tamañoCorte = isset($_POST['Sus_tamañoCorte']) ? $_POST['Sus_tamañoCorte'] : "";
+            $Sus_tirajePedido = isset($_POST['Sus_tirajePedido']) ? $_POST['Sus_tirajePedido'] : "";
+            $Sus_porcentajeDesperdicio = isset($_POST['Sus_porcentajeDesperdicio']) ? $_POST['Sus_porcentajeDesperdicio'] : "";
+            $Sus_tirajeTotal = isset($_POST['Sus_tirajeTotal']) ? $_POST['Sus_tirajeTotal'] : "";
 
             for($i = 0; $i < count($Arti_id); $i++){
                 $Sus_id = $obj->autoIncrement('tblsustrato', 'Sus_id');
@@ -218,19 +218,23 @@
 
     /* ================= Impresion ====================*/
             $Imp_id = $obj->autoIncrement('tblimpresion', 'Imp_id');
-            $Maq_id = $_POST['Maq_id'];
-            $Imp_formatoCorte = $_POST['Imp_formatoCorte'];
-            $Imp_encargado = $_POST['Imp_encargado'];
-            $Imp_observaciones = $_POST['Imp_observaciones'];
+            $Maq_id = isset($_POST['Maq_id']) ? $_POST['Maq_id'] : "NULL";
+            if($Maq_id == ""){
+                $Maq_id = "NULL";
+            }
+            $Imp_formatoCorte = isset($_POST['Imp_formatoCorte']) ? $_POST['Imp_formatoCorte'] : "";
+            $Imp_encargado = isset($_POST['Imp_encargado']) ? $_POST['Imp_encargado'] : "";
+            $Imp_observaciones = isset($_POST['Imp_observaciones']) ? $_POST['Imp_observaciones'] : "";
 
-            $sql = "INSERT INTO tblimpresion VALUES($Imp_id, $Maq_id, '$Imp_formatoCorte', '$Imp_encargado', '$Imp_observaciones')"; 
+            $sql = "INSERT INTO tblimpresion VALUES($Imp_id, $Maq_id, '$Imp_formatoCorte', '$Imp_encargado', '$Imp_observaciones')";
+            echo $sql;
             $insertImp = $obj->insert($sql);
 
 
     /* ================= Pliegos ====================*/
-            $Stg_id_pli = $_POST['Stg_id_pli'];
-            $Pli_rip = $_POST['Pli_rip'];
-            $Pli_tintaespecial = $_POST['Pli_tintaespecial'];
+            $Stg_id_pli = isset($_POST['Stg_id_pli']) ? $_POST['Stg_id_pli'] : "";
+            $Pli_rip = isset($_POST['Pli_rip']) ?$_POST['Pli_rip'] : "";
+            $Pli_tintaespecial = isset($_POST['Pli_tintaespecial']) ? $_POST['Pli_tintaespecial'] : "";
             
             for($i = 0; $i < count($Stg_id_pli); $i++){
                 $Pli_id = $obj->autoIncrement('tblpliego', 'Pli_id');
@@ -243,15 +247,15 @@
     /* ================= Orden de produccion ====================*/
             //Falta agregar el usuario
 
-            $Odp_fechaEntrega = $_POST['Odp_fechaEntrega'];
-            $Odp_fechaInicio = $_POST['Odp_fechaInicio'];
-            $Odp_fechafin = $_POST['Odp_fechafin'];
+            $Odp_fechaEntrega = isset($_POST['Odp_fechaEntrega']) ? $_POST['Odp_fechaEntrega'] : "";
+            $Odp_fechaInicio = isset($_POST['Odp_fechaInicio']) ? $_POST['Odp_fechaInicio'] : "";
+            $Odp_fechafin = isset($_POST['Odp_fechafin']) ? $_POST['Odp_fechafin'] : "";
             $sql = "INSERT INTO tblordenproduccion VALUES($Odp_id, NOW(), $Odp_tipoempresa, $Emp_id, ".$_SESSION['idUser'].", $Pte_id, $Pim_id, $Imp_id, '$Odp_fechaEntrega', '$Odp_fechaInicio', '$Odp_fechafin', 4, 'NULL', 0)";
             $insertOdp = $obj->insert($sql);
 
 
     /* ================= terminados ====================*/
-
+            if(isset($_POST['tipoterminado'])){
             $tipoterminado = $_POST['tipoterminado'];
             $tter_descripcion1 = "";
             $tter_descripcion2 = "";
@@ -332,6 +336,7 @@
                 $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idperfo";
                 $ejecutar = $obj->update($sql);
             }
+        }
 
             //FIN
             //Redirigue al incio de produccion
@@ -462,6 +467,7 @@
             
         */
         public function formUpdateOrden(){
+            if ($_SESSION['rolUser'] != 'Aprendiz') {
             $obj = new ProduccionModel();
             $Odp_id = $_GET['Odp_id'];
 
@@ -557,7 +563,7 @@
 
             $sql = "SELECT * FROM tbltipoterminado WHERE Odp_id = $Odp_id";
             $tipoterminado = $obj->consult($sql);
-
+            }
             include_once '../view/Produccion/Actualizar/formUpdateOrden.php';
         }
         
@@ -575,17 +581,21 @@
     
                 $Pim_id = $_POST['Pim_id'];
 
+                if(isset($_POST['Imp_id'])){
                 $Imp_id = $_POST['Imp_id'];
-
+                }else{
+                    $Imp_id = "";
+                }
+                
                 $Pte_id = $_POST['Pte_id'];
         /* ============ Producto terminado ===============*/
     
-                $Pte_cantidad = $_POST['Pte_cantidad'];
-                $Pte_numeroPaginas = $_POST['Pte_numeroPaginas'];
-                $Pte_tamañoAbierto = $_POST['Pte_tamañoAbierto'];
-                $Pte_tamañoCerrado = $_POST['Pte_tamañoCerrado'];
-                $Pte_diseñador = $_POST['Pte_diseñador'];
-                $Pba_id = $_POST['Pba_id'];
+                $Pte_cantidad = isset($_POST['Pte_cantidad']) ? $_POST['Pte_cantidad'] : "";
+                $Pte_numeroPaginas =  isset($_POST['Pte_numeroPaginas']) ? $_POST['Pte_numeroPaginas'] : "";
+                $Pte_tamañoAbierto = isset($_POST['Pte_tamañoAbierto']) ? $_POST['Pte_tamañoAbierto'] : "";
+                $Pte_tamañoCerrado = isset($_POST['Pte_tamañoCerrado']) ? $_POST['Pte_tamañoCerrado'] : "";
+                $Pte_diseñador = isset($_POST['Pte_diseñador']) ? $_POST['Pte_diseñador'] : "";
+                $Pba_id = isset($_POST['Pba_id']) ? $_POST['Pba_id'] : "";
                 $sql = "UPDATE tblproductoterminado 
                                 SET Pte_cantidad = $Pte_cantidad,  Pte_numeroPaginas = $Pte_numeroPaginas, 
                                 Pte_tamañoAbierto = '$Pte_tamañoAbierto', Pte_tamañoCerrado = '$Pte_tamañoCerrado', 
@@ -595,9 +605,9 @@
     
         /* =============== Pre-Impresion ==================*/
     
-                $Stg_id = $_POST['Stg_id'];
-                $Pim_encargado = $_POST['Pim_encargado'];
-                $Pim_observacion = $_POST['Pim_observacion'];
+                $Stg_id = isset($_POST['Stg_id']) ? $_POST['Stg_id'] : "";
+                $Pim_encargado = isset($_POST['Pim_encargado']) ? $_POST['Pim_encargado'] : "";
+                $Pim_observacion = isset($_POST['Pim_observacion']) ? $_POST['Pim_observacion'] : "";
                 $sql = "UPDATE tblpreimpreion SET Stg_id = $Stg_id, Pim_encargado = '$Pim_encargado', Pim_observacion = '$Pim_observacion'
                             WHERE Pim_id = $Pim_id ";
                 $insertPim = $obj->insert($sql);
@@ -606,28 +616,32 @@
                 $sql = "DELETE FROM tblsustrato WHERE Pim_id = $Pim_id";
                 $borrarsustratos = $obj->delete($sql);
 
-                $Arti_id = $_POST['Arti_id'];
-                $Sus_cantidadSustrato = $_POST['Sus_cantidadSustrato'];
-                $Sus_tamañoPliego = $_POST['Sus_tamañoPliego'];
-                $Sus_tamañoCorte = $_POST['Sus_tamañoCorte'];
-                $Sus_tirajePedido = $_POST['Sus_tirajePedido'];
-                $Sus_porcentajeDesperdicio = $_POST['Sus_porcentajeDesperdicio'];
-                $Sus_tirajeTotal = $_POST['Sus_tirajeTotal'];
-    
-                for($i = 0; $i < count($Arti_id); $i++){
-                    $Sus_id = $obj->autoIncrement('tblsustrato', 'Sus_id');
-                    $sql = "INSERT INTO tblsustrato VALUES($Sus_id, $Pim_id, '$Sus_tamañoPliego[$i]', $Sus_cantidadSustrato[$i], '$Sus_tamañoCorte[$i]', $Sus_tirajePedido[$i], $Sus_porcentajeDesperdicio[$i], $Sus_tirajeTotal[$i], $Arti_id[$i])";
-                    $insertSus = $obj->insert($sql);
-                
+                $Arti_id = isset($_POST['Arti_id']) ? $_POST['Arti_id'] : "";
+                $Sus_cantidadSustrato = isset($_POST['Sus_cantidadSustrato']) ? $_POST['Sus_cantidadSustrato'] : "";
+                $Sus_tamañoPliego = isset($_POST['Sus_tamañoPliego']) ? $_POST['Sus_tamañoPliego'] : "";
+                $Sus_tamañoCorte = isset($_POST['Sus_tamañoCorte']) ? $_POST['Sus_tamañoCorte'] : "";
+                $Sus_tirajePedido = isset($_POST['Sus_tirajePedido']) ? $_POST['Sus_tirajePedido'] : "";
+                $Sus_porcentajeDesperdicio = isset($_POST['Sus_porcentajeDesperdicio']) ? $_POST['Sus_porcentajeDesperdicio'] : "";
+                $Sus_tirajeTotal = isset($_POST['Sus_tirajeTotal']) ? $_POST['Sus_tirajeTotal'] : "";
+
+                if($Arti_id>0){
+                    for($i = 0; $i < count($Arti_id); $i++){
+                        $Sus_id = $obj->autoIncrement('tblsustrato', 'Sus_id');
+                        $sql = "INSERT INTO tblsustrato VALUES($Sus_id, $Pim_id, '$Sus_tamañoPliego[$i]', $Sus_cantidadSustrato[$i], '$Sus_tamañoCorte[$i]', $Sus_tirajePedido[$i], $Sus_porcentajeDesperdicio[$i], $Sus_tirajeTotal[$i], $Arti_id[$i])";
+                        $insertSus = $obj->insert($sql);
+                    
+                    }
                 }
     
     
         /* ================= Impresion ====================*/
-    
-                $Maq_id = $_POST['Maq_id'];
-                $Imp_formatoCorte = $_POST['Imp_formatoCorte'];
-                $Imp_encargado = $_POST['Imp_encargado'];
-                $Imp_observaciones = $_POST['Imp_observaciones'];
+
+
+                $Imp_id = $_POST['Imp_id'];
+                $Maq_id = isset($_POST['Maq_id']) ? $_POST['Maq_id'] : "";
+                $Imp_formatoCorte = isset($_POST['Imp_formatoCorte']) ? $_POST['Imp_formatoCorte'] : "";
+                $Imp_encargado = isset($_POST['Imp_encargado']) ? $_POST['Imp_encargado'] : "";
+                $Imp_observaciones = isset($_POST['Imp_observaciones']) ? $_POST['Imp_observaciones'] : "";
     
                 $sql = "UPDATE tblimpresion SET Maq_id = $Maq_id, Imp_formatoCorte = '$Imp_formatoCorte', 
                             Imp_encargado = '$Imp_encargado', Imp_observaciones = '$Imp_observaciones'
@@ -640,24 +654,28 @@
                 $sql = "DELETE FROM tblpliego WHERE Imp_id = $Imp_id";
                 $borrarpliegos = $obj->delete($sql);
 
-                $Stg_id_pli = $_POST['Stg_id_pli'];
-                $Pli_rip = $_POST['Pli_rip'];
-                $Pli_tintaespecial = $_POST['Pli_tintaespecial'];
-                for($i = 0; $i < count($Stg_id_pli); $i++){
-                    $Pli_id = $obj->autoIncrement('tblpliego', 'Pli_id');
-                    $sql = "INSERT INTO tblpliego VALUES($Pli_id, $Pli_rip[$i], $Stg_id_pli[$i], '$Pli_tintaespecial[$i]', $Imp_id)";
-                    $insertPli = $obj->insert($sql);
-                
+                if(isset($_POST['Stg_id_pli'])){
+
+                $Stg_id_pli = isset($_POST['Stg_id_pli']) ? $_POST['Stg_id_pli'] : "";
+                $Pli_rip = isset($_POST['Pli_rip']) ?$_POST['Pli_rip'] : "";
+                $Pli_tintaespecial = isset($_POST['Pli_tintaespecial']) ? $_POST['Pli_tintaespecial'] : "";
+                if($Stg_id_pli > 0){
+                    for($i = 0; $i < count($Stg_id_pli); $i++){
+                        $Pli_id = $obj->autoIncrement('tblpliego', 'Pli_id');
+                        $sql = "INSERT INTO tblpliego VALUES($Pli_id, $Pli_rip[$i], $Stg_id_pli[$i], '$Pli_tintaespecial[$i]', $Imp_id)";
+                        $insertPli = $obj->insert($sql);
+                    
+                    }
                 }
+            }
     
     
     
         /* ================= Orden de produccion ====================*/
-                //Falta agregar el usuario
     
-                $Odp_fechaEntrega = $_POST['Odp_fechaEntrega'];
-                $Odp_fechaInicio = $_POST['Odp_fechaInicio'];
-                $Odp_fechafin = $_POST['Odp_fechafin'];
+                $Odp_fechaEntrega = isset($_POST['Odp_fechaEntrega']) ? $_POST['Odp_fechaEntrega'] : "";
+                $Odp_fechaInicio = isset($_POST['Odp_fechaInicio']) ? $_POST['Odp_fechaInicio'] : "";
+                $Odp_fechafin = isset($_POST['Odp_fechafin']) ? $_POST['Odp_fechafin'] : "";
                 $sql = "UPDATE tblordenproduccion SET Odp_tipoempresa = $Odp_tipoempresa, Emp_id = $Emp_id, Pte_id = $Pte_id, Pim_id = $Pim_id, Imp_id = $Imp_id, 
                             Odp_fechaEntrega = '$Odp_fechaEntrega', Odp_fechaInicio = '$Odp_fechaInicio', Odp_fechafin = '$Odp_fechafin', Odp_Estado = 4, Odp_motivorechazo = 'NULL', Odp_usuFirma = 0
                             WHERE Odp_id = $Odp_id";
@@ -669,6 +687,7 @@
                 $sql = "DELETE FROM tbltipoterminado WHERE Odp_id = $Odp_id";
                 $borrarterminados = $obj->delete($sql);
 
+                if(isset($_POST['tipoterminado'])){
                 $tipoterminado = $_POST['tipoterminado'];
                 $tter_descripcion1 = "";
                 $tter_descripcion2 = "";
@@ -749,6 +768,7 @@
                     $sql = "UPDATE tbltipoterminado SET tter_descripcion1 = '$descripcion1' WHERE tter_id = $idperfo";
                     $ejecutar = $obj->update($sql);
                 }
+            }
                 
                     $_SESSION['mensaje'] = "Se actualizo correctamente la orden de produccion!";
                     $_SESSION['tipo'] = "success";
@@ -772,6 +792,8 @@
         //Funcion Eliminar
 
         public function postDelete(){
+            
+            if ($_SESSION['rolUser'] != 'Aprendiz') {
             
             $Odp_id = $_POST['Odp_id'];
             $obj = new ProduccionModel();
@@ -816,6 +838,12 @@
             if ($deletefinal) {
                 redirect(getUrl("Produccion","Produccion","getMain"));
             }
+        }else{
+            echo "<div class='x_panel'>";
+            echo "No tienes los permisos necesarios para acceder a esta vista :D <br>";
+            echo "<a href='".getUrl("Produccion", "Produccion", "getMain")."'> <button class='btn btn-primary mt-3'> Volver </button> </a>";
+            echo "</div>";
+        }
 
         }
 
@@ -961,10 +989,14 @@
 
             }
             //Consultar nombre de la maquina
+            if($Maq_id != 0){
             $sql = "SELECT Maq_nombre FROM tblmaquina WHERE Maq_id = $Maq_id";
             $nombremaq = $obj->consult($sql);
             foreach ($nombremaq as $res) {
                 $Maq_nombre = $res['Maq_nombre'];
+            }
+            }else{
+                $Maq_nombre = " ";
             }
 
 

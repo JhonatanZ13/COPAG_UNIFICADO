@@ -245,7 +245,7 @@ $(document).ready(function () {
                 title: 'Se a eliminado correctamente',
                 icon: 'success'
               });
-            setTimeout('document.location.reload()', 2000);
+            setTimeout('document.location.reload()', 500);
           }
       });
       }
@@ -358,7 +358,7 @@ $(document).on("click","#modalAprobar", function(){
               title: 'Se aprobo la orden de produccion',
               icon: 'success'
             });
-          setTimeout('document.location.reload()', 2000);
+          setTimeout('document.location.reload()', 500);
         }
     });
     }
@@ -418,7 +418,7 @@ $(document).on("click","#modalRechazar", function(){
                     title: 'Se rechazo la orden de produccion',
                     icon: 'success'
                   });
-                setTimeout('document.location.reload()', 2000);
+                setTimeout('document.location.reload()', 500);
               }
             });
           }

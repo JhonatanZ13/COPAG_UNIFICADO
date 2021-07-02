@@ -217,7 +217,7 @@ $pagina2 ='
     <br>';
   
 //Pliegos
-
+if(mysqli_num_rows($consultpliegos)>0){
 foreach ($consultpliegos as $res) {
   $pagina2 = $pagina2.'
   <table width="100%">
@@ -246,6 +246,26 @@ foreach ($consultpliegos as $res) {
 </table>
 <br><div class="ln-dotted"></div><br>';
 }
+}else{
+  $pagina2 = $pagina2.'
+  <table width="100%">
+  <tr>
+    <th class="t-left h-30" width="15%">Tipo de RIP:</th>
+    <td class="b-bottom" width="10%"></td>
+    <td width="10%"></td>
+    <th class="t-left h-30" width="10%">Tintas:</th>
+    <td class="b-bottom" width="15%"></td>
+    <td width="10%"></td>
+    <th class="t-left h-30" width="15%">Tinta especial:</th>
+    <td class="b-bottom" width="15%"></td>
+    <td width="10%"></td>
+  </tr>
+</table>
+<br><div class="ln-dotted"></div><br>';
+}
+
+
+
     
 $pagina2 = $pagina2.'<table>
       <tr>
@@ -268,12 +288,8 @@ $pagina2 = $pagina2.'
     <tr>
       <td COLSPAN=2 class="t-left h-20"><i>Terminados del producto:</i></td>
     </tr>
-  </table>
-  <table width="100%">
-  <tr>';
+  </table>';
   
-$contr = 1;
-
 foreach ($tipoterminado as $res) {
 
   $numero = intval($res['Ter_id']);
@@ -282,40 +298,27 @@ foreach ($tipoterminado as $res) {
     //Convierte ter_id a numero
     $numero2 = intval($ter['Ter_id']);
     //Verifica que no sean los terminados que tienen descripcion
-    if (($numero < 16 )) {
+    if ($numero < 16) {
       //Compara los ids para saber el nombre del terminado
       if($numero == $numero2){
         //Crea 4 filas en cada tabla
-        if($contr % 4 == 0){
-          $pagina2 = $pagina2.'
-            <td width="25%">
-              <ul>
-                <li class="">'.$ter['Ter_descripcion'].'</li>
-              </ul>
-            </td>
-          </tr>
-          <tr>
-          ';
-        }else{
         $pagina2 = $pagina2.'
+        <table width="100%">
+        <tr>
           <td width="25%">
             <ul>
               <li class="">'.$ter['Ter_descripcion'].'</li>
             </ul>
           </td>
-          ';
-        }
+        </tr>
+        </table>';
       }
     }
   }
-  
-  $contr++;
 }
 
 $pagina2 = $pagina2.'
-</table>
 <br><div class="ln-dotted"></div><br>';
-
 
 foreach ($tipoterminado as $res) {
 
@@ -496,9 +499,7 @@ $pagina2 = $pagina2.'
     <tr>
       <td COLSPAN=2 class="t-left h-20"><i>Terminados especiales:</i></td>
     </tr>
-  </table>
-        <table>
-          <tr>';
+</table>';
 
 
 $contr = 0;
@@ -514,24 +515,16 @@ foreach ($tipoterminado as $res) {
       //Compara los ids para saber el nombre del terminado
       if($numero == $numero2){
         //Crea 4 filas en cada tabla
-        if($contr % 4 == 0){
-          $pagina2 = $pagina2.'
-            <td width="25%">
-              <ul>
-                <li class="">'.$ter['Ter_descripcion'].'</li>
-              </ul>
-            </td>
-          </tr>
-          <tr>';
-      }else{
         $pagina2 = $pagina2.'
+        <table width="100%">
+        <tr>
           <td width="25%">
             <ul>
               <li class="">'.$ter['Ter_descripcion'].'</li>
             </ul>
           </td>
-          ';
-        }
+        </tr>
+        </table>';
       }
     }
     
@@ -540,10 +533,9 @@ foreach ($tipoterminado as $res) {
   $contr++;
 }
 
-$pagina2 = $pagina2.'</tr></table>
+$pagina2 = $pagina2.'
 <br><div class="ln-solid"></div><br>
-  <div class="b-top">
-    <table>
+    <table class="">
       <tr>
         <td class="b-bottom" width="200px">'.$imagenfirma.'</td>
         <td width="250px"></td>
@@ -560,9 +552,4 @@ $pagina2 = $pagina2.'</tr></table>
         <td></td>
       </tr>
     </table>
-  </div>
-
-
 ';
-
-?>

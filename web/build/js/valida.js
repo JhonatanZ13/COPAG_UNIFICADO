@@ -428,23 +428,16 @@ $(document).on("submit", "#formInsertProduccion", function(){
 	var tipocliente = $("#tipoCliente").val();
 	var elegircliente = $("#elegirCliente").val();
 	var elegirproducto = $("#elegirProducto").val();
-    var alertaVacio = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+    var alerta = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
 				"<strong>Por favor llene todos los campos obligatorios. (*)</strong><br> " +
 				"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
 				"<span aria-hidden='true'>&times;</span>" +
 				"</button>" +
-				"</div>";
-
-	var alertafaltantes = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
-	"<strong>Por favor revise que todos los datos esten correctamente escritos.</strong><br> " +
-	"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-	"<span aria-hidden='true'>&times;</span>" +
-	"</button>" +
-	"</div>";				
+				"</div>";				
 
 	if (tipocliente == "" || elegircliente == "" || elegirproducto == "") {
 
-		$("#alertaproduccion").html(alertaVacio);
+		$("#alertaproduccion").html(alerta);
 		setTimeout(function(){
 			$('#alertaproduccion').html("");
 		}, 5000);
@@ -495,7 +488,7 @@ $(document).on("submit", "#formInsertProduccion", function(){
 			}
 		  });
 	} else {
-		$("#alertaproduccion").html(alertafaltantes);
+		$("#alertaproduccion").html(alerta);
 		setTimeout(function(){
 			$('#alertaproduccion').html("");
 		}, 5000);
