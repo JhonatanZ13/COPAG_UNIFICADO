@@ -7,13 +7,13 @@
 
         <div class="shadow card bg-light text-success mb-3 mt-3 pb-3">
             <div class="form-group col-sm-12">
-                <label for="tipo">Nombre articulo:</label>
-                <select name="tipo" id="tipo" class="form-control" autofocus data-url="<?= getUrl("Salida", "Salida", "SelectEntrada", false, "ajax") ?>">
+                <label for="tipo">Tipo articulo:</label>
+                <select name="tipo[]" id="tipo" class="form-control" autofocus data-url="<?= getUrl("Salida", "Salida", "SelectEntrada", false, "ajax") ?>">
                     <option value="0">Seleccione..</option>
-                    <?php foreach ($tipos as $tp) {
-                        echo "<option value='" . $tp["Tart_id"] . "'>" . $tp["Tart_descripcion"] . "</option>";
-                    } ?>
-                </select> 
+                    <option value="Materia Prima">Materia Prima </option>
+                    <option value="Insumos">Insumos </option>
+                    <option value="Herramienta">Herramienta </option>
+                </select>
             </div>
 
             <div class="form-group col-sm-12">
@@ -38,7 +38,7 @@
 
     <div class="x_title"></div>
     <div class="x_panel">
-        <button type="submit" disabled name="enviar" id="send" class="btn btn-success btn-lg btn-block">
+        <button type="submit"  id="send" name="enviar"  class="btn btn-success btn-lg btn-block">
             DAR SALIDA
         </button>
     </div>

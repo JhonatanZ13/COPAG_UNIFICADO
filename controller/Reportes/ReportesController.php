@@ -149,6 +149,22 @@ class ReportesController
             . "</tr>";
             $i++;
         }
+        foreach ($maquina as $maq) {
+            $html .= "<tr>"
+            . "<td>" . $j . "</td>"
+            . "<td>" . $maq['Maq_nombre'] . "</td>"
+            . "<td>" . $maq['Maq_cantidad'] . "</td>"
+            . "</tr>";
+            $j++;
+        }
+        foreach ($herramienta as $her) {
+            $html .= "<tr>"
+            . "<td>" . $j . "</td>"
+            . "<td>" . $her['Her_nombre'] . "</td>"
+            . "<td>" . $her['Her_cantidad'] . "</td>"
+            . "</tr>";
+            $j++;
+        }
         $html .= "</table>";
 
         $mpdf->defaultheaderline = 0;

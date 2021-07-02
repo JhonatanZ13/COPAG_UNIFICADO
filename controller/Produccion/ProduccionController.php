@@ -44,7 +44,7 @@
         public function getMainAdmin(){
             $obj = new ProduccionModel();
             //Consultar Ordenes de producción 
-            $sql = "SELECT orden.Odp_id, empresa.Emp_razonSocial, producto.Pba_descripcion, usuario.Usu_primerNombre, usuario.Usu_segundoApellido, orden.Odp_fechaCreacion, orden.Odp_fechaEntrega, estado.Est_nombre
+            $sql = "SELECT orden.Odp_id, empresa.Emp_razonSocial, producto.Pba_descripcion, usuario.Usu_primerNombre, usuario.Usu_primerApellido, orden.Odp_fechaCreacion, orden.Odp_fechaEntrega, estado.Est_nombre
             FROM tblordenproduccion orden, tblempresa empresa, tblusuario usuario, tblproductobase producto, tblproductoterminado pterminado, tblestado estado
             WHERE empresa.Emp_id = orden.Emp_id 
             AND orden.Usu_id = usuario.Usu_id

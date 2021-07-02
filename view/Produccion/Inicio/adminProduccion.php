@@ -106,7 +106,7 @@
                                 echo "<td>" . $or['Odp_id'] . "</td>";
                                 echo "<td>" . $or['Emp_razonSocial'] . "</td>";
                                 echo "<td>" . $or['Pba_descripcion'] . "</td>";
-                                echo "<td>" . $or['Usu_primerNombre'] . ' ' . $or['Usu_segundoApellido'] . "</td>";
+                                echo "<td>" . $or['Usu_primerNombre'] . ' ' . $or['Usu_primerApellido'] . "</td>";
                                 echo "<td>" . $or['Odp_fechaCreacion'] . "</td>";
                                 echo "<td>" . $or['Odp_fechaEntrega'] . "</td>";
                                 echo "<td> <strong>" . $or['Est_nombre'] . "</strong></td>";

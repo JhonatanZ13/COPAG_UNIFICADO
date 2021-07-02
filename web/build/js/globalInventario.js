@@ -171,10 +171,10 @@ $(document).ready(function() {
         var padre = $(this).parent().parent();
         var vale = $(this).val();
         var url = $(this).attr("data-url");
-
+        var tipo = $("#tipo").val();
         $.ajax({
             url: url,
-            data: "vale=" + vale,
+            data: "vale=" + vale + "&" + "tipo=" + tipo,
             type: "POST",
             success: function(datos) {
                 cantidadGlobal = datos;

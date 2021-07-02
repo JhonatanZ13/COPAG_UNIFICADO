@@ -110,11 +110,13 @@ if (($_SESSION['rolUser'] != 'Aprendiz')) {
                         <select name="Tempr_id" class="form-control formularioPanel__input">
                             <option value="">Seleccionar...</option>
                                 <?php 
-                                    foreach ($tempresa as $temp) {     
+                                    foreach ($tempresa as $temp) {
+                                        if ($temp['Tempr_id'] != 4) {
                                 ?>
                                     <option value='<?= $temp['Tempr_id'] ?>'><?= $temp['Tempr_descripcion'] ?></option>;
                                     
-                                <?php } ?>
+                                <?php } 
+                                } ?>
                         </select>
                         <p class="formularioPanel__input-error">Tiene que elegir un Tipo de empresa.</p>
                     </div>
