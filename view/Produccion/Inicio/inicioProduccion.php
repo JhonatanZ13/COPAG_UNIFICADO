@@ -1,6 +1,6 @@
 <div class="container">
     <div class="page-title">
-        <div class="title_left">
+        <div class="x_panel col-md-12">
             <h3>Inicio de Produccion</h3>
         </div>
     </div>
@@ -123,18 +123,30 @@
                                 <td><?= $or['Odp_fechaEntrega']; ?></td>
                                 <td> <strong><?= $or['Est_nombre']; ?></strong></td>
                                 <td class='row'>
-                                <a target='_blank' href='<?= getUrl("Produccion", "Produccion", "getOrdenPdf", array("Odp_id" => $or['Odp_id']), "ajax"); ?>'>
+                                <?php if($or['Odp_Estado'] == 2 || $or['Odp_Estado'] == 3){ ?>
+                                <a target='_blank' href='<?= getUrl("Produccion", "Produccion", "getOrdenPdf", array("Odp_id" => $or['Odp_id']), "ajax");?>'>
                                     <button class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Descargar PDF'><i class='fa fa-file-pdf-o'></i>
                                 </button></a> 
-                                
+                                <?php
+                                }else{
+                                    ?>
+                                    <button disabled class='btn btn-sm btn-danger' data-toggle='tooltip' data-placement='bottom' title='Opcion no disponible'><i class='fa fa-file-pdf-o'></i>
+                                    <?php
+                                }
+                                ?>
                                 <a href='<?= getUrl("Produccion", "Produccion", "getConsult", array("Odp_id" => $or['Odp_id'])); ?>'>
                                     <button class='btn btn-sm btn-info' data-toggle='tooltip' data-placement='bottom' title='Visualizar'><i class='fa fa-eye'></i>
                                     </button>
                                 </a> 
-                                            
+                            <?php
+                                if ($_SESSION['rolUser'] != 'Aprendiz') {
+                            ?>         
                                 <a  href='<?= getUrl("Produccion", "Produccion", "formUpdateOrden", array("Odp_id" => $or['Odp_id'])); ?>'>
                                     <button class='btn btn-sm btn-primary' data-toggle='tooltip' data-placement='bottom' title='Editar'><i class='fa fa-edit'></i></button>
                                 </a>
+                                <?php
+                                }
+                            ?>
                             <?php
                                 if ($_SESSION['rolUser'] != 'Aprendiz') {
                             ?>

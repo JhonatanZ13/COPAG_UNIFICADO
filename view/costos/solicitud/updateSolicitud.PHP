@@ -34,7 +34,7 @@
                                 if($usu['Usu_id']==$ped['destinatario']){
                                     echo"<option value='".$usu['Usu_id']."'selected>".$usu['Usu_primerNombre'].'&nbsp;'.$usu['Usu_segundoNombre'].'&nbsp;'.$usu['Usu_primerApellido'].'&nbsp;'.$usu['Usu_primerApellido']."</option>";
                                 }else{
-                                echo "<option value='".$usu['Cen_id']."'>".$usu['Usu_primerNombre'].'&nbsp;'.$usu['Usu_segundoNombre'].'&nbsp;'.$usu['Usu_primerApellido'].'&nbsp;'.$usu['Usu_primerApellido']."</option>";}
+                                echo "<option value='".$usu['Usu_id']."'>".$usu['Usu_primerNombre'].'&nbsp;'.$usu['Usu_segundoNombre'].'&nbsp;'.$usu['Usu_primerApellido'].'&nbsp;'.$usu['Usu_primerApellido']."</option>";}
                             
                             }
                             ?>

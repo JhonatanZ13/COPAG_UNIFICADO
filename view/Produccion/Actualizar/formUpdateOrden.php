@@ -1,6 +1,10 @@
+<?php
+    if ($_SESSION['rolUser'] != 'Aprendiz') {
+?>
+<form id="formUpdateProduccion" class="form-horizontal form-label-left" action="<?php echo getUrl("Produccion", "Produccion", "postUpdateOrdenProduccion"); ?>" method="POST">
 <div class="x_content">
     <!-- Header info -->
-    <div>
+    <div class="x_panel">
         <h3>Orden de produccion No. <?= $Odp_id ?></h3>
         <h4>Funcionario que atiende: <?= $usu_name ?></h4>
     </div>
@@ -25,12 +29,11 @@
 
     <!---------------------- Inicio formulario ----------------------->
 
-    <form id="formUpdateProduccion" class="form-horizontal form-label-left" action="<?php echo getUrl("Produccion", "Produccion", "postUpdateOrdenProduccion"); ?>"  method="POST" onsubmit="return validarCamposVacios2();">
+    
 
         <input type="hidden" name="Odp_id" value="<?= $Odp_id ?>">
 
-        <div class="x_content">
-            <div class="ln_solid"></div>
+        <div class="">
             <div class="row">
 
                 <!--------- Datos del cliente ---------->
@@ -147,8 +150,8 @@
                                         <label class="control-label col-md-3 col-sm-3" for="">Elegir producto<span class="required">*</span>
                                         </label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <select class="form-control" id="elegirProducto" name="Pba_id">
-                                                <option selected value="">Elegir..</option>
+                                            <select id="elegirProducto" class="form-control" name="Pba_id">
+                                                <option value="">Elegir...</option>
                                                 <?php
                                                 foreach ($productos as $res) {
                                                     if ($res['Pba_id'] == $pter['Pba_id']) {
@@ -172,7 +175,9 @@
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-3 col-sm-3">Cantidad de paginas</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" id="cantidadPaginas" class="form-control" name="Pte_numeroPaginas" value="<?= $pter['Pte_numeroPaginas'] ?>">
+                                            <input type="text" id="cantidadPaginas" class="form-control" name="Pte_numeroPaginas" value="<?php if ($pter['Pte_numeroPaginas'] != 0) {
+                                                                                                                                                echo $pter['Pte_numeroPaginas'];
+                                                                                                                                            } ?>">
                                             <p id="cantidadPP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor numerico</p>
                                         </div>
                                     </div>
@@ -194,7 +199,9 @@
                                         <label class="col-form-label col-md-3 col-sm-3">Fecha de inicio <span class="required">*</span>
                                         </label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input class="form-control" name="Odp_fechaInicio" value="<?php echo date('Y-m-d', strtotime($odp['Odp_fechaInicio'])); ?>" placeholder="dd-mm-yyyy" type="date">
+                                            <input class="form-control" name="Odp_fechaInicio" value="<?php if ($odp['Odp_fechaInicio'] != "") {
+                                                                                                            echo  date('Y-m-d', strtotime($odp['Odp_fechaInicio']));
+                                                                                                        } ?>" placeholder="dd-mm-yyyy" type="date">
 
                                         </div>
                                     </div>
@@ -202,14 +209,18 @@
                                         <label class="col-form-label col-md-3 col-sm-3 ">Fecha fin <span class="required">*</span>
                                         </label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input class="form-control" name="Odp_fechafin" value="<?php echo date('Y-m-d', strtotime($odp['Odp_fechafin'])); ?>" placeholder="dd-mm-yyyy" type="date">
+                                            <input class="form-control" name="Odp_fechafin" value="<?php if ($odp['Odp_fechafin'] != "") {
+                                                                                                        echo date('Y-m-d', strtotime($odp['Odp_fechafin']));
+                                                                                                    } ?>" placeholder="dd-mm-yyyy" type="date">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label col-md-3 col-sm-3 ">Fecha entrega <span class="required">*</span>
                                         </label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input class="form-control" name="Odp_fechaEntrega" value="<?php echo date('Y-m-d', strtotime($odp['Odp_fechaEntrega'])); ?>" placeholder="dd-mm-yyyy" type="date">
+                                            <input class="form-control" name="Odp_fechaEntrega" value="<?php if ($odp['Odp_fechaEntrega'] != "") {
+                                                                                                            echo date('Y-m-d', strtotime($odp['Odp_fechaEntrega']));
+                                                                                                        } ?>" placeholder="dd-mm-yyyy" type="date">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -228,7 +239,7 @@
 
         <!----------- Pre-impresion ------------->
         <?php foreach ($consultpreimpre as $pimpr) { ?>
-            <div class="row">
+            <div class="">
                 <input type="hidden" name="Pim_id" value="<?= $pimpr['Pim_id'] ?>">
                 <div class="x_panel">
                     <div class="x_content">
@@ -411,126 +422,231 @@
         </div>
 
         <!----------- Datos de impresión -------------->
-        <?php foreach ($consultimpresion as $impr) { ?>
-            <div class="row">
-                <input type="hidden" name="Imp_id" value="<?= $impr['Imp_id'] ?>">
-                <div class="x_panel">
-                    <div class="x_content">
-                        <h5>Datos de impresión</h5>
-                        <div class="ln_solid"></div>
+        <?php
+            foreach ($consultimpresion as $impr) { ?>
+                <div class="">
+                    <input type="hidden" name="Imp_id" value="<?= $impr['Imp_id'] ?>">
+                    <div class="x_panel">
+                        <div class="x_content">
+                            <h5>Datos de impresión</h5>
+                            <div class="ln_solid"></div>
 
-                        <div class="x_panel">
-                            <div class="col-md-12">
-                                <div class="form-group col-md-6">
-                                    <label class="" for="">Elegir maquina<span class="required">*</span></label><br>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <select name="Maq_id" class="form-control">
-                                            <option selected>Elegir</option>
-                                            <?php
-                                            foreach ($maquina as $res) {
-                                                if ($res['Maq_id'] = $impr['Maq_id']) {
-                                            ?>
-                                                    <option value='<?= $res['Maq_id'] ?>' selected> <?= $res['Maq_nombre'] ?></option>
+                            <div class="x_panel">
+                                <div class="col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label class="" for="">Elegir maquina<span class="required">*</span></label><br>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <select name="Maq_id" class="form-control">
+                                                <option selected>Elegir</option>
+                                                <?php
+                                                foreach ($maquina as $res) {
+                                                    if ($res['Maq_id'] = $impr['Maq_id']) {
+                                                ?>
+                                                        <option value='<?= $res['Maq_id'] ?>' selected> <?= $res['Maq_nombre'] ?></option>
 
-                                                <?php } else { ?>
-                                                    <option value='<?= $res['Maq_id'] ?>'> <?= $res['Maq_nombre'] ?></option>
+                                                    <?php } else { ?>
+                                                        <option value='<?= $res['Maq_id'] ?>'> <?= $res['Maq_nombre'] ?></option>
+                                                    <?php } ?>
                                                 <?php } ?>
-                                            <?php } ?>
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="">Formato corte:</label> <br>
-                                    <div class="col-md-5 col-sm-5">
-                                        <input id="formatoCorteImpresion" type="text" name="Imp_formatoCorte" class="form-control" value="<?= $impr['Imp_formatoCorte'] ?>">
-                                        <p id="formatoCorteImpresionP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor como por ejemplo: 50 x 70 cm </p>
+                                    <div class="form-group col-md-6">
+                                        <label class="">Formato corte:</label> <br>
+                                        <div class="col-md-5 col-sm-5">
+                                            <input id="formatoCorteImpresion" type="text" name="Imp_formatoCorte" class="form-control" value="<?= $impr['Imp_formatoCorte'] ?>">
+                                            <p id="formatoCorteImpresionP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor como por ejemplo: 50 x 70 cm </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!---- Pliegos ------>
+                            <!---- Pliegos ------>
 
-                        <div class="x_panel">
-                            <h4>Pliegos</h4>
-                            <div class="ln_solid"></div>
+                            <div class="x_panel">
+                                <h4>Pliegos</h4>
+                                <div class="ln_solid"></div>
 
-                            <div class="col-md-12 pliegoContainer">
+                                <div class="col-md-12 pliegoContainer">
 
-                                <!--Card tintas y rip ---->
-                                <?php $contpliego = 1; ?>
-                                <?php foreach ($consultpliegos as $pli) { ?>
-                                    <div class="col-md-6 col-sm-6 copyPliego">
-                                        <input type="hidden" name="Pli_id" value="<?= $pli['Pli_id'] ?>">
-                                        <?php if ($contpliego > 1) { ?>
-                                            <div class='col-md-1 float-right' id='botonEliminarSustrato'>
-                                                <button type='button' class='btn btn-danger position-absolute eliminarPliego' style='z-index: 1;' data-toggle='tooltip' data-placement='bottom' title='Eliminar'>x</button>
-                                            </div>
-                                        <?php } ?>
-                                        <div class="x_panel ">
-                                            <div class="">
-                                                <div class="col-md-12">
-                                                    <h4>Personalizar pliego</h4>
-                                                    <div class="row">
+                                    <!--Card tintas y rip ---->
+                                    <?php $contpliego = 1; ?>
+                                    <?php
+                                    if (mysqli_num_rows($consultpliegos) > 0) {
+                                        foreach ($consultpliegos as $pli) { ?>
+                                            <div class="col-md-6 col-sm-6 copyPliego">
+                                                <input type="hidden" name="Pli_id" value="<?= $pli['Pli_id'] ?>">
+                                                <?php if ($contpliego > 1) { ?>
+                                                    <div class='col-md-1 float-right' id='botonEliminarSustrato'>
+                                                        <button type='button' class='btn btn-danger position-absolute eliminarPliego' style='z-index: 1;' data-toggle='tooltip' data-placement='bottom' title='Eliminar'>x</button>
+                                                    </div>
+                                                <?php } ?>
+                                                <div class="x_panel ">
+                                                    <div class="">
                                                         <div class="col-md-12">
-                                                            <select name="Pli_rip[]" class="form-control">
-                                                                <option selected>Elegir</option>
-                                                                <?php
-                                                                foreach ($tiporip as $res) {
-                                                                    if ($res['Stg_id'] == $pli['Pli_rip']) {
-                                                                ?>
-                                                                        <option value='<?= $res['Stg_id'] ?>' selected> <?= $res['Stg_nombre'] ?></option>
+                                                            <h4>Personalizar pliego</h4>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <select name="Pli_rip[]" class="form-control">
+                                                                        <option selected>Elegir</option>
+                                                                        <?php
+                                                                        foreach ($tiporip as $res) {
+                                                                            if ($res['Stg_id'] == $pli['Pli_rip']) {
+                                                                        ?>
+                                                                                <option value='<?= $res['Stg_id'] ?>' selected> <?= $res['Stg_nombre'] ?></option>
 
-                                                                    <?php } else { ?>
-                                                                        <option value='<?= $res['Stg_id'] ?>'> <?= $res['Stg_nombre'] ?></option>
-                                                                    <?php } ?>
-                                                                <?php } ?>
-                                                            </select>
+                                                                            <?php } else { ?>
+                                                                                <option value='<?= $res['Stg_id'] ?>'> <?= $res['Stg_nombre'] ?></option>
+                                                                            <?php } ?>
+                                                                        <?php } ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mt-3">
+                                                            <h4>Tintas</h4>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="">
+                                                                        <select name="Stg_id_pli[]" class="form-control">
+                                                                            <option selected>Elegir</option>
+                                                                            <?php
+                                                                            foreach ($tintas as $res) {
+                                                                                if ($res['Stg_id'] == $pli['Stg_id']) {
+                                                                            ?>
+                                                                                    <option value='<?= $res['Stg_id'] ?>' selected> <?= $res['Stg_nombre'] ?></option>
+
+                                                                                <?php } else { ?>
+                                                                                    <option value='<?= $res['Stg_id'] ?>'> <?= $res['Stg_nombre'] ?></option>
+                                                                                <?php } ?>
+                                                                            <?php } ?>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12 mt-3">
-                                                    <h4>Tintas</h4>
-
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <div class="">
-                                                                <select name="Stg_id_pli[]" class="form-control">
-                                                                    <option selected>Elegir</option>
-                                                                    <?php
-                                                                    foreach ($tintas as $res) {
-                                                                        if ($res['Stg_id'] == $pli['Stg_id']) {
-                                                                    ?>
-                                                                            <option value='<?= $res['Stg_id'] ?>' selected> <?= $res['Stg_nombre'] ?></option>
-
-                                                                        <?php } else { ?>
-                                                                            <option value='<?= $res['Stg_id'] ?>'> <?= $res['Stg_nombre'] ?></option>
-                                                                        <?php } ?>
-                                                                    <?php } ?>
-                                                                </select>
+                                                    <div class="col-md-12 mt-3">
+                                                        <h4>Tinta especial</h4>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="">
+                                                                    <div class="input-group">
+                                                                        <input id="tintaEspecial" type="text" class="form-control" name="Pli_tintaespecial[]" value="<?= $pli['Pli_tintaespecial'] ?>">
+                                                                        <p id="tintaEspecialP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor de tinta. por ejemplo: #E01AB5 </p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
-                                            <div class="col-md-12 mt-3">
-                                                <h4>Tinta especial</h4>
-                                                <div class="row">
+                                        <?php $contpliego++;
+                                        }
+                                    } else {
+                                        ?>
+                                        <div class="col-md-6 col-sm-6 copyPliego">
+                                            <div class="x_panel ">
+                                                <div class="">
                                                     <div class="col-md-12">
+                                                        <h4>Personalizar pliego</h4>
                                                         <div class="">
-                                                            <div class="input-group">
-                                                                <input id="tintaEspecial" type="text" class="form-control" name="Pli_tintaespecial[]" value="<?= $pli['Pli_tintaespecial'] ?>">
-                                                                <p id="tintaEspecialP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor de tinta. por ejemplo: #E01AB5 </p>
+                                                            <select id="personalizarPliego" name="Pli_rip[]" class="form-control">
+                                                                <option selected>Elegir</option>
+                                                                <?php
+                                                                foreach ($tiporip as $res) {
+                                                                ?>
+                                                                    <option value='<?= $res['Stg_id'] ?>'> <?= $res['Stg_nombre'] ?></option>
+
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 mt-2">
+                                                        <h4>Tintas</h4>
+
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="">
+                                                                    <select id="tintas" name="Stg_id_pli[]" class="form-control">
+                                                                        <option selected>Elegir</option>
+                                                                        <option value="7">CMYK</option>
+                                                                        <option value="8">Solo negro</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mt-2">
+                                                    <h4>Tinta especial</h4>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="">
+                                                                <div class="input-group">
+                                                                    <input placeholder="Ejemplo: #e01ab5" id="tintaEspecial" type="text" class="form-control" name="Pli_tintaespecial[]" /> <br>
+                                                                    <p id="tintaEspecialP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor de tinta. por ejemplo: #e01ab5 </p>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- <div class="col-md-6 col-sm-6 copyPliego">
+                                <div class="x_panel ">
+                                    <div class="">
+                                        <div class="col-md-12">
+                                            <h4>Personalizar pliego</h4>
+                                            <div class="input-group">
+                                                <div class="x_panel">
+                                                //Pegar foreach
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <h4>Tintas</h4>
 
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="x_panel">
+                                                        <div class="col-md-6">
+                                                            <input type="radio" class="" name="Stg_id_pli[]" checked> CMYK
+                                                        </div>
+                                                        <div class="col-md-1 ml-1" style="border: 1px solid #00FFFF; height:20px; background:#00FFFF;"></div>
+                                                        <div class="col-md-1 ml-1" style="border: 1px solid #E5097F; height:20px; background:#E5097F;"></div>
+                                                        <div class="col-md-1 ml-1" style="border: 1px solid #FFE900; height:20px; background:#FFE900;"></div>
+                                                        <div class="col-md-1 ml-1" style="border: 1px solid #000000; height:20px; background:#000000;"></div>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="x_panel">
+                                                        <div class="col-md-8">
+                                                            <input type="radio" class="" name="Stg_id_pli[]"> SOLO NEGRO
+                                                        </div>
+                                                        <div class="col-md-3 ml-1" style="border: 1px solid #000000; height:20px; width:100%; background:#000000;"></div>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                <?php $contpliego++;
-                                } ?>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            <label class="col-form-label col-md-3 col-sm-3 text-left">Tinta especial</label>
+                                            <div class="col-md-9 col-sm-9">
+                                                <div class="input-group">
+                                                    <input type="text" value="#e01ab5" class="form-control" name="Pli_tintaespecial[]" />
+                                                    <span class=""><i></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                                </div>
+                            <?php } ?>
                             </div>
 
                             <button type="button" id="agregarPliego" class="btn btn-success">Agregar pliego <i class="fa fa-plus"></i></button>
@@ -554,671 +670,692 @@
 
                     </div>
                 </div>
-            <?php } ?>
-            </div>
+            <?php
+            } 
+        ?>
+</div>
 
 
-            <!-- Terminados -->
-            <div class="x_panel">
-                <div class="col-md-12 col-sm-12">
-                    <div class="col-md-12 checkbox-inline x_panel">
-                        <div class="col-md-3">
-                            <div class="checkbox">
-                                <label>
-                                    <input name="tipoterminado[]" <?php $done = 0;
-                                                                    foreach ($tipoterminado as $tipoter) {
-                                                                        if ($tipoter['Ter_id'] == 1) {
-                                                                            $done = 1;
-                                                                        }
-                                                                    }
-                                                                    echo "type='checkbox'";
-                                                                    if ($done == 1) {
-                                                                        echo "checked";
-                                                                    } ?> class="flat" value="1"> Refile
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 6) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="6"> Empastado
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 11) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="11"> Rustica
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 2) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="2"> Engomado
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 7) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="7"> Libreta
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 12) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="12"> Talonario
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 3) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="3"> Troquelado
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 8) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="8"> Pasta Dura
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 13) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="13"> Hot Meal
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 4) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="4"> Grafado
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 9) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="9"> Despuntado
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 14) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="14"> Anillado
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2">
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 5) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="5"> Repujado
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 10) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="10"> Emblocado
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 15) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="15"> Cosido
-                                </label>
-                            </div>
-                        </div>
-
+<!-- Terminados -->
+<div class="x_panel">
+    <h5>Terminados</h5>
+    <h4>Elija los terminados que desee</h4>
+    <div class="ln_solid"></div>
+    <div class="x_panel">
+        <div class="col-md-12 col-sm-12">
+            <div class="col-md-12 checkbox-inline x_panel">
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input name="tipoterminado[]" <?php $done = 0;
+                                                            foreach ($tipoterminado as $tipoter) {
+                                                                if ($tipoter['Ter_id'] == 1) {
+                                                                    $done = 1;
+                                                                }
+                                                            }
+                                                            echo "type='checkbox'";
+                                                            if ($done == 1) {
+                                                                echo "checked";
+                                                            } ?> class="flat" value="1"> Refile
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 6) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="6"> Empastado
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 11) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="11"> Rustica
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 2) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="2"> Engomado
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 7) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="7"> Libreta
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 12) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="12"> Talonario
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 3) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="3"> Troquelado
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 8) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="8"> Pasta Dura
+                        </label>
                     </div>
 
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 13) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="13"> Hot Meal
+                        </label>
+                    </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="col-md-4">
-                        <div class="x_panel">
-                            <div class="checkbox">
-                                <label>
-                                    <input class="flat checkActivar" <?php $done = 0;
-                                                                        foreach ($tipoterminado as $tipoter) {
-                                                                            if ($tipoter['Ter_id'] == 16) {
-                                                                                $done = 1;
-                                                                            }
-                                                                        }
-                                                                        echo "type='checkbox'";
-                                                                        if ($done == 1) {
-                                                                            echo "checked";
-                                                                        } ?> name="tipoterminado[]" value="16"> Numerado
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label class="col-form-label col-md-3 col-sm-3 ">Desde</label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <input id="numeradoDesde" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
-                                                                                                        if ($tipoter['Ter_id'] == 16) {
-                                                                                                            echo $tipoter['tter_descripcion1'];
-                                                                                                        }
-                                                                                                    } ?>" name="numeradodesde" <?php if ($done != 1) {
+
+                <div class="col-md-3">
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 4) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="4"> Grafado
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 9) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="9"> Despuntado
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 14) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="14"> Anillado
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 5) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="5"> Repujado
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 10) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="10"> Emblocado
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 15) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat" name="tipoterminado[]" value="15"> Cosido
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div class="x_panel">
+                    <div class="checkbox">
+                        <label>
+                            <input class="flat checkActivar" <?php $done = 0;
+                                                                foreach ($tipoterminado as $tipoter) {
+                                                                    if ($tipoter['Ter_id'] == 16) {
+                                                                        $done = 1;
+                                                                    }
+                                                                }
+                                                                echo "type='checkbox'";
+                                                                if ($done == 1) {
+                                                                    echo "checked";
+                                                                } ?> name="tipoterminado[]" value="16"> Numerado
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Desde</label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input id="numeradoDesde" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
+                                                                                                                    if ($tipoter['Ter_id'] == 16) {
+                                                                                                                        echo $tipoter['tter_descripcion1'];
+                                                                                                                    }
+                                                                                                                } ?>" name="numeradodesde" <?php if ($done != 1) {
                                                                                                                                     echo " disabled";
                                                                                                                                 } ?>>
-                                        <p id="numeradoDesdeP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="col-form-label col-md-3 col-sm-3 ">Hasta</label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <input id="numeradoHasta" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
-                                                                                                        if ($tipoter['Ter_id'] == 16) {
-                                                                                                            echo $tipoter['tter_descripcion2'];
-                                                                                                        }
-                                                                                                    } ?>" <?php if ($done != 1) {
+                                <p id="numeradoDesdeP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Hasta</label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input id="numeradoHasta" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
+                                                                                                                    if ($tipoter['Ter_id'] == 16) {
+                                                                                                                        echo $tipoter['tter_descripcion2'];
+                                                                                                                    }
+                                                                                                                } ?>" <?php if ($done != 1) {
                                                                                                                 echo " disabled";
                                                                                                             } ?> name="numeradohasta">
-                                        <p id="numeradoHastaP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
-                                    </div>
-                                </div>
+                                <p id="numeradoHastaP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="x_panel">
-                            <div class="checkbox">
-                                <label>
-                                    <input class="flat checkActivar" <?php $done = 0;
-                                                                        foreach ($tipoterminado as $tipoter) {
-                                                                            if ($tipoter['Ter_id'] == 17) {
-                                                                                $done = 1;
-                                                                            }
-                                                                        }
-                                                                        echo "type='checkbox'";
-                                                                        if ($done == 1) {
-                                                                            echo "checked";
-                                                                        } ?> name="tipoterminado[]" value="17"> Estampado
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label class="col-form-label col-md-3 col-sm-3 ">Color</label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <input id="estamcolor" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
-                                                                                                        if ($tipoter['Ter_id'] == 17) {
-                                                                                                            echo $tipoter['tter_descripcion1'];
-                                                                                                        }
-                                                                                                    } ?>" <?php if ($done != 1) {
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="x_panel">
+                    <div class="checkbox">
+                        <label>
+                            <input class="flat checkActivar" <?php $done = 0;
+                                                                foreach ($tipoterminado as $tipoter) {
+                                                                    if ($tipoter['Ter_id'] == 17) {
+                                                                        $done = 1;
+                                                                    }
+                                                                }
+                                                                echo "type='checkbox'";
+                                                                if ($done == 1) {
+                                                                    echo "checked";
+                                                                } ?> name="tipoterminado[]" value="17"> Estampado
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Color</label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input id="estamcolor" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
+                                                                                                                if ($tipoter['Ter_id'] == 17) {
+                                                                                                                    echo $tipoter['tter_descripcion1'];
+                                                                                                                }
+                                                                                                            } ?>" <?php if ($done != 1) {
                                                                                                                 echo " disabled";
                                                                                                             } ?> name="estamcolor">
-                                        <p id="estamcolorP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor de color. por ejemplo: #E01AB5 </p>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label class="col-form-label col-md-3 col-sm-3 ">Trafico</label>
-                                    <div class="col-md-9 col-sm-9 ">
-                                        <input type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
-                                                                                                        if ($tipoter['Ter_id'] == 17) {
-                                                                                                            echo $tipoter['tter_descripcion2'];
-                                                                                                        }
-                                                                                                    } ?>" <?php if ($done != 1) {
+                                <p id="estamcolorP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor de color. por ejemplo: #E01AB5 </p>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-form-label col-md-3 col-sm-3 ">Trafico</label>
+                            <div class="col-md-9 col-sm-9 ">
+                                <input type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
+                                                                                                if ($tipoter['Ter_id'] == 17) {
+                                                                                                    echo $tipoter['tter_descripcion2'];
+                                                                                                }
+                                                                                            } ?>" <?php if ($done != 1) {
                                                                                                                 echo " disabled";
                                                                                                             } ?> name="estamtrafico">
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="x_panel">
-                            <div class="checkbox">
-                                <label>
-                                    <input class="flat checkActivar" name="tipoterminado[]" <?php $done = 0;
-                                                                                            foreach ($tipoterminado as $tipoter) {
-                                                                                                if ($tipoter['Ter_id'] == 18) {
-                                                                                                    $done = 1;
-                                                                                                }
-                                                                                            }
-                                                                                            echo "type='checkbox'";
-                                                                                            if ($done == 1) {
-                                                                                                echo "checked";
-                                                                                            } ?> value="18"> Plegado
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="col-form-label col-md-5 col-sm-5 ">Numero de cuerpos</label>
-                                    <div class="col-md-7 col-sm-7 ">
-                                        <input id="numeroCuerpos" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
-                                                                                                        if ($tipoter['Ter_id'] == 18) {
-                                                                                                            echo $tipoter['tter_descripcion1'];
-                                                                                                        }
-                                                                                                    } ?>" <?php if ($done != 1) {
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="x_panel">
+                    <div class="checkbox">
+                        <label>
+                            <input class="flat checkActivar" name="tipoterminado[]" <?php $done = 0;
+                                                                                    foreach ($tipoterminado as $tipoter) {
+                                                                                        if ($tipoter['Ter_id'] == 18) {
+                                                                                            $done = 1;
+                                                                                        }
+                                                                                    }
+                                                                                    echo "type='checkbox'";
+                                                                                    if ($done == 1) {
+                                                                                        echo "checked";
+                                                                                    } ?> value="18"> Plegado
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="col-form-label col-md-5 col-sm-5 ">Numero de cuerpos</label>
+                            <div class="col-md-7 col-sm-7 ">
+                                <input id="numeroCuerpos" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
+                                                                                                                    if ($tipoter['Ter_id'] == 18) {
+                                                                                                                        echo $tipoter['tter_descripcion1'];
+                                                                                                                    }
+                                                                                                                } ?>" <?php if ($done != 1) {
                                                                                                                 echo " disabled";
                                                                                                             } ?> name="plenumerocuerpos">
-                                        <p id="numeroCuerposP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
-                                    </div>
-                                </div>
+                                <p id="numeroCuerposP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="x_panel">
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 19) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat checkActivar" name="tipoterminado[]" value="19"> Embolsado
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="col-form-label col-md-5 col-sm-5 ">Cantidad</label>
-                                    <div class="col-md-7 col-sm-7 ">
-                                        <input id="embolsadoCantidad" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
-                                                                                                        if ($tipoter['Ter_id'] == 19) {
-                                                                                                            echo $tipoter['tter_descripcion1'];
-                                                                                                        }
-                                                                                                    } ?>" <?php if ($done != 1) {
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="x_panel">
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 19) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat checkActivar" name="tipoterminado[]" value="19"> Embolsado
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="col-form-label col-md-5 col-sm-5 ">Cantidad</label>
+                            <div class="col-md-7 col-sm-7 ">
+                                <input id="embolsadoCantidad" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
+                                                                                                                        if ($tipoter['Ter_id'] == 19) {
+                                                                                                                            echo $tipoter['tter_descripcion1'];
+                                                                                                                        }
+                                                                                                                    } ?>" <?php if ($done != 1) {
                                                                                                                 echo " disabled";
                                                                                                             } ?> name="embolcantidad">
-                                        <p id="embolsadoCantidadP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
-                                    </div>
-                                </div>
+                                <p id="embolsadoCantidadP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="x_panel">
-                            <div class="checkbox">
-                                <label class="">
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 20) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat checkActivar" name="tipoterminado[]" value="20"> Fajado
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="col-form-label col-md-5 col-sm-5 ">Cantidad</label>
-                                    <div class="col-md-7 col-sm-7 ">
-                                        <input id="fajadoCantidad" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
-                                                                                                        if ($tipoter['Ter_id'] == 20) {
-                                                                                                            echo $tipoter['tter_descripcion1'];
-                                                                                                        }
-                                                                                                    } ?>" <?php if ($done != 1) {
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="x_panel">
+                    <div class="checkbox">
+                        <label class="">
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 20) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat checkActivar" name="tipoterminado[]" value="20"> Fajado
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="col-form-label col-md-5 col-sm-5 ">Cantidad</label>
+                            <div class="col-md-7 col-sm-7 ">
+                                <input id="fajadoCantidad" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
+                                                                                                                    if ($tipoter['Ter_id'] == 20) {
+                                                                                                                        echo $tipoter['tter_descripcion1'];
+                                                                                                                    }
+                                                                                                                } ?>" <?php if ($done != 1) {
                                                                                                                 echo " disabled";
                                                                                                             } ?> name="fajacantidad">
-                                    <p id="fajadoCantidadP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
-                                    </div>
-                                </div>
+                                <p id="fajadoCantidadP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="x_panel">
-                            <div class="checkbox">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 21) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat checkActivar" name="tipoterminado[]" value="21"> Desbasurado
-                                </label>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="col-form-label col-md-5 col-sm-5 ">Cantidad</label>
-                                    <div class="col-md-7 col-sm-7 ">
-                                        <input id="desbasuradoCantidad"type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
-                                                                                                        if ($tipoter['Ter_id'] == 21) {
-                                                                                                            echo $tipoter['tter_descripcion1'];
-                                                                                                        }
-                                                                                                    } ?>" <?php if ($done != 1) {
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="x_panel">
+                    <div class="checkbox">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 21) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat checkActivar" name="tipoterminado[]" value="21"> Desbasurado
+                        </label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="col-form-label col-md-5 col-sm-5 ">Cantidad</label>
+                            <div class="col-md-7 col-sm-7 ">
+                                <input id="desbasuradoCantidad" type="text" class="form-control inputActivar" value="<?php foreach ($tipoterminado as $tipoter) {
+                                                                                                                            if ($tipoter['Ter_id'] == 21) {
+                                                                                                                                echo $tipoter['tter_descripcion1'];
+                                                                                                                            }
+                                                                                                                        } ?>" <?php if ($done != 1) {
                                                                                                                 echo " disabled";
                                                                                                             } ?> name="desbcantidad">
-                                        <p id="desbasuradoCantidadP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="x_panel">
-                            <div class="checkbox col-md-4">
-                                <label>
-                                    <input <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 22) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat checkActivar" name="tipoterminado[]" value="22"> Perforado
-                                </label>
-                            </div>
-                            <div class="row col-md-8">
-                                <div class="form-group col-md-6 radioRemoveClass">
-                                    <label>
-                                        <input class="flat inputActivar" name="perforado" <?php $check = 0;
-                                                                                            foreach ($tipoterminado as $tipoter) {
-                                                                                                if ($tipoter['Ter_id'] == 22) {
-                                                                                                    $check = $tipoter['tter_descripcion1'];
-                                                                                                }
-                                                                                            }
-                                                                                            echo "type='radio'";
-                                                                                            if ($check == '1') {
-                                                                                                echo "checked value='1'>";
-                                                                                            } else {
-                                                                                                echo "value='1'>";
-                                                                                            } ?> Micro
-                                    </label>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>
-                                        <input class="flat inputActivar" name="perforado" <?php $check = 0;
-                                                                                            foreach ($tipoterminado as $tipoter) {
-                                                                                                if ($tipoter['Ter_id'] == 22) {
-                                                                                                    $check = $tipoter['tter_descripcion1'];
-                                                                                                }
-                                                                                            }
-                                                                                            echo "type='radio' ";
-                                                                                            if ($check == '2') {
-                                                                                                echo "checked value='2'>";
-                                                                                            } else {
-                                                                                                echo "value='2'>";
-                                                                                            } ?> Normal </label>
-                                </div>
+                                <p id="desbasuradoCantidadP" class="form_input-error"><span class="fa fa-times-circle"></span> Error: Debe ingresar un valor númerico. </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Terminados especiales -->
-            <div class="col-md-12"><br></div>
-            <div class="col-md-12">
-            </div>
-            <h4>Terminados especiales</h4>
-            <div class="x_panel col-md-12 col-sm-3">
-                <div class="col-md-12">
-                    <div class="col-md-3">
-                        <div class="checkbox">
+            <div class="col-md-4">
+                <div class="x_panel">
+                    <div class="checkbox col-md-4">
+                        <label>
+                            <input <?php $done = 0;
+                                    foreach ($tipoterminado as $tipoter) {
+                                        if ($tipoter['Ter_id'] == 22) {
+                                            $done = 1;
+                                        }
+                                    }
+                                    echo "type='checkbox'";
+                                    if ($done == 1) {
+                                        echo "checked";
+                                    } ?> class="flat checkActivar" name="tipoterminado[]" value="22"> Perforado
+                        </label>
+                    </div>
+                    <div class="row col-md-8">
+                        <div class="form-group col-md-6 radioRemoveClass">
                             <label>
-                                <input id="plastificadoBrillante" <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 23) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="23"> Plastificado Brillante
-                            </label>
+                                <input class="flat inputActivar" name="perforado" <?php $check = 0;
+                                                                                    foreach ($tipoterminado as $tipoter) {
+                                                                                        if ($tipoter['Ter_id'] == 22) {
+                                                                                            $check = $tipoter['tter_descripcion1'];
+                                                                                        }
+                                                                                    }
+                                                                                    echo "type='radio'";
+                                                                                    if ($check == '1') {
+                                                                                        echo "checked value='1'>";
+                                                                                    } else {
+                                                                                        echo "value='1'>";
+                                                                                    } ?> Micro </label>
                         </div>
-                        <div class="checkbox">
+                        <div class="form-group col-md-6">
                             <label>
-                                <input id="plastificadoOpaco" <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 27) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="27"> Plastificado Opaco
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="col-md-12 col-sm-12 ">
-
-                            <div class="checkbox">
-                                <label>
-                                    <input id="laminadoMate" <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 24) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="24"> Laminado Mate
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input id="laminadoBrillante" <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 28) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="28"> Laminado Brillante
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="col-md-12 col-sm-12 ">
-
-                            <div class="checkbox">
-                                <label>
-                                    <input id="uvTotal" <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 25) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="25"> UV total
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input id="uvMate" <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 29) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="29"> UV mate
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="col-md-12 col-sm-12 ">
-
-                            <div class="checkbox">
-                                <label>
-                                    <input id="metalizadoFoil" <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 26) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="26"> Metalizado Foil
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input id="castCure" <?php $done = 0;
-                                            foreach ($tipoterminado as $tipoter) {
-                                                if ($tipoter['Ter_id'] == 30) {
-                                                    $done = 1;
-                                                }
-                                            }
-                                            echo "type='checkbox'";
-                                            if ($done == 1) {
-                                                echo "checked";
-                                            } ?> class="flat" name="tipoterminado[]" value="30"> Cast and Cure
-                                </label>
-                            </div>
+                                <input class="flat inputActivar" name="perforado" <?php $check = 0;
+                                                                                    foreach ($tipoterminado as $tipoter) {
+                                                                                        if ($tipoter['Ter_id'] == 22) {
+                                                                                            $check = $tipoter['tter_descripcion1'];
+                                                                                        }
+                                                                                    }
+                                                                                    echo "type='radio' ";
+                                                                                    if ($check == '2') {
+                                                                                        echo "checked value='2'>";
+                                                                                    } else {
+                                                                                        echo "value='2'>";
+                                                                                    } ?> Normal </label>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="col-md-12 mt-5">
-            <div class="alert alert-danger invisible" role="alert" id="alert_reg">
-             <h5 class="display-5s">Por favor rellene o revise todos los campos obligatorios.</h5>
-            </div class="col-md-12">
-                <div class="col-md-6 float-right">
-                    <a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>">
-                        <button type="button" class="btn btn-danger float-right">Cancelar</button>
-                    </a>
-                    <input type="submit" class="btn btn-success float-right" value="Actualizar Orden" id="actualizarordenp">
+        </div>
+        </div>
+    </div>
+    <!-- Terminados especiales -->
+    <div class="col-md-12"><br></div>
+    <div class="col-md-12">
+    </div>
+    <h4>Terminados especiales</h4>
+    <div class="x_panel col-md-12 col-sm-3">
+        <div class="col-md-12">
+            <div class="col-md-3">
+            <div class="col-md-12 col-sm-12 ">
+                <div class="checkbox">
+                    <label>
+                        <input id="plastificadoBrillante" <?php $done = 0;
+                                                            foreach ($tipoterminado as $tipoter) {
+                                                                if ($tipoter['Ter_id'] == 23) {
+                                                                    $done = 1;
+                                                                }
+                                                            }
+                                                            echo "type='checkbox'";
+                                                            if ($done == 1) {
+                                                                echo "checked";
+                                                            } ?> class="flat" name="tipoterminado[]" value="23"> Plastificado Brillante
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input id="plastificadoOpaco" <?php $done = 0;
+                                                        foreach ($tipoterminado as $tipoter) {
+                                                            if ($tipoter['Ter_id'] == 27) {
+                                                                $done = 1;
+                                                            }
+                                                        }
+                                                        echo "type='checkbox'";
+                                                        if ($done == 1) {
+                                                            echo "checked";
+                                                        } ?> class="flat" name="tipoterminado[]" value="27"> Plastificado Opaco
+                    </label>
                 </div>
             </div>
-    </form>
+            </div>
+
+            <div class="col-md-3">
+                <div class="col-md-12 col-sm-12 ">
+
+                    <div class="checkbox">
+                        <label>
+                            <input id="laminadoMate" <?php $done = 0;
+                                                        foreach ($tipoterminado as $tipoter) {
+                                                            if ($tipoter['Ter_id'] == 24) {
+                                                                $done = 1;
+                                                            }
+                                                        }
+                                                        echo "type='checkbox'";
+                                                        if ($done == 1) {
+                                                            echo "checked";
+                                                        } ?> class="flat" name="tipoterminado[]" value="24"> Laminado Mate
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input id="laminadoBrillante" <?php $done = 0;
+                                                            foreach ($tipoterminado as $tipoter) {
+                                                                if ($tipoter['Ter_id'] == 28) {
+                                                                    $done = 1;
+                                                                }
+                                                            }
+                                                            echo "type='checkbox'";
+                                                            if ($done == 1) {
+                                                                echo "checked";
+                                                            } ?> class="flat" name="tipoterminado[]" value="28"> Laminado Brillante
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="col-md-12 col-sm-12 ">
+
+                    <div class="checkbox">
+                        <label>
+                            <input id="uvTotal" <?php $done = 0;
+                                                foreach ($tipoterminado as $tipoter) {
+                                                    if ($tipoter['Ter_id'] == 25) {
+                                                        $done = 1;
+                                                    }
+                                                }
+                                                echo "type='checkbox'";
+                                                if ($done == 1) {
+                                                    echo "checked";
+                                                } ?> class="flat" name="tipoterminado[]" value="25"> UV total
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input id="uvMate" <?php $done = 0;
+                                                foreach ($tipoterminado as $tipoter) {
+                                                    if ($tipoter['Ter_id'] == 29) {
+                                                        $done = 1;
+                                                    }
+                                                }
+                                                echo "type='checkbox'";
+                                                if ($done == 1) {
+                                                    echo "checked";
+                                                } ?> class="flat" name="tipoterminado[]" value="29"> UV mate
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="col-md-12 col-sm-12 ">
+
+                    <div class="checkbox">
+                        <label>
+                            <input id="metalizadoFoil" <?php $done = 0;
+                                                        foreach ($tipoterminado as $tipoter) {
+                                                            if ($tipoter['Ter_id'] == 26) {
+                                                                $done = 1;
+                                                            }
+                                                        }
+                                                        echo "type='checkbox'";
+                                                        if ($done == 1) {
+                                                            echo "checked";
+                                                        } ?> class="flat" name="tipoterminado[]" value="26"> Metalizado Foil
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input id="castCure" <?php $done = 0;
+                                                    foreach ($tipoterminado as $tipoter) {
+                                                        if ($tipoter['Ter_id'] == 30) {
+                                                            $done = 1;
+                                                        }
+                                                    }
+                                                    echo "type='checkbox'";
+                                                    if ($done == 1) {
+                                                        echo "checked";
+                                                    } ?> class="flat" name="tipoterminado[]" value="30"> Cast and Cure
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 mt-5">
+        <div id="alertaproduccion">
+
+        </div>
+        <div class="col-md-6 float-right">
+            <a href="<?php echo getUrl("Produccion", "Produccion", "getMain"); ?>">
+                <button type="button" class="btn btn-danger float-right">Cancelar</button>
+            </a>
+            <input type="submit" class="btn btn-success float-right" value="Actualizar Orden">
+        </div>
+    </div>
 </div>
+
+</div>
+</form>
+<?php }else{
+
+echo "<div class='x_panel'>";
+echo "No tienes los permisos necesarios para acceder a esta vista :D <br>";
+echo "<a href='".getUrl("Produccion", "Produccion", "getMain")."'> <button class='btn btn-primary mt-3'> Volver </button> </a>";
+echo "</div>";
+}
+
+
+?>

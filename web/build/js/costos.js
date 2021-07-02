@@ -1,101 +1,472 @@
-$(document).ready(function () {
-  //compras
-  var item = document.getElementById('item');
-        var agrega =
-                "<button type='button' id='agrega' class='col-8 form-control btn-success'><i class='fa fa-plus-square-o pl-1' ></i></button>";
+var v=true;
+$("span.text-danger").hide();
 
-        function contadorD() {
-                var $divs = $(".delete").toArray().length;
-                return $divs;
-        }
-        function contadorItem() {
-                var numItem = $(".item").toArray().length;
-                //var numItem = document.getElementsByClassName("item").length;
-                numItem = numItem + 1;
-                console.log(numItem);
-                return numItem;
-        }
+function verificar(){
 
-        $(document).on('click', '#agrega', function () {
+  var v1=0,v2=0,v3=0,v4=0,v5=0,v6=0;
+  v1=validacion('Soc_area');
+  v2=validacion('birthday');
+  v3=validacion('selectRegio');
+  v4=validacion('Soc_nom_je');
+  v5=validacion('Soc_servidorp');
+  v6=validacion('Soc_DNI_jefeOficina');
+  v7=validacion('Soc_DNI_servidorPublico');
+  v8=validacion('Soc_ficha');
+  
 
-                $("#agrega").remove();
+  if (v1===false || v2===false || v3===false || v4===false || v5===false || v6===false || v7===false  || v8===false ) {
+    $("#exito").hide();
+    $("#error").show();
+}else{
+   $("#error").hide();
+   $("#exito").show();
+}
 
-                var clon = $("#clon").html();
+}
 
-                $("#contenedor").append(
+function validacion(campo){
+  var a=0;
+  
+  if (campo==='Soc_area')
+  {
+      Soc_area = document.getElementById(campo).value;
+      if( Soc_area == null || Soc_area.length == 0 || /^\s+$/.test(Soc_area) ) {
+       
+          $('#'+campo).attr("class", "form-control is-invalid");
+          $('#'+campo).parent().children("span").text("campo vacio").show();
+          return false;
+         
+      }
+      else
+      {  
+              $('#'+campo).attr("class", "form-control is-valid");
+              $('#'+campo).parent().children("span").text("").show();
+              return true;
+          }  
+      
+  }
+  if (campo==='birthday'){
+      birthday = document.getElementById(campo).value;
+      if( birthday == null || birthday.length == 0 || /^\s+$/.test(birthday)  ) {
+          
+          $('#'+campo).attr("class", "date-picker form-control is-invalid");
+          $('#'+campo).parent().children("span").text("campo vacio").show();
+          return false;
+          
+      }
+      else{
+          $('#'+campo).attr("class", "date-picker form-control is-valid");
+          $('#'+campo).parent().children("span").text("").show();
+          return true;
+          
+      } 
+  }
 
-                        "<div class='form col-md-12 row ml-5'>" + clon
-                        + "<div class='col-2'><button type='button' class='delete ml-3 btn btn-danger btn-sm'><i class='fa fa-trash pl-1' ></i></button></div>"
-                        + agrega
-                        + "</div> "
+  
+  if (campo==='birthday'){
+    birthday = document.getElementById(campo).value;
+    if( birthday == null || birthday.length == 0 || /^\s+$/.test(birthday)  ) {
+        
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+        
+    }
+    else{
+        $('#'+campo).attr("class", "date-picker form-control is-valid");
+        $('#'+campo).parent().children("span").text("").show();
+        return true;
+        
+    } 
+}
+
+if (campo==='selectRegio'){
+  indice = document.getElementById(campo).selectedIndex;
+  if( indice == null || indice == 0 ) {
+      $('#selectRegio').attr("class", "form-control is-invalid");
+      $('#selectCentro').attr("class", "form-control is-invalid");
+      return false;
+  }
+  else{
+      $('#selectRegio').attr("class", "form-control is-valid");
+      $('#selectCentro').attr("class", "form-control is-valid");
+      return true;
+
+  }
+}
+
+if (campo==='Soc_nom_je')
+{
+    Soc_nom_je = document.getElementById(campo).value;
+    if( Soc_nom_je == null || Soc_nom_je.length == 0 || /^\s+$/.test(Soc_nom_je) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
 
 
-                );
+if (campo==='Soc_servidorp')
+{
+    Soc_servidorp = document.getElementById(campo).value;
+    if( Soc_servidorp == null || Soc_servidorp.length == 0 || /^\s+$/.test(Soc_servidorp) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
 
-                return false;
+if (campo==='Soc_DNI_jefeOficina')
+{
+    Soc_DNI_jefeOficina = document.getElementById(campo).value;
+    if( Soc_DNI_jefeOficina == null || Soc_DNI_jefeOficina.length == 0 || /^\s+$/.test(Soc_DNI_jefeOficina) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
+
+if (campo==='Soc_DNI_servidorPublico')
+{
+    Soc_DNI_servidorPublico = document.getElementById(campo).value;
+    if( Soc_DNI_servidorPublico == null || Soc_DNI_servidorPublico.length == 0 || /^\s+$/.test(Soc_DNI_servidorPublico) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
+
+if (campo==='Soc_ficha')
+{
+    Soc_ficha = document.getElementById(campo).value;
+    if( Soc_ficha == null || Soc_ficha.length == 0 || /^\s+$/.test(Soc_ficha) ) { 
+        $('#'+campo).attr("class", "date-picker form-control is-invalid");
+        $('#'+campo).parent().children("span").text("campo vacio").show();
+        return false;
+       
+    }
+    else
+    {  
+            $('#'+campo).attr("class", "date-picker form-control is-valid");
+            $('#'+campo).parent().children("span").text("").show();
+            return true;
+        }  
+    
+}
 
 
-        });
 
-        $(document).on("keyup", ".validar", function () {
-                var campo = $(this).val();
 
-                if (campo.length >= 1) {
-                        if (contadorD() == 0) {
-                                $("#agrega").remove();
-                                $("#clon").append(
-                                        agrega
-                                );
+
+}
+
+
+//compras
+
+
+$(document).ready(function(){
+
+
+  var item = document.getElementById('item');            
+  var agrega=
+  "<button type='button' id='agrega' class='col-md-8 form-control btn-success'><i class='fa fa-plus-square-o pl-1' ></i></button>";
+
+       function contadorD(){
+          var $divs = $(".delete").toArray().length;
+          return $divs;
+       }
+       function contadorItem(){
+          var numItem = $(".item").toArray().length;
+          //var numItem = document.getElementsByClassName("item").length;
+         numItem=numItem+1;
+          console.log(numItem);
+          return numItem;
+       }
+
+
+
+  $(document).on('click','#agrega',function(){
+  
+          $("#agrega").remove();
+
+          var clon = $("#clon").html();
+
+          $("#contenedor").append(
+
+          "<div class='form col-md-12 row ml-5'>"+clon
+          + "<div class='col-2'><button type='button' class='delete ml-3 btn btn-danger btn-sm'><i class='fa fa-trash pl-1' ></i></button></div>"
+          +agrega
+          +"</div> "
+
+
+          );
+
+return false;
+
+
+  });
+
+  $(document).on("keyup",".validar",function(){	
+          var campo=$(this).val();
+
+          if (campo.length >= 1) {
+           if (contadorD()==0 ) {
+                  $("#agrega").remove();
+                  $("#clon").append(
+                          agrega
+                          ); 
+           }
+
+
+                }
+
+
+              
+
+  });
+
+  $(document).on('click','.delete',function(){ 
+        var  finalEliminar=contadorD();
+
+          $(this).parent().parent().remove();
+          var cont=0;
+          if (contadorD()==0 ) {
+                  $("#agrega").remove();
+                  $("#clon").append(
+                          agrega
+                          ); 
+                          cont++;
+          }
+
+                if (cont==0 ) {
+                  if (contadorD()!= finalEliminar) {
+                          $("#agrega").remove();
+                          $("#contenedor").append( 
+                                  "<div class='form col-12 row ml-5'>"
+                                  +agrega
+                                  +"</div> "
+                                  ); 
+
+
                         }
+                } 
 
 
-                }
-        });
-
-        $(document).on('click', '.delete', function () {
-                var finalEliminar = contadorD();
-
-                $(this).parent().parent().remove();
-                var cont = 0;
-                if (contadorD() == 0) {
-                        $("#agrega").remove();
-                        $("#clon").append(
-                                agrega
-                        );
-                        cont++;
-                }
-
-                if (cont == 0) {
-                        if (contadorD() != finalEliminar) {
-                                $("#agrega").remove();
-                                $("#contenedor").append(
-                                        "<div class='form col-12 row ml-5'>"
-                                        + agrega
-                                        + "</div> "
-                                );
 
 
-                        }
-                }
+  });
 
-        });
+
+
 
 });
 
-$(document).on("change", "#selectRegio", function () {
-        var id = $(this).val();
-        console.log(id);
-        var url = $(this).attr("data-url");
-        $.ajax({
-                url: url,
-                data: "id=" + id,
-                type: "POST",
-                success: function (datos) {
-                        $("#selectCentro").html(datos);
-                }
-        })
+$(document).on("change", "#selectRegio", function() {
+  var id = $(this).val();
+  console.log(id);
+  var url = $(this).attr("data-url");
+  $.ajax({
+      url: url,
+      data: "id=" + id,
+      type: "POST",
+      success: function(datos) {
+          $("#selectCentro").html(datos);
+      }
+  })
 
 })
+
+
+
+
+
+
+
+
+//fin compras
+
+
+//modal compras
+$(document).ready(function () {
+
+  $(document).on("click",".botonModal",function(){
+		var url=$(this).attr("data-url");
+		var datos=$(this).attr("data-id");
+
+  swal({
+    title:'¿Desea eliminar la solicitud de compras?',
+    icon:'warning',
+    buttons:{
+      confirm:{
+        text:"Eliminar",
+        className:"btn btn-danger"
+      },
+
+      cancel:{
+        text:"Cancelar",
+        className:"btn btn-success",
+        visible:true
+      }
+    },
+    
+  }).then((Delete)=>{
+      if(Delete){
+
+        $.ajax({
+          url:url,
+          data:"Soc_id="+datos,
+          type:"POST",
+          success:function(){
+            swal("Se eliminado a exitosamente", "", "success");
+          }
+        });
+
+        setTimeout('document.location.reload()',1000);
+
+      }
+  });
+
+		
+	});
+// modal fin
+
+
+$("#solicompras").submit(function (event) {
+  var mensaje = "";
+  var errores = 0;
+
+   
+  if (!validardescripB()) {
+    mensaje = mensaje + "<br>*Por favor seleccione la descripcion del bien.";
+    errores++;
+  }
+
+   
+  if (!validaruMedida()) {
+    mensaje = mensaje + "<br>*Por favor seleccione unidad de medida.";
+    errores++;
+  }
+
+    
+  if (!validarCantidad()) {
+    mensaje = mensaje + "<br>*Por favor escriba la cantidad.";
+    errores++;
+  }
+
+    
+  if (!validarObservacion()) {
+    mensaje = mensaje + "<br>*Por favor escriba las observaciones.";
+    errores++;
+  }
+
+
+ 
+
+  //Resultado final
+  if (errores > 0) {
+    alertCompras("danger", "Error!", mensaje);
+
+    swal("Error!", "Por favor verifica los datos.", "error");
+    event.preventDefault();
+  } else {
+     swal("Exito!", "Mensaje!", "success");
+    return;
+  }
+});
+
+
+function alertCompras(tipo, title, text) {
+  var alerta =
+    "<div class='alert alert-" +
+    tipo +
+    " alert-dismissible fade show' role='alert'>" +
+    "<strong>" +
+    title +
+    "!</strong><br> " +
+    text +
+    "" +
+    "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+    "<span aria-hidden='true'>&times;</span>" +
+    "</button>" +
+    "</div>";
+
+  $("#contentAlertCompras").html(alerta);
+}
+function validardescripB() {
+  var value = $("#Pba_id").val();
+  if (value == 0) {
+    return false;
+  } else {
+    return true;
+  } 
+
+}
+
+function validaruMedida() {
+  var value = $("#Med_id").val();
+  if (value == 0) {
+    return false;
+  } else {
+    return true;
+  } 
+
+}
+
+function validarCantidad() {
+  var value = $("#com_Cantidad").val();
+  value = value.trim();
+  if (value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function validarObservacion() {
+  var value = $("#com_Observaciones").val();
+  value = value.trim();
+  if (value == "") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+
+
+});
 
 
 
@@ -412,7 +783,7 @@ $(document).ready(function () {
         $(document).on("click", ".botonModalC", function () {
           var url = $(this).attr("data-url");
           var datos = $(this).attr("data-id");
-      
+
           swal({
             title: "¿Desea eliminar la solicitud de compras?",
             icon: "warning",
@@ -421,7 +792,7 @@ $(document).ready(function () {
                 text: "Eliminar",
                 className: "btn btn-danger",
               },
-      
+
               cancel: {
                 text: "Cancelar",
                 className: "btn btn-success",
@@ -438,7 +809,7 @@ $(document).ready(function () {
                   swal("Se eliminado a exitosamente", "", "success");
                 },
               });
-      
+
               setTimeout("document.location.reload()", 1000);
             }
           });
@@ -450,7 +821,7 @@ $(document).ready(function () {
   $("#solicitudC").submit(function (event) {
     var mensaje = "";
     var errores = 0;
-   
+
     if (!validardestinatario()) {
       mensaje = mensaje + "<br>*Por favor seleccione el destinatario.";
       errores++;
@@ -458,7 +829,7 @@ $(document).ready(function () {
       mensaje = mensaje + "<br>*Por favor seleccione un cliente.";
       errores++;
     }else {
- 
+
     if($("#tablap .is-invalid").length>0){
       mensaje = mensaje + "<br>*Verifique que la tabla este llenada correctamente.";
       errores++;
@@ -569,7 +940,7 @@ $(document).ready(function () {
     } else {
       return true;
     }
-  } 
+  }
 
   function validarPjMes() {
     var value = $("#pjmId").val();
@@ -663,7 +1034,7 @@ $(document).ready(function () {
         return this.value == val;
       })
       .data("xyz");
-    
+
     // console.log($(this).siblings('#items').children());
     var inputHidden = $(this).siblings("input");
     inputHidden.val(xyz);
@@ -690,7 +1061,7 @@ $(document).ready(function () {
 
 
   $(document).on("click", "#modalAprobarEnvio", function () {
-  
+
     var url = $(this).attr("data-url");
     var id = $(this).attr("data-id");
 
@@ -700,16 +1071,15 @@ $(document).ready(function () {
       type: "warning",
       icon: "warning",
       buttons: {
-        cancel: {
+        confirm: {
+          text: "Aprobar envio",
+          className: "btn btn-success",
+        },cancel: {
           visible: true,
           text: "Cancelar",
           className: "btn btn-danger",
         },
-        confirm: {
-          text: "Aprobar envio",
-          className: "btn btn-success",
-        },
-      }, 
+      },
       // content: (
       //   <div>
       //   <h1>hola</h1></div>
@@ -723,7 +1093,7 @@ $(document).ready(function () {
           success: function () {
             var urlt =
               "ajax.php?modulo=costos&controlador=pdf&funcion=postSolicitudPdf&Ped_id=" +
-              id;            
+              id;
             swal({
               title: "Se aprobo el envio",
               icon: "success",
@@ -766,7 +1136,7 @@ $(document).ready(function () {
 //           data: "Ped_id=" + id + "&" + "Ped_motivo=" + valor,
 //             type: "POST",
 //           success: function () {
-          
+
 //             swal({
 //               title: "Se rechazo la solicitud de cotización",
 //               icon: "success",
@@ -784,7 +1154,7 @@ $(document).ready(function () {
     var url = $(this).attr("data-url");
     var id = $(this).attr("data-id");
 
-   
+
 
     swal({
       title: "¿Desea rechazar la solicitud No° " + id + "?",
@@ -804,7 +1174,7 @@ $(document).ready(function () {
           className: "btn btn-success",
         },
       },
-    }).then(function (valor) { 
+    }).then(function (valor) {
       swal({
         title: "¿Esta seguro de rechazar esta solicitud?",
         text: `Motivo del rechazo: ${valor}`,
@@ -841,7 +1211,7 @@ $(document).ready(function () {
     });
   });
 
-  
+
 
 
   $(document).on("change", "#depId", function () {
@@ -911,7 +1281,7 @@ $(document).ready(function () {
   });
   // modal fin
 
- 
+
   conttr();
 
   function is_negative_number(number=0){
@@ -920,6 +1290,54 @@ $(document).ready(function () {
         return true;
     }else{
         return false;
+    }
+}
+
+
+function valorPs(id){
+
+  var urlt="ajax.php?modulo=costos&controlador=solicitud&funcion=consultaPd";
+  var valoridAjax = document.getElementById(id).value;
+  // valoridAjax=valoridAjax.trim;
+  $.ajax({
+    // async: false,
+    type: "POST",
+    url:urlt,
+    data: {},
+    success: function(data) {
+
+      var json_obj = $.parseJSON(data); // lo convierte a Array
+      var num=0;
+    //  var cantidad=json_obj.length;
+    //  alert(cantidad);
+      for (var i = 0; i<18; i++) {
+        if (json_obj[i]==valoridAjax){
+          // alert(json_obj[i]);
+         num=1;
+           
+        }
+        
+       }
+       confirmacion(num,id);
+    }
+});
+
+
+}
+
+function confirmacion(num,id){
+  var idm="#"+id;
+    if(num==1){
+     
+     console.log("si"+id);
+    }else if (num==0){
+      // document.getElementById(id).value = "";
+       console.log("no");
+       
+        $(idm).siblings(".alv").remove();
+        $(idm).addClass("is-invalid");
+        $(idm).parent().append("<p class='text-danger alv'>Ingrese un producto valido</p>");
+        $(idm).removeClass("is-valid");
     }
 }
 
@@ -935,7 +1353,7 @@ $(document).ready(function () {
       $(this).addClass("is-valid");
       $(this).siblings(".alv").remove();
     }
-    else{ 
+    else{
       $(this).siblings(".alv").remove();
       $(this).addClass("is-invalid");
       $(this).parent().append("<p class='text-danger alv'>Campo vacio</p>");
@@ -947,7 +1365,7 @@ $(document).ready(function () {
       $(this).removeClass("is-invalid");
       $(this).addClass("is-valid");
       $(this).siblings(".alv").remove();
-    
+
     }else{
       $(this).siblings(".alv").remove();
       $(this).addClass("is-invalid");
@@ -960,7 +1378,7 @@ $(document).ready(function () {
         $(this).removeClass("is-invalid");
         $(this).addClass("is-valid");
         $(this).siblings(".alv").remove();
-      
+
       }else{
         $(this).siblings(".alv").remove();
         $(this).addClass("is-invalid");
@@ -975,8 +1393,8 @@ $(document).ready(function () {
         $(this).parent().append("<p class='text-danger alv'>Campo vacio</p>");
         $(this).removeClass("is-valid");
       } else if (valorid.length > 4) {
-        
-        
+
+
         // alert (valorid);
         $(this).removeClass("is-valid");
         $(this).addClass("is-invalid");
@@ -988,7 +1406,7 @@ $(document).ready(function () {
           );
       } else if(is_negative_number(valorid)){
 
-        
+
         // alert (valorid);
         $(this).removeClass("is-valid");
         $(this).addClass("is-invalid");
@@ -998,7 +1416,7 @@ $(document).ready(function () {
           .append(
             "<p class='text-danger alv'>Ingreasa un numero que no sea negativo</p>"
           );
-        
+
       }else{
         // if(){
         //   alert(valorid);
@@ -1008,16 +1426,36 @@ $(document).ready(function () {
         $(this).siblings(".alv").remove();
       }
     } else if (name == "producto[]") {
-     
-      
-     
+
+      // var idn=id.substr (-1);
+      // if(!isNaN(idn)){
+      //   var idnum="productoS"+idn;
+      // }else{
+      //   var idnum="productoS";
+      // }
+      // var productoS = document.getElementById(idnum).value;
+
+      // idps="#"+id;
+      // valorPs(id);
+
       if (valorid == "") {
-        
+
         $(this).siblings(".alv").remove();
         $(this).addClass("is-invalid");
         $(this).parent().append("<p class='text-danger alv'>Campo vacio</p>");
         $(this).removeClass("is-valid");
-      } else if (valorid.length >= 1) {
+
+      } else
+        if(valorPs(id)){
+    //    alert("hola");
+    //   //   $(this).siblings(".alv").remove();
+    //   //   $(this).addClass("is-invalid");
+    //   //   $(this).parent().append("<p class='text-danger alv'>Ingrese un producto valido</p>");
+    //   //   $(this).removeClass("is-valid");
+
+   }else
+      if (valorid.length >= 1) {
+      // alert(id. substr (-1));
         if (novalido(valorid)) {
           $(this).removeClass("is-valid");
           $(this).siblings(".alv").remove();
@@ -1107,6 +1545,10 @@ $(document).ready(function () {
     var cantidad = document.getElementById("cantidad").value;
     var desc = document.getElementById("desc").value;
     desc = desc.trim();
+
+    if(producto=="" || cantidad=="" || desc==""){
+      e.preventDefault();
+    }else{
     var Filas = $("#tablap tr").length - 1;
     var items = $("#items").html();
     $("#tablap").append(
@@ -1163,6 +1605,7 @@ $(document).ready(function () {
     document.getElementById("producto").value = "";
     document.getElementById("productoS").value = "";
     document.getElementById("producto").focus();
+  }
   });
 
   $(document).on("click", ".btn_remove", function () {
@@ -1257,10 +1700,10 @@ $(document).ready(function () {
     var selectCliente = $("#selectCliente").val();
 
     if (destinatario != 0 && tipoSolicitudP != 0 && selectCliente != 0 ) {
-      
+
       $("#updatePedido").prop("disabled", false);
     } else {
-      
+
       $("#updatePedido").prop("disabled", true);
     }
   }
@@ -1789,10 +2232,10 @@ $(document).ready(function () {
       totalMaterial = 0;
     }
 
-    
+
     insumos = parseFloat(totalTintas) + parseFloat(totalMaterial);
     $("#totalInsumos").val(insumos);
-    
+
 
     var totalDiseno = $("#totalDiseno").val();
     var totalTerminados = $("#totalTerminados").val();
@@ -1807,7 +2250,7 @@ $(document).ready(function () {
     procesos = parseFloat(totalDiseno) + parseFloat(totalTerminados);
     $("#totalProcesos").val(procesos);
 
-    
+
 
     if (isNaN(parseFloat(procesos))) {
       procesos = 0;
@@ -1818,7 +2261,7 @@ $(document).ready(function () {
 
     var totalCotizacion = parseFloat(procesos) + parseFloat(insumos);
     $("#totalCotizacion").val(totalCotizacion);
-    
+
   }
 
   //Obtener unidad de medida
@@ -1881,9 +2324,9 @@ $(document).ready(function () {
 
   validarPedicoCotizacionCliente();
   function validarPedicoCotizacionCliente() {
-    
+
     var value = $("#selectCliente").val();
-    
+
     if (value != 0) {
       $("#msgCliente").attr("class", "d-none");
       $("#enviarPedidoCotizacion").prop("disabled", false);
@@ -1904,7 +2347,7 @@ $(document).ready(function () {
       $("#enviarPedidoCotizacion").prop("disabled", true);
     }
   }
-  
+
   // Validar detalle pedido - tipoProducto
 
   $("#formInsertDetalleCotizacion").submit(function (event) {
@@ -3006,7 +3449,7 @@ $(document).ready(function () {
     }
   }
 
-  
+
 
   // Validar detalle pedido - tipoProducto
   // $('.alert').alert();

@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box table-responsive">
-                        <table id="datatable-responsive-costos-cotizacion-pendiente"
+                        <table id="table"
                             class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
                             width="100%">
                             <thead style="background-color:#17A481; color:#fff;">
@@ -38,10 +38,10 @@
             </div>
         </div>
     </div>
-
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+    <button type="submit" class="btn btn-success">Si</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
 
-        <button type="submit" class="btn btn-primary">Si</button>
+        
     </div>
 </form>

@@ -28,29 +28,7 @@ if (isset($_SESSION['error'])){
         <div class="col-sm-12">
             <div class="card-box table-responsive">
                 <div class="x_content row">
-                    <div class="form-group col-9"></div>
-
-                    <div class="form-group col-3">
-                        <label for="">Fecha de solicitud </label>
-
-                        <input type="date" name="ped_fecha" class="form-control" value="<?php  echo date("o-m-d");?>">
-
-                    </div>
-                    <!-- <div class="form-group col-6">
-                        <label for="">Tipo solicitud</label>
-                        <select class='display-5 form-control vSelect' name="TipoS" id="TipoSId" data-url="<?=getUrl("costos","solicitud","tipoSolid",false,"ajax")?> ">
-                            <option value="0" hidden selected >Tipo solicitud</option>
-                            <?php foreach ($tipoS as $ts){
-                                // if ($ts['tiposolic_id']=1){
-                                //     echo "<option class='form-control'  value=".$ts['tiposolic_id']." selected>".$ts['tiposolic_desc']."</option>"; 
-
-                                // }else{
-                                   // echo "<option class='form-control'  value=".$ts['tiposolic_id'].">".$ts['tiposolic_desc']."</option>"; 
-                                // }
-                            }    
-                         ?>
-                        </select> -->
-                    <!-- </div>  -->
+                                     
                     <div class="form-group col-6">
                         <label for="">Destinatario</label>
                         <select class='display-5 form-control vSelect' name="destinatario" id="destinaId">
@@ -58,7 +36,14 @@ if (isset($_SESSION['error'])){
                             <?php foreach ($usuario as $usu){
                          echo "<option class='form-control'  value=".$usu['Usu_id'].">".$usu['Usu_primerNombre'].'&nbsp;'.$usu['Usu_segundoNombre'].'&nbsp;'.$usu['Usu_primerApellido'].'&nbsp;'.$usu['Usu_primerApellido']."</option>"; } ?>
                         </select>
-                    </div>           
+                    </div>  
+                     <div class="form-group col-3"></div> 
+                     <div class="form-group col-3">
+                        <label for="">Fecha de solicitud </label>
+
+                        <input type="date" name="ped_fecha" class="form-control" value="<?php  echo date("o-m-d");?>">
+
+                    </div>         
 
                 </div>
             </div>
@@ -189,12 +174,13 @@ if (isset($_SESSION['error'])){
                   
                   </div>
                 </div>
-                
+         
                 <div class="col-12 d-flex justify-content-end mb-5">
+                <input type="submit" id="sibmSolicitud" name="registrarse" value="Registrar"
+                        class="btn btn-success  mt-5">
                     <a href="<?php echo getUrl("costos","solicitud","consult");?>"><button type='button'
                             class="btn btn-danger mt-5">Cancelar</button></a>
-                    <input type="submit" id="sibmSolicitud" name="registrarse" value="Generar solicitud"
-                        class="btn btn-primary  mt-5">
+                  
 
                 </div>
 
