@@ -1,12 +1,12 @@
-<div class="x_title ">
-    <h2>Visualizar Solicitud Compras N° <?php echo $Soc_id;?> </h2>
+<div class="x_panel x_title ">
+    <h2 class="ml-2">Visualizar Solicitud Compras N° <?php echo $Soc_id;?> </h2>
     <div class="clearfix"></div>
 </div>
 
 
-<form>
+<form class="x_panel">
 
-    <div class="item form-group">
+    <div class="item form-group mt-2">
         <label class="col-form-label col-md-2 col-sm-2 label-align">
             <h6> fecha:</h6>
         </label>
@@ -134,9 +134,9 @@ foreach ($solicitud as $soli){
     <br>
 
     <fieldset disabled>
-        <div class="container mt-5 mb-5">
+        <div class="container mt-5 mb-5 p-3">
             <div class="form-row ml-6 " name="com_NoItem" id="com_NoItem">
-                <div class="form-group col-md-12 ml-5" id="contenedor">
+                <div class="form-group col-md-12" id="contenedor">
                     <div class=" col-md-12 row ml-5 ">
 
                         <div class="form-control col-3" style="background-color:#17A481; color:#fff;"><label
@@ -145,7 +145,7 @@ foreach ($solicitud as $soli){
                         <div class="form-control col-2" style="background-color:#17A481; color:#fff;">U. Medida
                         </div>
                         <div class="form-control col-2" style="background-color:#17A481; color:#fff;">Cantidad</div>
-                        <div class="form-control col-2" style="background-color:#17A481; color:#fff;">Observaciones
+                        <div class="form-control col-4" style="background-color:#17A481; color:#fff;">Observaciones
                         </div>
 
                         <div class="col-2" name="com_NoItem" id="com_Noitem"></div>
@@ -158,7 +158,7 @@ foreach ($solicitud as $soli){
                     ?>
 
                     <div class="form col-md-12 row ml-5" id="clon">
-                        <select id="disabledSelect" name="Arti_id[]" id="Arti_id" class="form-control col-3">
+                        <select style="height: 50px;" id="disabledSelect" name="Arti_id[]" id="Arti_id" class="form-control col-3">
                             <option value="">Seleccione...</option>
                             <?php
 
@@ -172,7 +172,7 @@ foreach ($solicitud as $soli){
                     }
                         ?>
                         </select>
-                        <select readonly="readonly" name="Med_id[]" id="Med_id" class="form-control col-2">
+                        <select style="height: 50px;" readonly="readonly" name="Med_id[]" id="Med_id" class="form-control col-2">
                             <option value="">Seleccione...</option>
                             <?php
 
@@ -187,12 +187,9 @@ foreach ($solicitud as $soli){
                         ?>
                         </select>
 
-                        <input type="text" readonly="readonly" value="<?php echo $comp['com_Cantidad']; ?>"
+                        <input style="height: 50px;" type="text" readonly="readonly" value="<?php echo $comp['com_Cantidad']; ?>"
                             id="com_Cantidad" name="com_Cantidad[]" class="form-control col-2 " placeholder="">
-                        <input type="text" readonly="readonly" value="<?php echo $comp['com_Observaciones']; ?>"
-                            id="com_Observaciones" name="com_Observaciones[]"
-                            class="form-control col-2 validar producto" rows="1" cols="50" placeholder="Observacion...">
-
+                            <textarea style="min-height: 50px; max-height: 50px;" id="com_Observaciones" style="resize:none;" name="com_Observaciones[]" class="form-control col-4 validar" rows="10" cols="1" placeholder="Observacion..." readonly><?php echo $comp['com_Observaciones']; ?></textarea>
                     </div>
 
                     <?php   }  ?>

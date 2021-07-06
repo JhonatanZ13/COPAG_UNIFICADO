@@ -112,20 +112,20 @@
                 
                 <div class="container mt-8">
                     <div class="form-row ml-6 " name="com_NoItem" id="com_NoItem">
-                        <div class="form-group col-md-12 ml-5" id="contenedor">
-                            <div class=" col-md-12 row ml-5 ">
+                        <div class="form-group col-12 ml-5" id="contenedor">
+                            <div class=" col-12 row ml-5 ">
                                 <div class="form-control col-2" style="background-color:#17A481; color:#fff;">
                                     Descripcion bien</div>
                                 <div class="form-control col-2" style="background-color:#17A481; color:#fff;">U. Medida
                                 </div>
                                 <div class="form-control col-2" style="background-color:#17A481; color:#fff;">Cantidad
                                 </div>
-                                <div class="form-control col-2" style="background-color:#17A481; color:#fff;">
+                                <div class="form-control col-4" style="background-color:#17A481; color:#fff;">
                                     Observaciones</div>
                                 <div class="col-2" name="com_NoItem" id="com_Noitem"></div>
                             </div>
-                            <div class=" form col-md-12 row ml-5" id="clon">
-                                <select type="text" name="Arti_id[]" id="Arti_id" class="form-control col-2">
+                            <div class=" form col-12 row ml-5" id="clon">
+                                <select type="text" style="height: 50px;" name="Arti_id[]" id="Arti_id" class="form-control col-2">
                                     <option value="">Seleccione...</option>
                                     <?php
                                 foreach ($Articulos as $arti) {
@@ -135,7 +135,7 @@
                                 }
                                 ?>
                                 </select>
-                                <select type="text" name="Med_id[]" id="Med_id" class="form-control col-2">
+                                <select type="text" style="height: 50px;" name="Med_id[]" id="Med_id" class="form-control col-2">
                                     <option value="">Seleccione...</option>
                                     <?php
                                 foreach ($Medidas as $med) {
@@ -145,10 +145,10 @@
                                 }
                                 ?>
                                 </select>
-                                <input type="number" id="com_Cantidad" name="com_Cantidad[]" class="form-control col-2">
-                                <textarea id="com_Observaciones" name="com_Observaciones[]"
-                                    class="form-control col-2 validar" rows="1" cols="50"
-                                    placeholder="Observacion..." style="resize:none;"></textarea>
+                                <input type="number" style="height: 50px;" id="com_Cantidad" name="com_Cantidad[]" class="form-control col-2">
+                                <textarea style="min-height: 50px; max-height: 50px;" id="com_Observaciones" name="com_Observaciones[]"
+                                    class="form-control col-4 validar" rows="10" cols="1"
+                                    placeholder="Observacion..." ></textarea>
 
                             </div>
 

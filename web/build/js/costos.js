@@ -185,7 +185,7 @@ $(document).ready(function() {
 
     var item = document.getElementById('item');
     var agrega =
-        "<button type='button' id='agrega' class='col-8 form-control btn-success'><i class='fa fa-plus-square-o pl-1' ></i></button>";
+        "<button type='button' id='agrega' class='col-10 form-control btn-success'><i class='fa fa-plus-square-o pl-1' ></i></button>";
 
     function contadorD() {
         var $divs = $(".delete").toArray().length;
@@ -210,8 +210,8 @@ $(document).ready(function() {
 
         $("#contenedor").append(
 
-            "<div class='form col-md-12 row ml-5'>" + clon +
-            "<div class='col-2'><button type='button' class='delete ml-3 btn btn-danger btn-sm'><i class='fa fa-trash pl-1' ></i></button></div>" +
+            "<div class='form col-12 row ml-5'>" + clon +
+            "<div class='col-2'><button type='button' class='delete ml-3 btn btn-danger btn-sm'><i class='fa fa-trash' ></i></button></div>" +
             agrega +
             "</div> "
 

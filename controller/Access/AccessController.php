@@ -1,8 +1,13 @@
 <?php
+    /* ================= START ======================= */
+
+    //  Variables que guardan la url de las imagenes de los roles de usuario, en donde dependiendo del rol asigna una imagen a su perfil
 
     $manager = "../web/images/manager.png";
     $functionary = "../web/images/functionary.png";
     $learner = "../web/images/learner.png";
+
+    /* ===================== END ======================= */
     
     include_once '../model/Access/AccessModel.php';
 
@@ -20,6 +25,7 @@
 
             if(mysqli_num_rows($usuario)>0){
                 foreach ($usuario as $user) {
+                    
                     $_SESSION['nameUser']=$user['Usu_primerNombre'];
                     $_SESSION['surnameUser']=$user['Usu_primerApellido'];
                     $_SESSION['rolUser']=$user['Rol_nombre'];
