@@ -170,7 +170,7 @@
                             ?>
                         </select>
                         <input type="text" style="height: 50px;" value="<?php echo $comp['com_Cantidad']; ?>" id="com_Cantidad" name="com_Cantidad[]" class="form-control col-2 ">
-                        <textarea style="min-height: 50px; max-height: 50px;" id="com_Observaciones" style="resize:none;" name="com_Observaciones[]" class="form-control col-4 validar" rows="10" cols="1" placeholder="Observacion..."><?php echo $comp['com_Observaciones']; ?></textarea>
+                        <textarea style="min-height: 50px; max-height: 50px; resize:none;" id="com_Observaciones" style="resize:none;" name="com_Observaciones[]" class="form-control col-4 validar" rows="10" cols="1" placeholder="Observacion..."><?php echo $comp['com_Observaciones']; ?></textarea>
                         <?php
                         if ($contador > 1) {
                         ?>
