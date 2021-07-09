@@ -241,7 +241,7 @@
                                 </label>
                                 <div class="col-md-9 col-sm-9 ">
                                     <select id="tipoDiseño" class="form-control" name="Stg_id">
-                                        <option selected>Elegir</option>
+                                        <option value="">Elegir</option>
                                         <?php
                                         foreach ($tipodiseno as $res) {
                                         ?>
@@ -269,7 +269,7 @@
                                             </label>
                                             <div class="form-group col-md-12 col-sm-12 ">
                                                 <select id="tipoSustrato" class="form-control" name="Arti_id[]">
-                                                    <option selected>Elegir</option>
+                                                    <option value="">Elegir</option>
                                                     <?php
                                                     foreach ($articulo as $res) {
                                                     ?>

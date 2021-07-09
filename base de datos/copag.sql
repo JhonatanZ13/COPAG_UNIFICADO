@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-07-2021 a las 14:56:52
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.3
+-- Tiempo de generación: 09-07-2021 a las 02:35:09
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 7.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -465,6 +464,13 @@ CREATE TABLE `tblempresa` (
   `Stg_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `tblempresa`
+--
+
+INSERT INTO `tblempresa` (`Emp_id`, `Emp_razonSocial`, `Emp_NIT`, `Emp_email`, `Emp_direccion`, `Emp_nombreContacto`, `Emp_apellidoContacto`, `Mun_id`, `Emp_numeroDocumento`, `Emp_primerNumeroContacto`, `Emp_segundoNumeroContacto`, `Est_id`, `Tempr_id`, `Stg_id`) VALUES
+('1', 'CDTI', '000012344', 'dfsf@misena.edu.co', 'dsfsdfsdf', 'Jhonatan', 'Zambrano', 1009, '4535334535', '3168445287', '453353453', 1, 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -578,11 +584,20 @@ DELIMITER ;
 
 CREATE TABLE `tblimpresion` (
   `Imp_id` int(30) NOT NULL,
-  `Maq_id` int(11) NOT NULL,
+  `Maq_id` int(11) DEFAULT NULL,
   `Imp_formatoCorte` varchar(15) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Imp_encargado` varchar(60) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Imp_observaciones` varchar(200) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tblimpresion`
+--
+
+INSERT INTO `tblimpresion` (`Imp_id`, `Maq_id`, `Imp_formatoCorte`, `Imp_encargado`, `Imp_observaciones`) VALUES
+(1, NULL, '', 'Jhonatan', ''),
+(2, NULL, '', 'Jhonatan', 'dfdf'),
+(3, NULL, '', 'Jhonatand', 'dfdf');
 
 -- --------------------------------------------------------
 
@@ -1863,6 +1878,15 @@ CREATE TABLE `tblordenproduccion` (
   `Odp_usuFirma` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `tblordenproduccion`
+--
+
+INSERT INTO `tblordenproduccion` (`Odp_id`, `Odp_fechaCreacion`, `Odp_tipoempresa`, `Emp_id`, `Usu_id`, `Pte_id`, `Pim_id`, `Imp_id`, `Odp_fechaEntrega`, `Odp_fechaInicio`, `Odp_fechafin`, `Odp_Estado`, `Odp_motivorechazo`, `Odp_usuFirma`) VALUES
+(1, '2021-07-08', 3, '1', 4, 2, 1, 1, '', '', '', 4, 'NULL', 0),
+(2, '2021-07-08', 4, '1', 4, 3, 2, 2, '2021-07-13', '', '', 2, 'NULL', 4),
+(3, '2021-07-08', 3, '1', 4, 4, 3, 3, '2021-07-15', '', '', 2, 'NULL', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -1913,11 +1937,19 @@ CREATE TABLE `tblpermiso` (
 
 CREATE TABLE `tblpliego` (
   `Pli_id` int(11) NOT NULL,
-  `Pli_rip` int(11) NOT NULL,
-  `Stg_id` int(11) NOT NULL,
-  `Pli_tintaespecial` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
-  `Imp_id` int(11) NOT NULL
+  `Pli_rip` int(11) DEFAULT NULL,
+  `Stg_id` int(11) DEFAULT NULL,
+  `Pli_tintaespecial` varchar(30) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Imp_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tblpliego`
+--
+
+INSERT INTO `tblpliego` (`Pli_id`, `Pli_rip`, `Stg_id`, `Pli_tintaespecial`, `Imp_id`) VALUES
+(1, 9, 7, 'NULL', 2),
+(2, 10, 7, 'NULL', 2);
 
 -- --------------------------------------------------------
 
@@ -1927,7 +1959,7 @@ CREATE TABLE `tblpliego` (
 
 CREATE TABLE `tblpreimpreion` (
   `Pim_id` int(30) NOT NULL,
-  `Stg_id` int(11) NOT NULL,
+  `Stg_id` int(11) DEFAULT NULL,
   `Pim_encargado` varchar(60) COLLATE utf8_spanish_ci DEFAULT NULL,
   `Pim_observacion` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -1937,7 +1969,9 @@ CREATE TABLE `tblpreimpreion` (
 --
 
 INSERT INTO `tblpreimpreion` (`Pim_id`, `Stg_id`, `Pim_encargado`, `Pim_observacion`) VALUES
-(1, 4, 'Jhonatan', 'dfdf');
+(1, 4, 'Jhonatan Zambrano', ''),
+(2, NULL, 'Jhonatan Zambrano', 'dfdf'),
+(3, NULL, 'Jhonatan Zambrano', 'sfdf');
 
 -- --------------------------------------------------------
 
@@ -2007,7 +2041,10 @@ CREATE TABLE `tblproductoterminado` (
 --
 
 INSERT INTO `tblproductoterminado` (`Pte_id`, `Pte_cantidad`, `Pte_numeroPaginas`, `Pte_tamañoAbierto`, `Pte_tamañoCerrado`, `Pte_diseñador`, `Pba_id`) VALUES
-(1, 40, 44, '20 x 30 cm', '10 x 30 cm', 'Jhonatan', 2);
+(1, 40, 44, '20 x 30 cm', '10 x 30 cm', 'Jhonatan', 2),
+(2, 4000, 0, '', '', 'Jhonatan', 1),
+(3, 4000, 0, '', '', 'Jhonatan', 1),
+(4, 4000, 0, '', '', 'Jhonatan', 1);
 
 -- --------------------------------------------------------
 
@@ -2154,14 +2191,24 @@ INSERT INTO `tblsubtipogeneral` (`Stg_id`, `Stg_nombre`, `Tge_id`) VALUES
 CREATE TABLE `tblsustrato` (
   `Sus_id` int(11) NOT NULL,
   `Pim_id` int(11) NOT NULL,
-  `Sus_tamañoPliego` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `Sus_cantidadSustrato` int(11) NOT NULL,
-  `Sus_tamañoCorte` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `Sus_tirajePedido` int(11) NOT NULL,
-  `Sus_porcentajeDesperdicio` int(10) NOT NULL,
-  `Sus_tirajeTotal` int(11) NOT NULL,
-  `Arti_id` int(11) NOT NULL
+  `Sus_tamañoPliego` varchar(15) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Sus_cantidadSustrato` int(11) DEFAULT NULL,
+  `Sus_tamañoCorte` varchar(15) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Sus_tirajePedido` int(11) DEFAULT NULL,
+  `Sus_porcentajeDesperdicio` int(10) DEFAULT NULL,
+  `Sus_tirajeTotal` int(11) DEFAULT NULL,
+  `Arti_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tblsustrato`
+--
+
+INSERT INTO `tblsustrato` (`Sus_id`, `Pim_id`, `Sus_tamañoPliego`, `Sus_cantidadSustrato`, `Sus_tamañoCorte`, `Sus_tirajePedido`, `Sus_porcentajeDesperdicio`, `Sus_tirajeTotal`, `Arti_id`) VALUES
+(1, 1, 'NULL', 90000, 'NULL', NULL, 5, NULL, 1),
+(2, 1, 'NULL', 2000, 'NULL', NULL, 5, NULL, 1),
+(3, 2, 'NULL', 10000, 'NULL', NULL, 5, NULL, 1),
+(4, 2, '90 x 79 cm', 10000, 'NULL', NULL, 5, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -2327,6 +2374,15 @@ CREATE TABLE `tbltipoterminado` (
   `Odp_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `tbltipoterminado`
+--
+
+INSERT INTO `tbltipoterminado` (`tter_id`, `Ter_id`, `tter_descripcion1`, `tter_descripcion2`, `Odp_id`) VALUES
+(1, 1, '', '', 1),
+(2, 27, '', '', 1),
+(3, 1, '', '', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -2357,7 +2413,7 @@ CREATE TABLE `tblusuario` (
 
 INSERT INTO `tblusuario` (`Usu_id`, `Usu_primerNombre`, `Usu_segundoNombre`, `Usu_primerApellido`, `Usu_segundoApellido`, `Stg_id`, `Usu_numeroDocumento`, `Usu_telefono`, `Usu_email`, `Usu_password`, `Rol_id`, `Gen_id`, `Est_id`, `Area_id`, `Usu_token`) VALUES
 (1, 'Jair', 'Alexander', 'Hernandez', 'rosero', 0, '1144090162', '3235148081', 'jahernandez2610@misena.edu.co', '1144090162', 1, 1, 1, 5, '0'),
-(4, 'Jhonatan', 'Javiera', 'Zambrano', 'Zambrano', 0, '111000', '3168445287', 'zambranojhonatan20@gmail.com', 'Alex123.', 1, 1, 1, 4, '0');
+(4, 'Jhonatan', 'Javier', 'Zambrano', 'Zambrano', 0, '111000', '3168445287', 'zambranojhonatan20@gmail.com', '111000', 1, 1, 1, 5, '0');
 
 --
 -- Índices para tablas volcadas

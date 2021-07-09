@@ -193,10 +193,14 @@
 
     /* =============== Pre-Impresion ==================*/
 
-            $Stg_id = isset($_POST['Stg_id']) ? $_POST['Stg_id'] : "";
+            $Stg_id = isset($_POST['Stg_id']) ? $_POST['Stg_id'] : "NULL";
             $Pim_encargado = isset($_POST['Pim_encargado']) ? $_POST['Pim_encargado'] : "";
             $Pim_observacion = isset($_POST['Pim_observacion']) ? $_POST['Pim_observacion'] : "";
+            if($Stg_id == ""){
+                $Stg_id = "NULL";
+            }
             $sql = "INSERT INTO tblpreimpreion VALUES($Pim_id, $Stg_id, '$Pim_encargado', '$Pim_observacion')";
+            echo $sql;
             $insertPim = $obj->insert($sql);
 
     /* ================= Sustratos ====================*/
@@ -209,7 +213,11 @@
             $Sus_porcentajeDesperdicio = isset($_POST['Sus_porcentajeDesperdicio']) ? $_POST['Sus_porcentajeDesperdicio'] : "";
             $Sus_tirajeTotal = isset($_POST['Sus_tirajeTotal']) ? $_POST['Sus_tirajeTotal'] : "";
 
-            for($i = 0; $i < count($Arti_id); $i++){
+            $contsus = count($Arti_id);
+            if(count($Arti_id) == ""){
+                $contsus = 1;
+            }
+            for($i = 0; $i < $contsus; $i++){
                 $Sus_id = $obj->autoIncrement('tblsustrato', 'Sus_id');
                 $sql = "INSERT INTO tblsustrato VALUES($Sus_id, $Pim_id, '$Sus_tamañoPliego[$i]', $Sus_cantidadSustrato[$i], '$Sus_tamañoCorte[$i]', $Sus_tirajePedido[$i], $Sus_porcentajeDesperdicio[$i], $Sus_tirajeTotal[$i], $Arti_id[$i])";
                 $insertSus = $obj->insert($sql);
@@ -227,7 +235,6 @@
             $Imp_observaciones = isset($_POST['Imp_observaciones']) ? $_POST['Imp_observaciones'] : "";
 
             $sql = "INSERT INTO tblimpresion VALUES($Imp_id, $Maq_id, '$Imp_formatoCorte', '$Imp_encargado', '$Imp_observaciones')";
-            echo $sql;
             $insertImp = $obj->insert($sql);
 
 
@@ -235,7 +242,11 @@
             $Stg_id_pli = isset($_POST['Stg_id_pli']) ? $_POST['Stg_id_pli'] : "";
             $Pli_rip = isset($_POST['Pli_rip']) ?$_POST['Pli_rip'] : "";
             $Pli_tintaespecial = isset($_POST['Pli_tintaespecial']) ? $_POST['Pli_tintaespecial'] : "";
-            
+
+            $contpl = count($Stg_id_pli);
+            if(count($Stg_id_pli) == 0){
+                $contpl = 1;
+            }
             for($i = 0; $i < count($Stg_id_pli); $i++){
                 $Pli_id = $obj->autoIncrement('tblpliego', 'Pli_id');
                 $sql = "INSERT INTO tblpliego VALUES($Pli_id, $Pli_rip[$i], $Stg_id_pli[$i], '$Pli_tintaespecial[$i]', $Imp_id)";
@@ -617,21 +628,42 @@
                 $borrarsustratos = $obj->delete($sql);
 
                 $Arti_id = isset($_POST['Arti_id']) ? $_POST['Arti_id'] : "";
-                $Sus_cantidadSustrato = isset($_POST['Sus_cantidadSustrato']) ? $_POST['Sus_cantidadSustrato'] : "";
-                $Sus_tamañoPliego = isset($_POST['Sus_tamañoPliego']) ? $_POST['Sus_tamañoPliego'] : "";
-                $Sus_tamañoCorte = isset($_POST['Sus_tamañoCorte']) ? $_POST['Sus_tamañoCorte'] : "";
-                $Sus_tirajePedido = isset($_POST['Sus_tirajePedido']) ? $_POST['Sus_tirajePedido'] : "";
-                $Sus_porcentajeDesperdicio = isset($_POST['Sus_porcentajeDesperdicio']) ? $_POST['Sus_porcentajeDesperdicio'] : "";
-                $Sus_tirajeTotal = isset($_POST['Sus_tirajeTotal']) ? $_POST['Sus_tirajeTotal'] : "";
-
-                if($Arti_id>0){
-                    for($i = 0; $i < count($Arti_id); $i++){
-                        $Sus_id = $obj->autoIncrement('tblsustrato', 'Sus_id');
-                        $sql = "INSERT INTO tblsustrato VALUES($Sus_id, $Pim_id, '$Sus_tamañoPliego[$i]', $Sus_cantidadSustrato[$i], '$Sus_tamañoCorte[$i]', $Sus_tirajePedido[$i], $Sus_porcentajeDesperdicio[$i], $Sus_tirajeTotal[$i], $Arti_id[$i])";
-                        $insertSus = $obj->insert($sql);
-                    
-                    }
+                $Sus_cantidadSustrato = isset($_POST['Sus_cantidadSustrato']) ? $_POST['Sus_cantidadSustrato'] : "NULL";
+                $Sus_tamañoPliego = isset($_POST['Sus_tamañoPliego']) ? $_POST['Sus_tamañoPliego'] : "NULL";
+                $Sus_tamañoCorte = isset($_POST['Sus_tamañoCorte']) ? $_POST['Sus_tamañoCorte'] : "NULL";
+                $Sus_tirajePedido = isset($_POST['Sus_tirajePedido']) ? $_POST['Sus_tirajePedido'] : "NULL";
+                $Sus_porcentajeDesperdicio = isset($_POST['Sus_porcentajeDesperdicio']) ? $_POST['Sus_porcentajeDesperdicio'] : "NULL";
+                $Sus_tirajeTotal = isset($_POST['Sus_tirajeTotal']) ? $_POST['Sus_tirajeTotal'] : "NULL";
+                
+                $contsus = count($Arti_id);
+                if (count($Arti_id) == "") {
+                    $contsus = 1;
                 }
+                for($i = 0; $i < $contsus; $i++){
+                    if($Sus_cantidadSustrato[$i] == ""){
+                        $Sus_cantidadSustrato[$i] = "NULL";
+                    }
+                    if($Sus_tamañoPliego[$i] == ""){
+                        $Sus_tamañoPliego[$i] = "NULL";
+                    }
+                    if($Sus_tamañoCorte[$i] == ""){
+                        $Sus_tamañoCorte[$i] = "NULL";
+                    }
+                    if($Sus_tirajePedido[$i] == ""){
+                        $Sus_tirajePedido[$i] = "NULL";
+                    }
+                    if($Sus_porcentajeDesperdicio[$i] == ""){
+                        $Sus_porcentajeDesperdicio[$i] = "NULL";
+                    }
+                    if($Sus_tirajeTotal[$i] == ""){
+                        $Sus_tirajeTotal[$i] = "NULL";
+                    }
+                    $Sus_id = $obj->autoIncrement('tblsustrato', 'Sus_id');
+                    $sql = "INSERT INTO tblsustrato VALUES($Sus_id, $Pim_id, '$Sus_tamañoPliego[$i]', $Sus_cantidadSustrato[$i], '$Sus_tamañoCorte[$i]', $Sus_tirajePedido[$i], $Sus_porcentajeDesperdicio[$i], $Sus_tirajeTotal[$i], $Arti_id[$i])";
+                    $insertSus = $obj->insert($sql);
+                
+                }
+                
     
     
         /* ================= Impresion ====================*/
@@ -659,13 +691,25 @@
                 $Stg_id_pli = isset($_POST['Stg_id_pli']) ? $_POST['Stg_id_pli'] : "";
                 $Pli_rip = isset($_POST['Pli_rip']) ?$_POST['Pli_rip'] : "";
                 $Pli_tintaespecial = isset($_POST['Pli_tintaespecial']) ? $_POST['Pli_tintaespecial'] : "";
-                if($Stg_id_pli > 0){
-                    for($i = 0; $i < count($Stg_id_pli); $i++){
-                        $Pli_id = $obj->autoIncrement('tblpliego', 'Pli_id');
-                        $sql = "INSERT INTO tblpliego VALUES($Pli_id, $Pli_rip[$i], $Stg_id_pli[$i], '$Pli_tintaespecial[$i]', $Imp_id)";
-                        $insertPli = $obj->insert($sql);
-                    
+
+                $contpl = count($Stg_id_pli);
+                if (count($Stg_id_pli) == "") {
+                    $contpl = 1;
+                }
+                for($i = 0; $i < $contpl; $i++){
+                    if($Pli_rip[$i] == ""){
+                        $Pli_rip[$i] = "NULL";
                     }
+                    if($Pli_tintaespecial[$i] == ""){
+                        $Pli_tintaespecial[$i] = "NULL";
+                    }
+                    if($Stg_id_pli[$i] == ""){
+                        $Stg_id_pli[$i] = "NULL";
+                    }
+                    $Pli_id = $obj->autoIncrement('tblpliego', 'Pli_id');
+                    $sql = "INSERT INTO tblpliego VALUES($Pli_id, $Pli_rip[$i], $Stg_id_pli[$i], '$Pli_tintaespecial[$i]', $Imp_id)";
+                    $insertPli = $obj->insert($sql);
+                
                 }
             }
     
